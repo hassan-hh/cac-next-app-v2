@@ -3,9 +3,9 @@ import styles from '../styles/Home.module.css'
 
 const Home = () => {
   return (
-    <div className="h-screen">
-      <Nav/>
-    </div>
+    <>
+     <h1>Main Landing Page Before Login</h1>
+    </>
   )
 }
 export default Home

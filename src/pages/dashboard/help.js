@@ -6,11 +6,9 @@ const Help = () => {
 
     return (
             <>
-            <Meta title="Help and Support"/>
-               <DashboardNav/>
-               <div className="h-screen bg-gray-200 px-14">
-                    <Header title="Questions & Answers" subTitle="YOU CAN FIND MORE INFORMATION HERE"/>
-               </div>
+                <Meta title="Help and Support"/>
+                {/* <DashboardNav/> */}
+                <Header title="Questions & Answers" subTitle="YOU CAN FIND MORE INFORMATION HERE"/>
             </>
     )
 }

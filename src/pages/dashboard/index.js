@@ -4,29 +4,17 @@ import StatusCard from '../../components/dashboard/cards/StatusCard'
 import TableCard from '../../components/dashboard/cards/TableCard'
 import ServicesCard from '../../components/dashboard/cards/ServicesCard'
 import Meta from '../../components/seo/Meta'
+import ClientConfig from '../../ClientConfig'
+
 
 const Dashboard = () => {
 
     return (
         <>
-        <Meta title="User Dashboard" />
-            <DashboardNav/>
-            <div className="bg-gray-200 px-6 lg:px-14 min-h-screen">
-               <Header title="Support Dashboard" subTitle="TODAY'S OVERVIEW"/>
-                <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 mb-8">
-                   <div className="col-span-2 mb-4 xl:mb-0"><StatusCard title="CATS Daemon Status" btnName="View Daemon Processes"/></div>
-                   <div className="col-span-2 mb-4 xl:mb-0"><StatusCard title="CATS Batch Status" btnName="View Batch Processes"/></div>
-                   <div className="grid grid-cols-2 xl:grid-cols-1 gap-4">
-                        <div><ServicesCard error="DOWN" service="DATABASE"/></div>
-                        <div><ServicesCard error="DOWN" service="MQ CONNECTION"/></div>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 mb-8">
-                    <TableCard title="CATS Dates Overview"/>
-                </div>
-                <div className="grid grid-cols-1 pb-8">
-                    <TableCard title="Disclosures Block Status"/>
-                </div>
+            <Meta title="User Dashboard" />
+            {/* <DashboardNav/> */}
+            <div class="h-64 border-dashed border-4 border-white p-4 text-md">
+            <h1>Dashboard</h1>
             </div>
         </>
     )
