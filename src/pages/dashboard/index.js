@@ -4,17 +4,31 @@ import StatusCard from '../../components/dashboard/cards/StatusCard'
 import TableCard from '../../components/dashboard/cards/TableCard'
 import ServicesCard from '../../components/dashboard/cards/ServicesCard'
 import Meta from '../../components/seo/Meta'
-import ClientConfig from '../../ClientConfig'
+// import ClientConfig from '../../ClientConfig'
 
 
-const Dashboard = () => {
+export const getStaticProps = async () => {
+    // const CatsUrl = ClientConfig.apiUrl
+    // const res = await fetch(`${CatsUrl}/account/regions`)
+    // const data = await res.text()
+
+    return {
+        props: {
+            //data
+        }
+    }
+}
+
+
+
+const Dashboard = ({data}) => {
 
     return (
         <>
-            <Meta title="User Dashboard" />
+            <Meta title="User Dashboard"/>
+            <Header title="User Dashboard" subTitle="EXTRA TEXT GOES HERE"/>
             {/* <DashboardNav/> */}
-            <div class="h-64 border-dashed border-4 border-white p-4 text-md">
-            <h1>Dashboard</h1>
+            <div className="h-64 border-dashed border-4 border-white p-4 text-md">
             </div>
         </>
     )

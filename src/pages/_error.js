@@ -1,5 +1,14 @@
+// import Link from 'next/link'
+
 function Error({ statusCode }) {
+
+  // const goBack = () => {
+  //   return (
+  //       <Link href="/"><a>Go back home</a></Link>
+  //   )
+  // }
   return (
+    
     <h2 className="h-full flex items-center justify-center flex-row">
       { statusCode === 404 ?
         `Error ${statusCode} page not found`
