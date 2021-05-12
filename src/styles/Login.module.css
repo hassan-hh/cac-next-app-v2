@@ -1,0 +1,19 @@
+.customRadio label:hover {
+  /* background: #121727; */
+  /* color: #274da0; */
+  color: #2bbc9c;
+  cursor: pointer;
+}
+.customRadio input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+}
+.customRadio input[type="radio"]:checked + label {
+  /* background: #121727; */
+  /* color: #274da0; */
+  color: #2bbc9c;
+}
+.customRadio input[type="radio"]:focus {
+  outline: none;
+}

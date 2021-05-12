@@ -11,7 +11,7 @@ const Support = () => {
         <>
             <Meta title="User Dashboard" />
             {/* <DashboardNav/> */}
-            <Header title="Support Dashboard" subTitle="TODAY'S OVERVIEW"/>
+            <Header title="Support Dashboard" subTitle=""/>
             <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 mb-8">
             <div className="col-span-2 mb-4 xl:mb-0"><StatusCard title="CATS Daemon Status" btnName="View Daemon Processes"/></div>
             <div className="col-span-2 mb-4 xl:mb-0"><StatusCard title="CATS Batch Status" btnName="View Batch Processes"/></div>

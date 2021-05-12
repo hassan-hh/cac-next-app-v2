@@ -26,9 +26,175 @@ const Dashboard = ({data}) => {
     return (
         <>
             <Meta title="User Dashboard"/>
-            <Header title="User Dashboard" subTitle="EXTRA TEXT GOES HERE"/>
+            <Header title="My Tasks" subTitle=""/>
             {/* <DashboardNav/> */}
-            <div className="h-64 border-dashed border-4 border-white p-4 text-md">
+            <div className="h-screen max-w-full">
+                <table className="h-screen min-w-full divide-y divide-gray-200 shadow-sm">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                ID
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                CA
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                Task Description
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                Task Date
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                Task Time Deadline
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                Dates
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                            <td className="px-6 py-4">
+                                <p></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </>
     )

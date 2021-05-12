@@ -2,7 +2,7 @@
 const StatusCard = ({title, btnName}) => {
 
     return (  
-            <div className="w-full shadow-lg rounded-lg overflow-hidden border-t-4 border-green-400">
+            <div className="w-full shadow-sm rounded-md overflow-hidden border-t-4 border-green-400">
                 <div className="bg-white px-4 py-4">
                     <h1 className="text-gray-700 text-lg tracking-wide">{title}</h1>
                 </div>

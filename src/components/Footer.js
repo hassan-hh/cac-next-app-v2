@@ -1,9 +1,7 @@
-import styles from '../styles/Footer.module.css'
-
-const Footer = () => {
+const Footer = ({ loggedIn }) => {
 
     return (
-        <footer className={styles.footer}>
+        <footer className={`${loggedIn ? 'text-gray-900' : 'text-white'} text-lg h-40 flex items-center justify-center`}>
         <a
           href="#"
           target="_blank"

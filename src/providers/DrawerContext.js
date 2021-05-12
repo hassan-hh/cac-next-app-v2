@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
+import Cookies from 'js-cookie'
 export const DrawerContext = createContext()
 
 export const DrawerProvider = ({ children }) => {
@@ -8,49 +9,54 @@ export const DrawerProvider = ({ children }) => {
     const [accountEntity, setAccountEntity] = useState([])
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
+     useEffect(() => {
         DateApi()
         RegionsApi()
-        //AccountApi()
-    }, [])
-
+        AccountApi()
+     }, [])
+    
     const DateApi = async () => {
-        setLoading(true)
-        const res = await fetch(`/api/user/systemdate`)
-        const date = await res.json()
-        setLoading(false)
-        setSystemDate(date)
+            setLoading(true)
+        try {
+            const res = await fetch(`/api/user/systemdate`)
+            const date = await res.json()
+            setLoading(false)
+            setSystemDate(date)
+        }
+        catch (err) {
+            setLoading(false)
+        }
+        
     }
     const RegionsApi = async () => {
-        setLoading(true)
-        const res = await fetch(`/api/account/regions`, {credentials: 'include'
-            // method: "GET",
-            // headers: {
-            //     'Accept': 'application/json',
-            //     'Content-Type': 'application/json',
-            //     'Cache': 'no-cache',
-            // },
-            // credentials: 'include'
-        })
-        const region = await res.json()
-        setLoading(false)
-        setRegions(region)
-        console.log(res)
+            setLoading(true)
+        try {
+            const res = await fetch(`/api/account/regions`)
+            const region = await res.json()
+            setLoading(false)
+            setRegions(region)
+        }
+        catch (err) {
+            setLoading(false)
+        }
     }
     const AccountApi = async () => {
-        setLoading(true)
-        // const res = await fetch(`/api/user/match/catsupp/account`)
-        const res = await fetch(`/api/account/entities`)
-        const account = await res.json()
-        setLoading(false)
-        setAccountEntity(account)
+            setLoading(true)
+        try {
+            const res = await fetch(`/api/account/entities`)
+            const account = await res.json()
+            setLoading(false)
+            setAccountEntity(account)
+        }
+        catch (err) {
+            setLoading(false)
+        }
     }
 
     return ( 
-        <>
-            <DrawerContext.Provider value={{systemDate, accountEntity, regions, loading}}>
-                {children}  
-            </DrawerContext.Provider>
-        </>
+        <DrawerContext.Provider value={{systemDate, accountEntity, regions, loading}}>
+            {children}  
+        </DrawerContext.Provider>
+
     )
 }

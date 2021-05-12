@@ -9,7 +9,7 @@ function Error({ statusCode }) {
   // }
   return (
     
-    <h2 className="h-full flex items-center justify-center flex-row">
+    <h2 className="text-white text-lg h-full flex items-center justify-center flex-row">
       { statusCode === 404 ?
         `Error ${statusCode} page not found`
         : statusCode ? `An error ${statusCode} occurred on server`

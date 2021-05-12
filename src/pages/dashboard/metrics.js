@@ -37,7 +37,7 @@ const Metrics = ({ data }) => {
 
         <>
             <Meta title="Metrics" />
-            <Header title="Application Metrics" subTitle="EXTRA TEXT GOES HERE"/>
+            <Header title="Application Metrics" subTitle=""/>
             {   !data ?
                 <Error />
                 :

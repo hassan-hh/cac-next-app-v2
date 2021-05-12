@@ -2,7 +2,7 @@
 const Header = ({title, subTitle}) => {
 
     return (
-        <header className="py-6 w-full">
+        <header className="pb-6 w-full">
             <small className="text-xs text-gray-500">
                 {subTitle}
             </small>
