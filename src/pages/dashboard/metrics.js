@@ -57,9 +57,9 @@ const Metrics = ({ data }) => {
                     {/* {data.timers.map(time => {
                         {time.duration_units}
                     })} */}
-                    {state.guages.map((item, idx) => (
+                    {/* {state.guages.map((item, idx) => (
                         <p>{item.jvm.files.error}</p> 
-                    ))}
+                    ))} */}
                     <div className="mt-2 bg-gray-600 rounded-full">
                         {/* <div className={`${state.gauges.jvm.memory.total.used} w-9/12 bg-green-500 py-1 rounded-full`}></div> */}
                     </div>
