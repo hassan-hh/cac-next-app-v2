@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
@@ -31,8 +32,14 @@ export const getStaticProps = async () => {
 
 const Metrics = ({ data }) => {
     // const array = []
-    // console.log('metrics', data)
+    console.log('metrics', data)
     // console.log('metrics keys', data.keys(timers.duration_units))
+    const [state, setState] = useState(data)
+    console.log('state', state)
+
+
+
+
     return (
 
         <>
@@ -43,17 +50,18 @@ const Metrics = ({ data }) => {
                 :
                 <div className="flex flex-col">
                     
-                    {data.version}
+                    {state.version}
+                    {/* {state.counters.com.codahale.metrics.servlet.InstrumentedFilter.activeRequests.count} */}
                     {/* {data.keys(HikariPool_1.pool.Wait.duration_units)} */}
                     {/* <All data={data}/> */}
                     {/* {data.timers.map(time => {
                         {time.duration_units}
                     })} */}
-                    {/* {data.map(item => {
-                        {item.HikariPool_1.pool.Wait}
-                    })} */}
+                    {state.guages.map((item, idx) => (
+                        <p>{item.jvm.files.error}</p> 
+                    ))}
                     <div className="mt-2 bg-gray-600 rounded-full">
-                        <div className={`${data.counters} w-9/12 bg-green-500 py-1 rounded-full`}></div>
+                        {/* <div className={`${state.gauges.jvm.memory.total.used} w-9/12 bg-green-500 py-1 rounded-full`}></div> */}
                     </div>
                     <div className="mt-2 bg-gray-600 rounded-full">
                         <div className="w-9/12 bg-green-500 py-1 rounded-full"></div>

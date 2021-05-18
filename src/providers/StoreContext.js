@@ -1,10 +1,13 @@
 import { useState, useEffect, createContext } from 'react'
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
+
 export const StoreContext = createContext()
 
 export const StoreProvider = ({ children }) => {
 
-    //const [loggedIn, setLoggedIn] = useState(false)
+    const router = useRouter()
+    const [loggedIn, setLoggedIn] = useState(false)
     const [loadingSpinner, setLoadingSpinner] = useState(false)
     const [store, setStore] = useState({
         emailAddress: '',
@@ -33,11 +36,24 @@ export const StoreProvider = ({ children }) => {
             //loggedIn,
             sessionId
         })
-        //console.warn('storeContext', store)
-    }, [])
+        if (loggedIn) {
+            router.push('/dashboard')
+            //setLoadingSpinner(false)
+
+        } else {
+            router.push('/login')
+            //setLoadingSpinner(false)
+        }
+        // if(dashboard) {
+        //     setLoadingSpinner(false)
+        // }
+        // if (location.pathname == '/dashboard') {
+        //     setLoadingSpinner(false)
+        // }
+    }, [loggedIn])
 
     return (
-        <StoreContext.Provider value={{ loadingSpinner, setLoadingSpinner, store, setStore }}>
+        <StoreContext.Provider value={{ loggedIn, setLoggedIn, loadingSpinner, setLoadingSpinner, store, setStore }}>
             {children}
         </StoreContext.Provider>
     )

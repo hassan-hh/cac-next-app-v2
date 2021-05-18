@@ -3,15 +3,24 @@ import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
 import ClientConfig from '../../ClientConfig'
-import Modal from '../../Components/dashboard/Modal'
+import InstallationPropertiesModal from '../../Components/dashboard/InstallationPropertiesModal'
 import axios from 'axios'
 import { useRouter } from 'next/router';
+import LoadingSkeleton from '../../components/dashboard/LoadingSkeleton'
 
 export const getStaticProps = async () => {
-    const CatsUrl = ClientConfig.apiUrl
-    const res = await fetch(`${CatsUrl}/installation/properties`)
-    const data = await res.json()
- 
+        const CatsUrl = ClientConfig.apiUrl
+        const res = await fetch(`${CatsUrl}/installation/properties`)
+        const data = await res.json()
+    
+    // if(!data) {
+    //     return {
+    //         props: {
+    //             noData
+    //         },
+    //     }
+    // }
+
     return {
         props: {
             data
@@ -24,8 +33,8 @@ const InstallationProperties = ({ data }) => {
 
     console.log('fetched table data', data)
     const router = useRouter()
-    const [update, setUpdate] = useState(0)
     const [modal, setModal] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [itemDetail, setItemDetail] = useState({
         osName: '',
         filter: '',
@@ -36,13 +45,19 @@ const InstallationProperties = ({ data }) => {
     console.log('itemDetail', itemDetail)
 
     useEffect(() => {
+        if (!data) {
+            setLoading(true)
+        }
         const x = setTimeout(() => {
             if (itemDetail.success) {
                 setModal(false)
             }
+            if (data){
+                setLoading(false)
+            }
         }, 1500)
         return () => clearTimeout(x)
-    }, [itemDetail.success])
+    }, [itemDetail.success, data])
 
     const refreshData = () => {
         router.replace(router.asPath)
@@ -120,39 +135,53 @@ const InstallationProperties = ({ data }) => {
                         </thead>
                         <tbody  className="bg-white divide-y divide-gray-200 text-sm">
                             {data.map((item, idx) => (
-                                <tr
-                                    key={idx}
-                                    onClick={() => handleModal(item)}
-                                    className="hover:bg-gray-100 cursor-pointer"
-                                >
-                                    <td className="px-6 py-1">
-                                        <p>{item.osName}</p>
-                                    </td>
-                                    <td className="px-6 py-1">
-                                        <p>{item.filter}</p>
-                                    </td>
-                                    <td className="px-6 py-1">
-                                        <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">{item.key}</p>
-                                    </td>
-                                    <td className="px-6 py-1">
-                                        <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">{item.value}</p>
-                                    </td>
-                                </tr>
+                                <>
+                                    {   loading ? 
+                                        <LoadingSkeleton/>
+                                        :  
+                                        <tr
+                                            key={idx}
+                                            onClick={() => handleModal(item)}
+                                            className="hover:bg-gray-100 cursor-pointer"
+                                        >
+                                            <td className="px-6 py-1">
+                                                <p>
+                                                    {item.osName}
+                                                </p>
+                                            </td>
+                                            <td className="px-6 py-1">
+                                                <p>
+                                                    {item.filter}
+                                                </p>
+                                            </td>
+                                            <td className="px-6 py-1">
+                                                <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
+                                                    {item.key}
+                                                </p>
+                                            </td>
+                                            <td className="px-6 py-1">
+                                                <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
+                                                    {item.value}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    }
+                                </>
                             ))}
                         </tbody>
-                        {   !itemDetail ?
-                            null
-                            :
-                            <Modal
-                                itemDataProp={itemDetail}
-                                showModalProp={modal}
-                                closeModalProp={closeModal}
-                                handleOnChangeProp={handleOnChange}
-                                handleFormSubmitProp={handleFormSubmit}
-                                success={itemDetail.success}
-                            />
-                        }
                     </table>
+                    {   !itemDetail ?
+                        null
+                        :
+                        <InstallationPropertiesModal
+                            itemDataProp={itemDetail}
+                            showModalProp={modal}
+                            closeModalProp={closeModal}
+                            handleOnChangeProp={handleOnChange}
+                            handleFormSubmitProp={handleFormSubmit}
+                            success={itemDetail.success}
+                        />
+                    }
                 </div>
             }
         </>

@@ -1,22 +1,27 @@
-
-const Modal = ({ 
+const InstallaionPropertiesModal = ({ 
     itemDataProp, 
     showModalProp, 
     closeModalProp, 
     handleOnChangeProp, 
     handleFormSubmitProp, 
     success 
-    }) => {
+}) => {
 
     const { osName, filter, key, value } = itemDataProp
 
     return (
-        <div className={`${showModalProp ? 'bg-gray-900 opacity-100' : 'opacity-0 pointer-events-none' } transition-all ease-in-out duration-300 fixed flex justify-center items-center z-10 inset-0`} aria-labelledby="modal-title" role="dialog" aria-modal="true" id="iModal">
+        <div className={`${showModalProp ? 'bg-gray-900 bg-opacity-75 pointer-events-auto' : 'opacity-0 pointer-events-none' } h-screen transition-all ease-in-out duration-300 fixed flex justify-center items-center z-10 inset-0`} aria-labelledby="modal-title" role="dialog" aria-modal="true" id="iModal">
             <form
                 onSubmit={handleFormSubmitProp}
-                className="bg-white z-20 rounded-lg overflow-hidden shadow-xl mx-4 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                className="relative bg-white z-20 rounded-lg overflow-hidden shadow-xl mx-4 sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
             >
                 <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <img
+                        alt="close"
+                        className="w-4 absolute right-6 cursor-pointer"
+                        src="/close.svg"
+                        onClick={closeModalProp}
+                    />
                     <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
                         Edit Property
                     </h3>
@@ -99,7 +104,7 @@ const Modal = ({
                                 onChange={handleOnChangeProp}
                             />
                         </div>
-                        <div className={`${ success ? 'bg-green-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : null } opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
+                        <div className={`${ success ? 'bg-green-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : '' } opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
                             { success ? 
                                 <div className="h-full flex justify-evenly items-center">
                                     <img alt="check-mark" className="w-5" src="/check-mark.svg" />
@@ -108,7 +113,7 @@ const Modal = ({
                                 :
                                 <div className="h-full flex justify-evenly items-center">
                                     <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                                    <span className="pl-2 w-96 text-sm leading-snug">Installation property has not been saved.</span>
+                                    <span className="pl-2 w-96 text-sm leading-snug">Installation property has not been saved du to an error.</span>
                                 </div>
                             }
                         </div>
@@ -133,4 +138,4 @@ const Modal = ({
         </div>
     )
 }
-export default Modal
+export default InstallaionPropertiesModal

@@ -17,8 +17,7 @@
     "next": "10.0.9",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-loader-spinner": "^4.0.0"
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",

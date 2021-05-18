@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react'
+import LoadingSkeleton from '../LoadingSkeleton'
+import ItemLoadingSkeleton from '../ItemLoadingSkeleton'
 
 const DeactivatedAccounts = () => {
 
     const [deactivatedAccounts, setDeactivatedAccounts] = useState([])
-    console.log('deactivatedAccounts', deactivatedAccounts)
     const [update, setUpdate] = useState(0)
-    console.log('update', update)
+    const [reactivating, setReactivating] = useState(null)
     const [loading, setLoading] = useState(false)
-    console.log('loading', loading)
-     const [reactivating, setReactivating] = useState(null)
 
     useEffect(() => {
         DeactivatedAccountsApi()
+        const x = setTimeout(() => {
+            if (deactivatedAccounts) {
+                setLoading(false)
+            }
+        }, 1000)
+        return () => clearTimeout(x)
     }, [update])
 
     const DeactivatedAccountsApi = async () => {
@@ -23,20 +28,11 @@ const DeactivatedAccounts = () => {
             const convertedStr = stringifyObject.replace(/_/g,' ').toLowerCase()
             const newData = JSON.parse(convertedStr)
             setDeactivatedAccounts(newData)
-            setLoading(false)
-            console.log('res', res)
         }
         catch (err) {
             setLoading(false)
-            console.warn('New error', err)
         }
     }
-
-    // const handleRemoveItem = idx => {
-    //     const newAccount = [...deactivatedAccounts]
-    //     newAccount.splice(idx, 1)
-    //     setDeactivatedAccounts(newAccount)
-    // }
 
     const ReactivateAccountsApi = async (username, idx) => {
             setReactivating(idx)
@@ -46,79 +42,95 @@ const DeactivatedAccounts = () => {
             const res = await fetch(encodedUrl)
             setReactivating(null)
             setUpdate(update + 1)
-            console.log('res reactivate', res)
         }
         catch (err) {
             setReactivating(null)
-            console.warn('New error', err)
         }
+    }
+
+    const handleRemoveItem = idx => {
+        const newAccount = [...deactivatedAccounts]
+        newAccount.splice(idx, 1)
+        setDeactivatedAccounts(newAccount)
     }
     
     const handleReactivate = (account, idx) => {
-        //handleRemoveItem(idx)
         ReactivateAccountsApi(account.username, idx)
+        handleRemoveItem(idx)
     }
 
     return (
         <div className="h-screen max-w-full overflow-auto">
             <table className="min-w-full divide-y divide-gray-200 shadow-sm">
                 <thead className="bg-gray-50">
-                    <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                    <tr className="text-left text-xs text-gray-500 tracking-wider">
+                        <th scope="col" className="px-6 py-3 w-80 font-medium">
                             Username
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                        <th scope="col" className="px-6 py-3 w-80 font-medium">
                             Email
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                        <th scope="col" className="px-6 py-3 w-80 font-medium">
                             Name
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                        <th scope="col" className="px-6 py-3 w-80 font-medium">
                             Type
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                        <th scope="col" className="px-6 py-3 w-80 font-medium">
                             Phone
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                        <th scope="col" className="px-6 py-3 w-80 font-medium">
 
                         </th>
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {deactivatedAccounts.map((account, idx) => (
-                        <tr key={idx} className={`${deactivatedAccounts.length === 0 ? 'h-screen' : ''} text-sm hover:bg-gray-100`}>
-                            <td className="px-6 py-1 w-80 break-all">
-                                <p>{account.username}</p>
-                            </td>
-                            <td className="px-6 py-1 w-80 break-all">
-                                <p>{account.email}</p>
-                            </td>
-                            <td className="px-6 py-1 w-80 break-all">
-                                <p>{account.name}</p>
-                            </td>
-                            <td className="px-6 py-1 w-80 break-all">
-                                <p>{account.type}</p>
-                            </td>
-                            <td className="px-6 py-1 w-80 break-all">
-                                <p>{account.phoneNumber}</p>
-                            </td>
-                            <td className="px-6 py-1">
-                                <button
-                                    type="submit"
-                                    className={`${ reactivating !== idx ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-500 px-4'} focus:outline-none text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-xs font-medium`}
-                                    onClick={() => handleReactivate(account, idx)}
-                                    >
-                                    {   reactivating !== idx ? 
-                                        <span>Reactivate</span>
+                    {   deactivatedAccounts.map((account, idx) => (
+                        <>
+                            {   loading && update === 0 ?
+                                <LoadingSkeleton />
+                                :
+                                <tr key={idx} className={`hover:bg-gray-100 text-sm text-left`}>
+                                    {   reactivating !== idx ?
+                                        <>
+                                            <td className="px-6 py-1 w-80 break-all">
+                                                <p>{account.username}</p>
+                                            </td>
+                                            <td className="px-6 py-1 w-80 break-all">
+                                                <p>{account.email}</p>
+                                            </td>
+                                            <td className="px-6 py-1 w-80 break-all">
+                                                <p>{account.name}</p>
+                                            </td>
+                                            <td className="px-6 py-1 w-80 break-all capitalize">
+                                                <p>{account.type}</p>
+                                            </td>
+                                            <td className="px-6 py-1 w-80 break-all">
+                                                <p>{account.phoneNumber}</p>
+                                            </td>
+                                        </>
                                         :
-                                        <div className="flex justify-center items-center">
-                                            <img alt="loading" className="w-4 animate-spin text-white" src="/loading-w.svg" />
-                                            <span className="pl-1">Processing</span>
-                                        </div>
+                                        <ItemLoadingSkeleton />
                                     }
-                                </button>
-                            </td>
-                        </tr>
+                                    <td className="px-6 py-1 w-80">
+                                        <button
+                                            type="submit"
+                                            className={`${ reactivating !== idx ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-500 px-4'} ml-auto block focus:outline-none text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-xs font-medium`}
+                                            onClick={() => handleReactivate(account, idx)}
+                                            >
+                                            {   reactivating !== idx ? 
+                                                <span>Reactivate</span>
+                                                :
+                                                <div className="flex justify-center items-center">
+                                                    <img alt="loading" className="w-4 animate-spin text-white mr-1" src="/loading-w.svg" />
+                                                    <span>Processing</span>
+                                                </div>
+                                            }
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </>  
                     ))}
                 </tbody>
             </table>

@@ -3,12 +3,12 @@ import Cookies, { set } from 'js-cookie'
 import { StoreContext } from '../providers/StoreContext'
 import axios from 'axios'
 import styles from '../styles/Login.module.css'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 const LoginFull = () => {
 
-    const router = useRouter()
-    const { setLoadingSpinner, store, setStore } = useContext(StoreContext)
+    // const router = useRouter()
+    const { loggedIn, setLoggedIn, setLoadingSpinner, store, setStore } = useContext(StoreContext)
     //const [openModal, setOpenModal] = useState(false)
     const [login, setLogin] = useState({
         username: '', //any of these objects if mathed with object destructure below line 124 then it will update the same object or it will create another object from line 124
@@ -109,7 +109,7 @@ const LoginFull = () => {
                 console.log('LoginStore', store)
                 setLogin({
                     ...login,
-                    loading: false,
+                    loading: false,// loaded
                 })
             })
             .catch(err => {
@@ -135,9 +135,8 @@ const LoginFull = () => {
     const { username, password } = login
     
     if (store.sessionId) {
-        router.push('/dashboard')
-        //setLoggedIn(true)
-        setLoadingSpinner(true)
+        setLoggedIn(true)
+        setLoadingSpinner(false)
     }
 
     return (
@@ -197,42 +196,32 @@ const LoginFull = () => {
                 </div>
                 {/* //if username and password incorrect, show this same message. because username must be found/avilable before the password is entered
                 //this is loading state which happnes when we type in the login inpput and useEffect run the api as we type - true as we type false as we stop */}
-            
-                {/* {   loading  ? 
-                    <p className={`bg-blue-100 rounded-md flex items-center mt-2 p-2 h-16 transition-all duration-300 ease-in-out`}>
-                        Checking username
-                    </p>
-                    : 
-                    <p className={`${ login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 rounded-md mt-2 flex items-center opacity-100' : '' } h-0 opacity-0 px-2 transition-all duration-300 ease-in-out`}>
-                        Please check your username as we are unable to find an account with the entered details.
-                    </p>
-                } */}
-                <p className={`${ loading && login.password === '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 mt-2 opacity-100' : null } opacity-0 rounded-md h-0 px-2 transition-all duration-300 ease-in-out`}>
+                <div className={`${ loading && login.password === '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 mt-2 opacity-100' : '' }  flex justify-evenly items-center opacity-0 rounded-md h-0 px-2 transition-all duration-300 ease-in-out`}>
                     {   loading && login.password === '' ?
-                        <div className="h-full flex justify-evenly items-center">
-                            <img alt="loading" className="w-5 animate-spin" src="/loading.svg" />
-                            <span className="pl-2 w-96 text-sm leading-snug">Checking username</span>
-                        </div>
+                            <>
+                                <img alt="loading" className="w-5 animate-spin" src="/loading.svg" />
+                                <span className="pl-2 w-96 text-sm leading-snug">Checking username</span>
+                            </>
                         :
                         login.username !== '' && matchUser.length === 0 ?
-                        <div className="h-full flex justify-evenly items-center">
-                            <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                            <span className="pl-2 w-96 text-sm leading-snug">Please check your username as we are unable to find an account with the entered details.</span>
-                        </div>
+                            <>
+                                <img alt="x-mark" className="w-5" src="/x-mark.svg" />
+                                <span className="pl-2 w-96 text-sm leading-snug">Please check your username as we are unable to find an account with the entered details.</span>
+                            </>
                         :
                         null
                     }
-                </p>
-                <p className={`${ matchUser.length !== 0 && login.password !== '' && login.error === 401 ? 'bg-red-100 h-20 mt-2 opacity-100' : null } opacity-0 rounded-md px-2 h-0 transition-all duration-300 ease-in-out`}>
+                </div>
+                <div className={`${ matchUser.length !== 0 && login.password !== '' && login.error === 401 ? 'bg-red-100 h-20 mt-2 opacity-100' : '' } flex justify-evenly items-center opacity-0 rounded-md px-2 h-0 transition-all duration-300 ease-in-out`}>
                     {   matchUser.length !== 0 && login.password !== '' && login.error === 401 ?
-                        <div className="h-full flex justify-evenly items-center">
+                        <>
                             <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                            <p className="pl-2 w-96 text-sm leading-snug">You have entered an incorrect password. Please contact your system administrator or click on forgot password link to reset your password.</p>
-                        </div>
+                            <span className="pl-2 w-96 text-sm leading-snug">You have entered an incorrect password. Please contact your system administrator or click on forgot password link to reset your password.</span>
+                        </>
                         :
                         null
                     }
-                </p>
+                </div>
                 <label
                     htmlFor="password"
                     className="block mt-3 text-sm font-semibold text-white uppercase"

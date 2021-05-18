@@ -54,7 +54,7 @@ const Profile = () => {
                                     disabled
                                     id="userName"
                                     name="userName"
-                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-100 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner opacity-70"
+                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-10 focus:outline-none focus:bg-gray-300 focus:shadow-inner opacity-70 cursor-not-allowed"
                                     type="text"
                                     // value={userName}
                                     value={idLogon}
@@ -72,7 +72,7 @@ const Profile = () => {
                                 <input
                                     id="fullName"
                                     name="fullName"
-                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                     type="text"
                                     placeholder="Enter your name"
                                     //value={fullName}
@@ -91,7 +91,7 @@ const Profile = () => {
                                 <input
                                     id="email"
                                     name="email"
-                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                     type="email"
                                     placeholder="Enter your email"
                                     //value={email}
@@ -112,7 +112,7 @@ const Profile = () => {
                                     disabled
                                     id="accountType"
                                     name="accountType"
-                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-100 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner opacity-70"
+                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-100 focus:outline-none focus:bg-gray-300 focus:shadow-inner opacity-70 cursor-not-allowed"
                                     type="text"
                                     // value={accountType}
                                     value={idLogonType}
@@ -130,7 +130,7 @@ const Profile = () => {
                                 <input
                                     id="phoneNumber"
                                     name="phoneNumber"
-                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                    className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                     type="number"
                                     placeholder="020 5555 5555"
                                     value={phoneNumber}
