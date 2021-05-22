@@ -48,15 +48,15 @@ const DeactivatedAccounts = () => {
         }
     }
 
-    const handleRemoveItem = idx => {
-        const newAccount = [...deactivatedAccounts]
-        newAccount.splice(idx, 1)
-        setDeactivatedAccounts(newAccount)
-    }
+    // const handleRemoveItem = idx => {
+    //     const newAccount = [...deactivatedAccounts]
+    //     newAccount.splice(idx, 1)
+    //     setDeactivatedAccounts(newAccount)
+    // }
     
     const handleReactivate = (account, idx) => {
         ReactivateAccountsApi(account.username, idx)
-        handleRemoveItem(idx)
+        //handleRemoveItem(idx) //causes a bug at the bottom of the list, reactivating an item 
     }
 
     return (

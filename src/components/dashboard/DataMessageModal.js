@@ -415,8 +415,8 @@ const DataMessageModal = ({
                 </div>
                 <div className="bg-gray-100 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
-                        onClick={() => closeModalProp()}
                         type="button"
+                        onClick={() => closeModalProp()}
                         className="transition-all ease-in-out duration-300 w-full inline-flex justify-center uppercase rounded-md shadow-sm px-4 py-2 bg-red-600 text-sm font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                     >
                         Close

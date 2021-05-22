@@ -92,7 +92,7 @@ const Nav = ({loggedIn}) => {
                                             <Link href="/dashboard">
                                                 <a  className="bg-gray-900 text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
                                             </Link>
-                                            <Link href="/file-browser">
+                                            <Link href="/dashboard/file-browser">
                                                 <a className="text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium">File Browser</a>
                                             </Link>
                                             <div className="relative inline-block text-left">
@@ -177,15 +177,22 @@ const Nav = ({loggedIn}) => {
                                         aria-orientation="vertical" 
                                         aria-labelledby="user-menu"
                                     >
-                                        <Link href="/profile">
+                                        <Link href="/dashboard/profile">
                                             <a 
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
                                                 role="menuitem"
                                             >
-                                                    Your Profile
+                                                Your Profile
                                             </a>
                                         </Link>
-                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
+                                        <Link href="/dashboard/client">
+                                            <a 
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                role="menuitem"
+                                            >
+                                                Client Download
+                                            </a>
+                                        </Link>
                                         <form method="POST" action="#" role="none">
                                             <button type="submit" onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
                                                 Sign out

@@ -7,12 +7,16 @@ export const DrawerProvider = ({ children }) => {
     const [systemDate, setSystemDate] = useState({})
     const [regions, setRegions] = useState([])
     const [accountEntity, setAccountEntity] = useState([])
+    const [bookmarks, setBookmarks] = useState([])
+    const [savedSearches, setSavedSearches] = useState([])
     const [loading, setLoading] = useState(false)
 
      useEffect(() => {
         DateApi()
         RegionsApi()
         AccountApi()
+        BookmarksApi()
+        SavedSearchesApi()
      }, [])
     
     const DateApi = async () => {
@@ -52,9 +56,33 @@ export const DrawerProvider = ({ children }) => {
             setLoading(false)
         }
     }
+    const BookmarksApi = async () => {
+            setLoading(true)
+        try {
+            const res = await fetch(`/api/bookmark`)
+            const bookmark = await res.json()
+            setLoading(false)
+            setBookmarks(bookmark)
+        }
+        catch (err) {
+            setLoading(false)
+        }
+    }
+    const SavedSearchesApi = async () => {
+            setLoading(true)
+        try {
+            const res = await fetch(`/api/events/saved`)
+            const search = await res.json()
+            setLoading(false)
+            setSavedSearches(search)
+        }
+        catch (err) {
+            setLoading(false)
+        }
+    }
 
     return ( 
-        <DrawerContext.Provider value={{systemDate, accountEntity, regions, loading}}>
+        <DrawerContext.Provider value={{systemDate, accountEntity, regions, bookmarks, savedSearches, loading}}>
             {children}  
         </DrawerContext.Provider>
 

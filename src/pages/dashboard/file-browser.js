@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import DashboardNav from '../components/dashboard/DashboardNav'
-import Header from '../components/dashboard/Header'
-import Meta from '../components/seo/Meta'
+// import DashboardNav from '../../components/dashboard/DashboardNav'
+import Header from '../../components/dashboard/Header'
+import Meta from '../../components/seo/Meta'
 import PropTypes from 'prop-types';
 
 

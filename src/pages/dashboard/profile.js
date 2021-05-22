@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
-import { StoreContext } from '../providers/StoreContext'
-import Header from '../components/dashboard/Header'
-import Meta from '../components/seo/Meta'
+import { StoreContext } from '../.././providers/StoreContext'
+import Header from '../../components/dashboard/Header'
+import Meta from '../../components/seo/Meta'
 import Link from 'next/link'
 
 const Profile = () => {

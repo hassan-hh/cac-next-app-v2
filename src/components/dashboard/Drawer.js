@@ -5,9 +5,9 @@ import LoadingSpinner from './LoadingSpinner'
 
 const Drawer = () => {
 
-    const { systemDate, accountEntity, regions, loading } = useContext(DrawerContext)
-    const [bookmarks, setBookmarks] = useState(false)
-    const [savedSearch, setSavedSearch] = useState(false)
+    const { systemDate, accountEntity, regions, bookmarks, savedSearches, loading } = useContext(DrawerContext)
+    const [openBookmarks, setOpenBookmarks] = useState(false)
+    const [openSavedSearch, setOpenSavedSearch] = useState(false)
     const displayText = 'System Date:' 
     const zeroPad = (number) => number.toString().length === 1 ? `0${number}` : number
     const date = new Date(systemDate)
@@ -15,10 +15,13 @@ const Drawer = () => {
     const month = date.toLocaleString('default', { month: 'short' });
     const formatedDate = `${displayText} ${day} ${month} ${date.getFullYear()}`
 
-    console.log('drawer-date', systemDate)
-    console.log('drawer-regions', regions)
-    console.log('drawer-account', accountEntity)
-    console.log('drawer-loading', loading)
+    // console.log('drawer-date', systemDate)
+    // console.log('drawer-regions', regions)
+    // console.log('drawer-account', accountEntity)
+    // console.log('drawer-loading', loading)
+
+    console.log('bookmakrs', bookmarks)
+    console.log('savedSearches', savedSearches)
 
     return (
         <>
@@ -63,21 +66,23 @@ const Drawer = () => {
                             </select>
                         </div>
                     </div>
-                    <div onClick={() => setBookmarks(!bookmarks)} className={`bg-white hover:bg-gray-200 transition-all ease-in-out duration-300 p-6 w-full h-full shadow-sm rounded-md my-2`} aria-controls="bookmarks" aria-expanded={bookmarks}>
+                    <div onClick={() => setOpenBookmarks(!openBookmarks)} className={`bg-white hover:bg-gray-200 transition-all ease-in-out duration-300 p-6 w-full h-full shadow-sm rounded-md my-2`} aria-controls="bookmarks" aria-expanded={openBookmarks}>
                         <div className={`flex items-center justify-between flex-row`}>
                             <p>Bookmarks</p>
                             <img alt="Bookmarks" className="w-3" src="/plus.svg" />
                         </div>
-                        <div className={`${ bookmarks ? `h-60` : `h-0`} transition-all ease-in-out duration-300`} id="bookmarks">
-                            
+                        <div className={`${ openBookmarks ? `h-60` : `h-0`} transition-all ease-in-out duration-300`} id="bookmarks">
+                        {/* {bookmarks.map(bookmark => (
+                                {bookmark}
+                            ))} */}
                         </div>
                     </div>
-                    <div onClick={() => setSavedSearch(!savedSearch)} className={`bg-white hover:bg-gray-200 transition-all ease-in-out duration-300 p-6 w-full h-full shadow-sm rounded-md my-2`} aria-controls="saved-search" aria-expanded={savedSearch}>
+                    <div onClick={() => setOpenSavedSearch(!openSavedSearch)} className={`bg-white hover:bg-gray-200 transition-all ease-in-out duration-300 p-6 w-full h-full shadow-sm rounded-md my-2`} aria-controls="saved-search" aria-expanded={openSavedSearch}>
                         <div className={`flex items-center justify-between flex-row`}>
                             <p>Saved Search</p>
                             <img alt="Saved Search" className="w-3" src="/plus.svg" />  
                         </div>
-                        <div className={`${ savedSearch ? `h-60` : `h-0`} transition-all ease-in-out duration-300`} id="saved-search">
+                        <div className={`${ openSavedSearch ? `h-60` : `h-0`} transition-all ease-in-out duration-300`} id="saved-search">
                             
                         </div>
                     </div>

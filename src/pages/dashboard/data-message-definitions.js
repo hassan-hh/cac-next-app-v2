@@ -133,7 +133,8 @@ const DataMessageDefinitions = ({ data }) => {
             <Meta title="Data Message Definition Administation" />
             <Header title="Data Message Definition Administation" subTitle="" />
             <div className="flex">
-                <button 
+                <button
+                    type="button"
                     onClick={() => refreshData()}
                     className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none">
                     {   !loading ?
@@ -149,7 +150,8 @@ const DataMessageDefinitions = ({ data }) => {
                     }
                 </button>
                 <button
-                    onClick={() => { setModal(true); setEnableField(true); clearInputs(); }}
+                    type="button"
+                    onClick={() => { setModal(true); setEnableField(true); clearInputs();}}
                     className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-24 transition-all ease-in-out duration-300 uppercase shadow-sm py-2 rounded-md text-sm font-medium focus:outline-none">
                         <img alt="plus" className="w-3 mr-1" src="/plus-heavy-white.svg" /> 
                         Add

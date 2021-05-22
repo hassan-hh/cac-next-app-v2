@@ -32,7 +32,7 @@ const AccountRequest = () => {
     return (
         <>
             <button
-                type="submit"
+                type="button"
                 className={`bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none`}
                 onClick={() => setUpdate(update + 1)}
             >
