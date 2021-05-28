@@ -113,7 +113,7 @@ const InstallaionPropertiesModal = ({
                                 :
                                 <div className="h-full flex justify-evenly items-center">
                                     <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                                    <span className="pl-2 w-96 text-sm leading-snug">Installation property has not been saved du to an error.</span>
+                                    <span className="pl-2 w-96 text-sm leading-snug">Installation property has not been saved due to an error.</span>
                                 </div>
                             }
                         </div>

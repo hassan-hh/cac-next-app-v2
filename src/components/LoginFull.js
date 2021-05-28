@@ -84,7 +84,7 @@ const LoginFull = () => {
                 //     })
                 // }
 
-                //console.warn('res', res)
+                console.warn('res', res)
                 //console.warn('resData', res.response.data)
 
                 const {emailAddress, idLogon, idLogonType, name, idAccount, sessionId} = res.data

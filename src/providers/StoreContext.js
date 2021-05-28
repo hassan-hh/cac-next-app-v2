@@ -16,6 +16,7 @@ export const StoreProvider = ({ children }) => {
         name: '',
         idAccount: '',
         sessionId: '',
+        phoneNumber: '', //phone number used only in profile component/page. Name and value not included in the api reponse from login page, we are going to store it in the local storage instead
         //loggedIn: false
     })
     useEffect(() => {
@@ -26,6 +27,7 @@ export const StoreProvider = ({ children }) => {
         const idAccount = localStorage.getItem('idAccount')
         //const loggedIn = localStorage.getItem('loggedIn')
         const sessionId = Cookies.get('sessionId')
+        const phoneNumber = localStorage.getItem('phoneNumber', phoneNumber) //here we set the phone number to be stored in the localStorage
         setStore({
             ...store,
             emailAddress,
@@ -34,7 +36,8 @@ export const StoreProvider = ({ children }) => {
             name,
             idAccount,
             //loggedIn,
-            sessionId
+            sessionId,
+            phoneNumber
         })
         if (loggedIn) {
             router.push('/dashboard')
