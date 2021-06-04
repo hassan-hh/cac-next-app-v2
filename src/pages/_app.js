@@ -4,7 +4,7 @@ import '../styles/globals.css'
 import '../styles/index.css'
 import 'tailwindcss/tailwind.css'
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
 
   return (
     <StoreProvider>
@@ -14,4 +14,4 @@ function MyApp({ Component, pageProps }) {
     </StoreProvider>
   )
 }
-export default MyApp
+export default App

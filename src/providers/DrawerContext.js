@@ -7,7 +7,7 @@ export const DrawerProvider = ({ children }) => {
     const [systemDate, setSystemDate] = useState({})
     const [regions, setRegions] = useState([])
     const [accountEntity, setAccountEntity] = useState([])
-    const [bookmarks, setBookmarks] = useState([])
+    const [bookmarks, setBookmarks] = useState({})
     const [savedSearches, setSavedSearches] = useState([])
     const [loading, setLoading] = useState(false)
 

@@ -3,12 +3,12 @@ import Cookies, { set } from 'js-cookie'
 import { StoreContext } from '../providers/StoreContext'
 import axios from 'axios'
 import styles from '../styles/Login.module.css'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 const LoginFull = () => {
 
-    // const router = useRouter()
-    const { loggedIn, setLoggedIn, setLoadingSpinner, store, setStore } = useContext(StoreContext)
+    const router = useRouter()
+    const { loggedIn, setLoggedIn, setLoadingScreen, store, setStore } = useContext(StoreContext)
     //const [openModal, setOpenModal] = useState(false)
     const [login, setLogin] = useState({
         username: '', //any of these objects if mathed with object destructure below line 124 then it will update the same object or it will create another object from line 124
@@ -27,18 +27,18 @@ const LoginFull = () => {
     const matchUserApi = async () => {
             setLoading(true)
         try {
-            //setLogin({ ...login, loading: true })
             const res = await fetch(`/api/user/match/${login.username}/account`) //this api used for fetching user account before login
             const account = await res.json()
             setLoading(false)
-            //setLogin({ ...login, loading: false })
-            setMatchUser(account)
+            const stringifyObjects = JSON.stringify(account)
+            const convertedStrs = stringifyObjects.toLowerCase()
+            const lowerCaseData = JSON.parse(convertedStrs)
+            setMatchUser(lowerCaseData)
         }
         catch (err) {
             setLoading(false)
             console.warn('New error', err)
         }
-        
     }
     useEffect(() => {
         if (login.username !== '') {
@@ -61,12 +61,13 @@ const LoginFull = () => {
         //     }
         //  }, 2000)
         // return () => clearTimeout(id)
+        // if (loggedIn == false && router.pathname === '/login') { //after login out to login url then set loading screen false, not on dashboad as we don't know what page the user will sign out from 
+        //     setLoadingScreen(false)
+        // }
     }, [login.username, matchUser.length, login.password])
 
     const handleFormSubmit = e => {
         e.preventDefault()
-        // setSelected(selected)
-        // console.log('Submitted', selected)
         setLogin({ ...login, loading: true })
         // HOW IT WORKS 
         //if username with single accountType like catsupp can login with or without selecting the account, username with mutliple accounts need to select an account type to login with or error
@@ -83,18 +84,16 @@ const LoginFull = () => {
                 //         error: res.response.data,
                 //     })
                 // }
-
                 console.warn('res', res)
-                //console.warn('resData', res.response.data)
 
-                const {emailAddress, idLogon, idLogonType, name, idAccount, sessionId} = res.data
+                const { emailAddress, idLogon, idLogonType, name, idAccount, sessionId } = res.data
                 localStorage.setItem('emailAddress', emailAddress)
                 localStorage.setItem('idLogon', idLogon)
                 localStorage.setItem('idLogonType', idLogonType)
                 localStorage.setItem('name', name)
                 localStorage.setItem('idAccount', idAccount)
                 //localStorage.setItem('loggedIn', true)
-                Cookies.set('sessionId', sessionId, { expires: 60 });
+                Cookies.set('sessionId', sessionId)
 
                 setStore({
                     ...store,
@@ -131,12 +130,12 @@ const LoginFull = () => {
     const handleSelected = e => {
         setSelected({ [e.target.name]: e.target.value })
     }
-
     const { username, password } = login
-    
-    if (store.sessionId) {
+
+    if (store.sessionId) { //after authenticated redirect me to dashobard 
+        router.push('/dashboard')
         setLoggedIn(true)
-        setLoadingSpinner(false)
+        setLoadingScreen(true)
     }
 
     return (
@@ -162,32 +161,31 @@ const LoginFull = () => {
                 <div className={`${ matchUser.length > 1 ? 'h-96 overflow-auto' : '' || matchUser.length === 1 ? 'h-44 overflow-auto' : '' } relative rounded-md w-full h-0 transition-all duration-300 ease-in-out`}>
                     {matchUser.map(user => {
                         return (
-                            <div className={`${styles.customRadio} rounded-md text-sm p-3 mt-2 text-gray-600 bg-white`} key={user.idAccount}>
+                            <div className={`${styles.customRadio} rounded-md text-sm p-3 mt-2 text-gray-600 bg-white capitalize`} key={user.idAccount}>
                                 <input
                                     type="radio"
                                     name="idLogon"
-                                    id={user.idAccount}
-                                    value={user.idLogon}
+                                    id={user.idaccount}
+                                    value={user.idlogon}
                                     onChange={handleSelected}
                                     required
                                 />
                                 <label
-                                    id={user.idAccount}
-                                    htmlFor={user.idAccount}
+                                    id={user.idaccount}
+                                    htmlFor={user.idaccount}
                                 >
-                                    <h1 className="text-xl capitalize">{user.name} {user.idLogonType}</h1>
+                                    <h1 className="text-xl">{user.name} {user.idlogontype}</h1>
                                     <p>Avilable entities:</p>
-                                    {/* user.entities.filter(e => e.id !== null) */}
                                     {user.entities.map(entity => {
+                                        //user.entities.filter(e => e.id !== null) 
                                         return (
                                             <div key={entity.id}>
                                                 <p>{entity.name}</p>
                                             </div>
                                         )
                                     })}
-                                    <p>Last login: {user.lastSuccessfulLogin}</p>
-                                    {/* <p>{account.name}</p> */}
-                                    <p>Failed login attempts: {user.failedLoginAttempts}</p>
+                                    <p>Last login: {user.lastsuccessfullogin}</p>
+                                    <p>Failed login attempts: {user.failedloginattempts}</p>
                                     <small ><b>Please contact your System Administrator if this is incorrect.</b></small>
                                 </label>
                             </div>

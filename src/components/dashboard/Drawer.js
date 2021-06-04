@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { DrawerContext } from '../../providers/DrawerContext'
 import ErrorLoadingData from '../ErrorLoadingData'
-import LoadingSpinner from './LoadingSpinner'
+import LoadingScreen from './LoadingScreen'
 
 const Drawer = () => {
 
@@ -20,13 +20,13 @@ const Drawer = () => {
     // console.log('drawer-account', accountEntity)
     // console.log('drawer-loading', loading)
 
-    console.log('bookmakrs', bookmarks)
+    console.log('bookmarks here', bookmarks.bookmark)
     console.log('savedSearches', savedSearches)
 
     return (
         <>
             {/* {   loading ?
-                <LoadingSpinner />
+                <LoadingScreen />
                 : */}
                 <div style={{width: '340px'}} className="mx-5">
                     <p className="text-center py-5" key="date">{systemDate && formatedDate}</p>
@@ -72,9 +72,13 @@ const Drawer = () => {
                             <img alt="Bookmarks" className="w-3" src="/plus.svg" />
                         </div>
                         <div className={`${ openBookmarks ? `h-60` : `h-0`} transition-all ease-in-out duration-300`} id="bookmarks">
-                        {/* {bookmarks.map(bookmark => (
-                                {bookmark}
+                            {/* {bookmarks.bookmark.map(item => (
+                                <p>{item.name}</p>
+                            ))}
+                            {bookmarks.folder.map(item => (
+                                <p>{item.name}</p>
                             ))} */}
+                            <p>{bookmarks.name}</p>
                         </div>
                     </div>
                     <div onClick={() => setOpenSavedSearch(!openSavedSearch)} className={`bg-white hover:bg-gray-200 transition-all ease-in-out duration-300 p-6 w-full h-full shadow-sm rounded-md my-2`} aria-controls="saved-search" aria-expanded={openSavedSearch}>
@@ -83,7 +87,9 @@ const Drawer = () => {
                             <img alt="Saved Search" className="w-3" src="/plus.svg" />  
                         </div>
                         <div className={`${ openSavedSearch ? `h-60` : `h-0`} transition-all ease-in-out duration-300`} id="saved-search">
-                            
+                            {savedSearches.map(search => (
+                                <p>{search.name}</p>
+                            ))}
                         </div>
                     </div>
                     {/* </div> */}
