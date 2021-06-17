@@ -8,7 +8,7 @@ const Nav = ({loggedIn}) => {
 
     const router = useRouter()
     const container = useRef(null)
-    const { setLoggedIn, setLoadingScreen, store, setStore }   = useContext(StoreContext)
+    const { setLoggedIn, setLoadingScreen, profileImage, store, setStore }   = useContext(StoreContext)
     const [mobileMenu, setMobileMenu] = useState(false)
     const [userMenu, setUserMenu] = useState(false)
     const [dropDownMenu, setDropDownMenu] = useState(false)
@@ -90,15 +90,10 @@ const Nav = ({loggedIn}) => {
                             <h1 className="text-white text-3xl font-semibold ml-2 sm:-ml-2">CATS</h1>
                             :
                             <>
-                                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                                    <button onClick={() => setMobileMenu(!mobileMenu)} type="button" className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded={mobileMenu}>
+                                <div className="absolute flex items-center justify-center sm:hidden w-full">
+                                    <button onClick={() => setMobileMenu(!mobileMenu)} type="button" className="inline-flex items-center justify-center focus:outline-none p-2" aria-controls="mobile-menu" aria-expanded={mobileMenu}>
                                         <span className="sr-only">Open main menu</span>
-                                        <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                                        </svg>
-                                        <svg className="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
+                                        <img alt="mobile icon" className="block" src="/mobileHamberg.svg" />
                                     </button>
                                 </div>
                                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
@@ -170,11 +165,11 @@ const Nav = ({loggedIn}) => {
                                 </div>
                                 <div className="ml-3 relative">
                                     <div>
-                                        <button onClick={() => setUserMenu(!userMenu)} type="button" className={`${userMenu ? 'bg-gray-900' : ''} transition-all ease-in-out duration-300 hover:bg-gray-900 hover:text-white py-4 px-2 w-44 flex items-center justify-between flex-row text-xs focus:outline-none`} id="user-menu" aria-expanded={userMenu} aria-haspopup="true">
+                                        <button onClick={() => setUserMenu(!userMenu)} type="button" className={`${userMenu ? 'sm:bg-gray-900' : ''} transition-all ease-in-out duration-300 sm:hover:bg-gray-900 hover:text-white py-4 px-2 w-full sm:w-44 flex items-center justify-between flex-row text-xs focus:outline-none border-0`} id="user-menu" aria-expanded={userMenu} aria-haspopup="true">
                                             <span className="sr-only">Open user menu</span>
-                                            <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                                            <p className="text-white uppercase text-left w-24">Welcome, Cats Support</p>
-                                            <svg className="-ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" aria-hidden="true">
+                                            <img alt="User Photo" className="w-8 h-auto" src={`${profileImage || '/user.svg'}`} />
+                                            <p className="text-white uppercase text-left w-24 hidden sm:block">Welcome, {store.name}</p>
+                                            <svg className="-ml-1 h-5 w-5 hidden sm:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" aria-hidden="true">
                                                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                                             </svg>
                                         </button>
@@ -186,6 +181,7 @@ const Nav = ({loggedIn}) => {
                                         aria-orientation="vertical" 
                                         aria-labelledby="user-menu"
                                     >
+                                        {/* <p className="px-4 py-2 text-gray-700 uppercase text-xs text-left block sm:hidden">Welcome, <span className="capitalize">{store.name}</span></p> */}
                                         <Link href="/dashboard/profile">
                                             <a 
                                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
@@ -214,12 +210,67 @@ const Nav = ({loggedIn}) => {
                         </div>
                 </div>
                 { loggedIn ?
-                    <div className={`${mobileMenu ? 'h-48' : 'h-0'} transition-all ease-in-out duration-300 sm:hidden`} id="mobile-menu">
+                    <div className={`${mobileMenu && dropDownMenu ? 'h-auto' : mobileMenu ? 'h-36' : ''} h-0 transition-all ease-in-out duration-300 block sm:hidden`} id="mobile-menu">
                         <div className="px-2 pt-2 pb-3 space-y-1">
-                            <a href="#" className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
-                            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
-                            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-                            <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+                            <Link href="/dashboard">
+                                <a className="bg-gray-900 text-white block transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+                            </Link>
+                            <Link href="/dashboard/file-browser">
+                                <a className="hover:bg-gray-900 text-white block transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium">File Browser</a>
+                            </Link>
+                            <div className="relative">
+                                <button onClick={() => setDropDownMenu(!dropDownMenu)} type="button" className={`${dropDownMenu ? 'bg-gray-900' : ''} block w-full text-left transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-900 focus:outline-none`} id="drop-menu" aria-expanded={dropDownMenu} aria-haspopup="true">
+                                    Admin
+                                    <svg className="-mr-1 ml-2 h-5 w-5 absolute left-14 top-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#fff" aria-hidden="true">
+                                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div className={`${dropDownMenu ? 'h-56 z-40' : 'h-0 opacity-0'}  text-white text-sm transition-all ease-in-out duration-300 w-full focus:outline-none z-0`}
+                                    role="menu"
+                                    aria-orientation="vertical"
+                                    aria-labelledby="drop-menu"
+                                >
+                                    <div className="py-2" role="none">
+                                        <Link href="/dashboard/account-management">
+                                            <a className="block px-4 py-2" 
+                                                role="menuitem">
+                                                Account Management
+                                            </a>
+                                        </Link>
+                                        <Link href="/dashboard/installation-properties">
+                                            <a className="block px-4 py-2" 
+                                                role="menuitem">
+                                                Installation Properties
+                                            </a>
+                                        </Link>
+                                        <Link href="/dashboard/metrics">
+                                            <a className="block px-4 py-2" 
+                                                role="menuitem">
+                                                Metrics
+                                            </a>
+                                        </Link>
+                                        <Link href="/dashboard/rule-sets">
+                                            <a className="block px-4 py-2" 
+                                                role="menuitem">
+                                                Rule Sets
+                                            </a>
+                                        </Link>
+                                        <Link href="/dashboard/data-message-definitions">
+                                            <a className="block px-4 py-2" 
+                                                role="menuitem">
+                                                Data Message Definitions
+                                            </a>
+                                        </Link>
+                                        <Link href="/dashboard/support">
+                                            <a 
+                                                className="block px-4 py-2" 
+                                                role="menuitem">
+                                                Support Dashboard
+                                            </a>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     :

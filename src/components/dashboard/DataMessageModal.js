@@ -4,7 +4,7 @@ const DataMessageModal = ({
     closeModalProp, 
     handleOnChangeProp, 
     handleFormSubmitProp,
-    newForm,
+    clearFormField,
     success 
 }) => {
 
@@ -33,7 +33,6 @@ const DataMessageModal = ({
     return (
         <div  className={`${showModalProp ? 'bg-gray-900 bg-opacity-75 pointer-events-auto' : 'opacity-0 pointer-events-none' } h-screen transition-all ease-in-out duration-300 fixed flex justify-center items-center z-10 inset-0`} aria-labelledby="modal-title" role="dialog" aria-modal="true" id="iModal">
             <form
-                noValidate
                 onSubmit={handleFormSubmitProp}
                 className="relative bg-white z-20 rounded-lg overflow-hidden shadow-xl mx-4 sm:align-middle sm:max-w-2xl sm:w-full h-5/6 overflow-y-auto"
             >
@@ -56,14 +55,15 @@ const DataMessageModal = ({
                                 Definition Key
                             </label>
                             <input
-                                disabled={ newForm ? false : true }
+                                disabled={clearFormField ? false : true}
                                 id="definitionKey"
                                 name="definitionKey"
-                                className={`${ newForm ? 'bg-gray-200 opacity-100 cursor-auto' : 'bg-gray-100 opacity-70 cursor-not-allowed' } rounded-md block w-96 px-3 py-2 text-gray-700 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner`}
+                                className={`${clearFormField ? 'bg-gray-200 opacity-100 cursor-auto' : 'bg-gray-100 opacity-70 cursor-not-allowed'} rounded-md block w-96 px-3 py-2 text-gray-700 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner`}
                                 type="text"
                                 placeholder="Definition Key"
-                                value={definitionKey}
+                                value={definitionKey || ''}
                                 onChange={handleOnChangeProp}
+                                required
                             />
                         </div>
                         <div className="flex items-start flex-col sm:items-center sm:justify-between sm:flex-row mb-4">
@@ -79,7 +79,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Definition Key"
-                                value={idDataSource}
+                                value={idDataSource || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -96,7 +96,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Object Class"
-                                value={objectClass}
+                                value={objectClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -113,7 +113,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Version Number"
-                                value={versionNumber}
+                                value={versionNumber || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -130,7 +130,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Client Identifier"
-                                value={idClient}
+                                value={idClient || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -147,7 +147,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Message Types"
-                                value={messageTypes}
+                                value={messageTypes || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -164,7 +164,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Instrument Dummy Source"
-                                value={instrumentDummySource}
+                                value={instrumentDummySource || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -181,7 +181,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Region Identifier"
-                                value={idRegion}
+                                value={idRegion || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -198,7 +198,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Message To Event Class"
-                                value={messageToEventClass}
+                                value={messageToEventClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -215,7 +215,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Message From Event Class"
-                                value={messageFromEventClass}
+                                value={messageFromEventClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -232,7 +232,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Validation Class"
-                                value={validationClass}
+                                value={validationClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -249,7 +249,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Matching Class"
-                                value={matchingClass}
+                                value={matchingClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -266,7 +266,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Comparing Class"
-                                value={comparingClass}
+                                value={comparingClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -283,7 +283,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Data Source Message Class"
-                                value={dataSourceMessageClass}
+                                value={dataSourceMessageClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -300,7 +300,7 @@ const DataMessageModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="Merge Class"
-                                value={mergeClass}
+                                value={mergeClass || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>

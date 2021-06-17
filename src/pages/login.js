@@ -2,7 +2,7 @@ import Header from '../components/dashboard/Header'
 import Meta from '../components/seo/Meta'
 import Login from '../components/Login'
 import LoginFull from '../components/LoginFull'
-import ClientConfig from '../ClientConfig'
+// import ClientConfig from '../ClientConfig'
 import Error from './_error'
 import { useEffect, useContext } from 'react'
 import { StoreContext } from '../providers/StoreContext'
@@ -10,8 +10,8 @@ import { useRouter } from 'next/router'
 
 export const getStaticProps = async () => {
     
-    const CatsUrl = ClientConfig.apiUrl
-    const res = await fetch(`${CatsUrl}/installations/current`)
+    //const CatsUrl = ClientConfig.apiUrl //env.local might not work in production so we keep clientconfig.js
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installations/current`)
     const data = await res.json()
     const stringifyObject = JSON.stringify(data)
     const convertedStr = stringifyObject.replace(/_/g,' ').toLowerCase()
@@ -26,8 +26,10 @@ export const getStaticProps = async () => {
 
 const LoginPage = ({ lowerCaseData }) => {
 
-    const router = useRouter()
-    const { store, loggedIn, setLoggedIn, loadingScreen, setLoadingScreen } = useContext(StoreContext)
+    console.log('login-page', lowerCaseData)
+    
+    // const router = useRouter()
+    // const { store, loggedIn, setLoggedIn, loadingScreen, setLoadingScreen } = useContext(StoreContext)
 
     // useEffect(() => {
     //     // if (!store.sessionId && router.pathname === '/dashboard') {

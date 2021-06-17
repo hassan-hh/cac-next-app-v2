@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react'
 import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
-import Link from 'next/link'
-import ClientConfig from '../../ClientConfig'
+import Error from '../_error'
 import DataMessageModal from '../../Components/dashboard/DataMessageModal'
 import axios from 'axios'
 import { useRouter } from 'next/router';
+import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLoadingSkeleton'
 
- export const getStaticProps = async () => {
-    const CatsUrl = ClientConfig.apiUrl
-    const res = await fetch(`${CatsUrl}/dataMessageDefinition`)
+export const getStaticProps = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
     const data = await res.json()
-        
-        return {
-            props: {
-                data
-            },
-            revalidate: 1,
-        }
+    
+    return {
+        props: {
+            data
+        },
+        revalidate: 1,
     }
+}
 
 const DataMessageDefinitions = ({ data }) => {
 
     const router = useRouter()
+    const [itemDetail, setItemDetail] = useState(null)
     const [modal, setModal] = useState(false)
     const [enableField, setEnableField] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [updateText, setUpdateText] = useState(false)
     const [success, setSuccess] = useState(null)
-    const [itemDetail, setItemDetail] = useState(null)
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const x = setTimeout(() => {
@@ -35,12 +35,13 @@ const DataMessageDefinitions = ({ data }) => {
                 setModal(false)
                 setSuccess(null)
             }
-            if (loading) {
+            if (data) {
                 setLoading(false)
+                setUpdateText(false)
             }
-        }, 1500)
+        }, 1000)
         return () => clearTimeout(x)
-    }, [success, loading])
+    }, [success, data])
 
     const clearInputs = () => {
         setItemDetail({
@@ -66,9 +67,9 @@ const DataMessageDefinitions = ({ data }) => {
         })
     }
 
-    const refreshData = () => {
+    const refreshData = () => {// each time this function is fired, the api get revalidated/fetched and data prop is updated once again.
         router.replace(router.asPath)
-        setLoading(true)
+        setUpdateText(true)
     }
 
     const handleModal = item => {
@@ -79,7 +80,6 @@ const DataMessageDefinitions = ({ data }) => {
 
     const closeModal = () => { //callBack function
         setModal(false)
-        clearInputs()
     }
 
     const handleFormSubmit = e => {
@@ -112,7 +112,6 @@ const DataMessageDefinitions = ({ data }) => {
                 setSuccess(true)
                 refreshData()
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -120,8 +119,13 @@ const DataMessageDefinitions = ({ data }) => {
                 setSuccess(false)
                 refreshData()
             }
-            console.warn('error', err)
         })
+    }
+
+    const newForm = () => {
+        setModal(true)
+        setEnableField(true)
+        clearInputs()
     }
 
     const handleOnChange = e => {
@@ -132,100 +136,112 @@ const DataMessageDefinitions = ({ data }) => {
         <>
             <Meta title="Data Message Definition Administation" />
             <Header title="Data Message Definition Administation" subTitle="" />
-            <div className="flex">
-                <button
-                    type="button"
-                    onClick={() => refreshData()}
-                    className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none">
-                    {   !loading ?
-                        <>
-                            <img alt="plus" className="w-3 mr-1" src="/reload.svg" />
-                            <span>Refresh</span>
-                        </>
-                        :
-                        <>
-                            <img alt="plus" className="w-3 animate-spin mr-1" src="/reload.svg" />
-                            <span>Loading</span>
-                        </>
-                    }
-                </button>
-                <button
-                    type="button"
-                    onClick={() => { setModal(true); setEnableField(true); clearInputs();}}
-                    className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-24 transition-all ease-in-out duration-300 uppercase shadow-sm py-2 rounded-md text-sm font-medium focus:outline-none">
-                        <img alt="plus" className="w-3 mr-1" src="/plus-heavy-white.svg" /> 
-                        Add
-                </button>
-            </div>
-            <div className="h-screen max-w-full mt-8 overflow-auto">
-                <table className="min-w-full divide-y divide-gray-200 shadow-sm">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
-                                Definition Key
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
-                                Data Source Identifier
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
-                                Object Class
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
-                                Version Number
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {data.map((item, idx) => (
-                            <>
-                                {   idx === 0 ?
-                                    null
-                                    :
-                                    <tr 
+            { !data ?
+                <Error />
+                :
+                <>
+                    <div className="flex">
+                        <button
+                            type="button"
+                            onClick={refreshData}
+                            className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none">
+                            {   !updateText ?
+                                <>
+                                    <img alt="plus" className="w-3 mr-1" src="/reload.svg" />
+                                    <span>Refresh</span>
+                                </>
+                                :
+                                <>
+                                    <img alt="plus" className="w-3 animate-spin mr-1" src="/reload.svg" />
+                                    <span>Loading</span>
+                                </>
+                            }
+                        </button>
+                        <button
+                            type="button"
+                            onClick={newForm}
+                            className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-24 transition-all ease-in-out duration-300 uppercase shadow-sm py-2 rounded-md text-sm font-medium focus:outline-none">
+                                <img alt="plus" className="w-3 mr-1" src="/plus-heavy-white.svg" /> 
+                                Add
+                        </button>
+                    </div>
+                    <div className="h-screen max-w-full mt-8 overflow-auto">
+                        <table className="min-w-full divide-y divide-gray-200 shadow-sm">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                            Definition Key
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                            Data Source Identifier
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                            Object Class
+                                    </th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                            Version Number
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {data.map((item, idx) => (
+                                    <tr
                                         key={idx}
-                                        onClick={() => handleModal(item)} 
+                                        onClick={() => handleModal(item)}
                                         className="hover:bg-gray-100 text-sm cursor-pointer"
-                                        >
-                                            <td className="px-6 py-1">
-                                                <p>
-                                                    {item.definitionKey}
-                                                </p>
-                                            </td>
-                                            <td className="px-6 py-1">
-                                                <p>
-                                                    {item.idDataSource}
-                                                </p>
-                                            </td>
-                                            <td className="px-6 py-1">
-                                                <p>
-                                                    {item.objectClass}
-                                                </p>
-                                            </td>
-                                            <td className="px-6 py-1">
-                                                <p>
-                                                    {item.versionNumber}
-                                                </p>
-                                            </td>
+                                    >
+                                        {   loading ?
+                                            <DMLoadingSkeleton/>
+                                            :
+                                            <>
+                                                {   idx !== 0 ?
+                                                    <>
+                                                        <td className="px-6 py-1">
+                                                            <p className="w-52">
+                                                                {item.definitionKey}
+                                                            </p>
+                                                        </td>
+                                                        <td className="px-6 py-1">
+                                                            <p className="w-52">
+                                                                {item.idDataSource}
+                                                            </p>
+                                                        </td>
+                                                        <td className="px-6 py-1">
+                                                            <p className="w-52">
+                                                                {item.objectClass}
+                                                            </p>
+                                                        </td>
+                                                        <td className="px-6 py-1">
+                                                            <p className="w-52">
+                                                                {item.versionNumber}
+                                                            </p>
+                                                        </td>
+                                                    </>
+                                                    :
+                                                    ''
+                                                }
+                                            </>
+                                        }
                                     </tr>
-                                }
-                            </>
-                        ))}
-                    </tbody>
-                </table>
-                {   !itemDetail ?
-                    null
-                    :
-                    <DataMessageModal
-                        itemDataProp={itemDetail}
-                        showModalProp={modal}
-                        closeModalProp={closeModal}
-                        handleOnChangeProp={handleOnChange}
-                        handleFormSubmitProp={handleFormSubmit}
-                        newForm={enableField}
-                        success={success}
-                    />
-                }
-            </div>
+                                ))}
+                            </tbody>
+                        </table>
+                        {   !itemDetail ?
+                            null
+                            :
+                            <DataMessageModal
+                                itemDataProp={itemDetail}
+                                showModalProp={modal}
+                                closeModalProp={closeModal}
+                                handleOnChangeProp={handleOnChange}
+                                handleFormSubmitProp={handleFormSubmit}
+                                clearFormField={enableField}
+                                success={success}
+                            />
+                        }
+                    </div>
+                </>
+            }
         </>
     )
 }

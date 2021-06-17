@@ -2,11 +2,9 @@ import { useState, useEffect } from 'react'
 import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
-import ClientConfig from '../../ClientConfig'
 
 export const getStaticProps = async () => {
-    const CatsUrl = ClientConfig.apiUrl
-    const res = await fetch(`${CatsUrl}/management/metrics`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/management/metrics`)
     const data = await res.json()
 
     return {
@@ -18,9 +16,6 @@ export const getStaticProps = async () => {
 }
 
 const Metrics = ({ data }) => {
-
-    // const [time, setTime] = useState(Date.now());
-    // console.log('time', time)
 
     const [memory, setMemory] = useState(0)
     const [heapMemory, setHeapMemory] = useState(0)
@@ -1775,7 +1770,6 @@ const Metrics = ({ data }) => {
         let ifrMaxTr = ifrMax.toFixed(9)
     
     useEffect(() => {
-        //const interval = setInterval(() => setTime(Date.now()), 1)
         setMemory(memoryDiff)
         setHeapMemory(heapMemoryDiff)
         setNonHeapMemory(nonHeapMemoryDiff)
@@ -1783,12 +1777,7 @@ const Metrics = ({ data }) => {
         setTimedWaitingThread(timedWaitingDiff)
         setWaitingThread(waitingDiff)
         setBlockedThread(blockedDiff)
-        // return () => {
-        //     clearInterval(interval)
-        // }
     }, [])
-    //[usedHeapMemory, maxHeapMemory, heapMemoryDiff, heapMemory, data]
-    console.log('metrics', data)
 
     return (
         <>
@@ -1798,12 +1787,12 @@ const Metrics = ({ data }) => {
                 <Error />
                 :
                 <>
-                    <div className="flex flex-row justify-around mb-12">
+                    <div className="flex flex-col lg:flex-row justify-around mb-12">
                         <div className="w-full flex flex-col">
                             <h1 className="text-2xl pb-2">JVM Metrics</h1>
                             <h2 className="text-xl">Memory</h2>
                             <p className="text-sm mt-3">Total Memory ({usedMemory}M / {maxMemory}M)</p>
-                            <div className="w-3/4">
+                            <div className="w-full lg:w-3/4">
                                 <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${memory}%` }}>
                                     </div>
@@ -1836,7 +1825,7 @@ const Metrics = ({ data }) => {
                                 </span>
                             </div>
                             <p className="text-sm mt-3">Runnable ({runnable})</p>
-                            <div className="w-3/4">
+                            <div className="w-full lg:w-3/4">
                                 <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${runnableThread}%` }}>
                                     </div>
@@ -1869,7 +1858,7 @@ const Metrics = ({ data }) => {
                                 </h2>
                             </div>
                             <p className="text-sm mt-3">Mark Sweep count - G1 old ({markSweepTime})</p>
-                            <div className="w-3/4">
+                            <div className="w-full lg:w-3/4">
                                 <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${markSweepTime}` }}>
                                     </div>

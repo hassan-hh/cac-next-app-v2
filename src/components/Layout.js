@@ -39,11 +39,11 @@ const Layout = ({ children, parsedCookies }) => {
     //const { sessionId } = store
 
     useEffect(() => { //this will redirect the user when page is refreshed, page could be refreshed by visiting wrong url or hard resfresh the browser
-        // if (!sessionId && router.pathname !== '/login') {
+        // if (!store.sessionId && router.pathname !== '/login') {
         //     router.push('/login')
         // } 
         if (store.sessionId) {
-            router.push('/dashboard')
+            //router.push('/dashboard')
             setLoggedIn(true)
             setLoadingScreen(true)
         }
@@ -85,31 +85,33 @@ const Layout = ({ children, parsedCookies }) => {
     }
     else {
         return (
-            <div style={!loggedIn ? { background: '#2bbc9c' } : {}}>
+            <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}>
                 {/* {   loadingScreen ? //&& router.pathname === '/login' || router.pathname === '/dashboard/' //protect dashboard routes after login e.g loadingscreen spinner
                     <div className="h-screen flex items-center justify-center">
                         <LoadingScreen />
                     </div>
                     : */}
                     <>
-                        <Nav loggedIn={loggedIn} />
-                        <main className="flex flex-row">
+                    <Nav loggedIn={loggedIn} />
+                        <img
+                            src="/drawerToggler.svg"
+                            alt="toggler icon"
+                            className="w-16 h-auto absolute top-0 left-0 cursor-pointer block"
+                            onClick={() => setOpen(!open)}
+                        />
+                        <main className="flex flex-row relative">
                             {!loggedIn ?
                                 null
-                                :
+                            :
+                            <>
                                 <DrawerProvider>
-                                    <aside style={open ? { width: '380px' } : { width: '0px' }} className="bg-gray-100 min-h-screen hidden sm:block transition-all ease-in-out duration-500 z-0">
-                                        <img
-                                            src="/DrawerIconCircle.svg"
-                                            alt="toggler icon"
-                                            className="w-12 h-auto absolute top-0 left-0 m-2 cursor-pointer"
-                                            onClick={() => setOpen(!open)}
-                                        />
-                                        <Drawer />
+                                    <aside style={!open ? { width: '0px' } : {} } className="w-full sm:w-96 lg:w-96 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 block transition-all ease-in-out duration-500 z-20 lg:z-0">
+                                        <Drawer open={open}/>
                                     </aside>
                                 </DrawerProvider>
+                            </>
                             }
-                            <section className={`${loggedIn ? 'bg-gray-200' : ''} w-full p-4 sm:py-10 sm:px-10 min-h-screen overflow-auto z-10`}>
+                            <section className={`${loggedIn ? 'bg-gray-200' : ''} min-w-full lg:min-w-0 w-full overflow-auto p-4 sm:py-10 sm:px-10 min-h-screen z-10`}>
                                 {children}
                             </section>
                         </main>

@@ -1,4 +1,3 @@
-import DashboardNav from '../../components/dashboard/DashboardNav'
 import Header from '../../components/dashboard/Header'
 import StatusCard from '../../components/dashboard/cards/StatusCard'
 import TableCard from '../../components/dashboard/cards/TableCard'
@@ -10,7 +9,6 @@ const Support = () => {
     return (
         <>
             <Meta title="User Dashboard" />
-            {/* <DashboardNav/> */}
             <Header title="Support Dashboard" subTitle=""/>
             <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 mb-8">
             <div className="col-span-2 mb-4 xl:mb-0"><StatusCard title="CATS Daemon Status" btnName="View Daemon Processes"/></div>

@@ -65,7 +65,7 @@ const InstallaionPropertiesModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="*"
-                                value={filter}
+                                value={filter || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
@@ -82,7 +82,7 @@ const InstallaionPropertiesModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="property-key"
-                                value={key}
+                                value={key || ''}
                                 onChange={handleOnChangeProp}
                                 required
                             />
@@ -100,11 +100,11 @@ const InstallaionPropertiesModal = ({
                                 className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="property-value"
-                                value={value}
+                                value={value || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
-                        <div className={`${ success ? 'bg-green-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : '' } opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
+                        <div className={`${ success === true ? 'bg-green-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : '' } opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
                             { success ? 
                                 <div className="h-full flex justify-evenly items-center">
                                     <img alt="check-mark" className="w-5" src="/check-mark.svg" />

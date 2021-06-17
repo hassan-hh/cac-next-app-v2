@@ -18,6 +18,7 @@ export const StoreProvider = ({ children }) => {
     const router = useRouter()
     const [loggedIn, setLoggedIn] = useState(false)
     const [loadingScreen, setLoadingScreen] = useState(false)
+    const [profileImage, setProfileImage] = useState('')
     const [store, setStore] = useState({
         emailAddress: '',
         idLogon: '',
@@ -69,11 +70,19 @@ export const StoreProvider = ({ children }) => {
     }, [loggedIn])
 
 
-
-
     return (
-        <StoreContext.Provider value={{ loggedIn, setLoggedIn, loadingScreen, setLoadingScreen, store, setStore}}>
-            {children}
+        <StoreContext.Provider
+            value={{
+                loggedIn,
+                setLoggedIn,
+                loadingScreen,
+                setLoadingScreen,
+                profileImage,
+                setProfileImage,
+                store,
+                setStore
+            }}>
+                {children}
         </StoreContext.Provider>
     )
 }

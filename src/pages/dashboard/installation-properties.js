@@ -2,39 +2,28 @@ import { useState, useEffect } from 'react'
 import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
-import ClientConfig from '../../ClientConfig'
 import InstallationPropertiesModal from '../../Components/dashboard/InstallationPropertiesModal'
 import axios from 'axios'
 import { useRouter } from 'next/router';
-import LoadingSkeleton from '../../components/dashboard/LoadingSkeleton'
+import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLoadingSkeleton'
 
 export const getStaticProps = async () => {
-        const CatsUrl = ClientConfig.apiUrl
-        const res = await fetch(`${CatsUrl}/installation/properties`)
-        const data = await res.json()
-    
-    // if(!data) {
-    //     return {
-    //         props: {
-    //             noData
-    //         },
-    //     }
-    // }
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`)
+    const data = await res.json()
 
     return {
         props: {
             data
         },
-        revalidate: 1,
+        revalidate: 1, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
     }
 }
 
 const InstallationProperties = ({ data }) => {
 
-    console.log('fetched table data', data)
     const router = useRouter()
     const [modal, setModal] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [itemDetail, setItemDetail] = useState({
         osName: '',
         filter: '',
@@ -42,24 +31,20 @@ const InstallationProperties = ({ data }) => {
         value: '',
         success: null
     })
-    console.log('itemDetail', itemDetail)
 
     useEffect(() => {
-        if (!data) {
-            setLoading(true)
-        }
         const x = setTimeout(() => {
             if (itemDetail.success) {
                 setModal(false)
             }
-            if (data){
+            if (data) { // our loading state is true by default, if data is not empty then display data and setLoading to false
                 setLoading(false)
             }
-        }, 1500)
+        }, 1000)
         return () => clearTimeout(x)
     }, [itemDetail.success, data])
 
-    const refreshData = () => {
+    const refreshData = () => { //similar to AJAX in this case we might not need revalidate. 
         router.replace(router.asPath)
     }
 
@@ -90,7 +75,6 @@ const InstallationProperties = ({ data }) => {
                 })
                 refreshData()
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -100,7 +84,6 @@ const InstallationProperties = ({ data }) => {
                 })
                 refreshData()
             }
-            console.warn('error', err)
         })
     }
 
@@ -135,22 +118,22 @@ const InstallationProperties = ({ data }) => {
                         </thead>
                         <tbody  className="bg-white divide-y divide-gray-200 text-sm">
                             {data.map((item, idx) => (
-                                <>
-                                    {   loading ? 
-                                        <LoadingSkeleton/>
-                                        :  
-                                        <tr
-                                            key={idx}
-                                            onClick={() => handleModal(item)}
-                                            className="hover:bg-gray-100 cursor-pointer"
-                                        >
+                                <tr
+                                    key={idx}
+                                    onClick={() => handleModal(item)}
+                                    className="hover:bg-gray-100 cursor-pointer"
+                                >
+                                    {   loading ?
+                                        <IPLoadingSkeleton />
+                                        :
+                                        <>
                                             <td className="px-6 py-1">
-                                                <p>
+                                                <p className="w-48">
                                                     {item.osName}
                                                 </p>
                                             </td>
                                             <td className="px-6 py-1">
-                                                <p>
+                                                <p className="w-48 break-all">
                                                     {item.filter}
                                                 </p>
                                             </td>
@@ -164,14 +147,14 @@ const InstallationProperties = ({ data }) => {
                                                     {item.value}
                                                 </p>
                                             </td>
-                                        </tr>
+                                        </>
                                     }
-                                </>
+                                </tr>
                             ))}
                         </tbody>
                     </table>
                     {   !itemDetail ?
-                        null
+                        ''
                         :
                         <InstallationPropertiesModal
                             itemDataProp={itemDetail}
