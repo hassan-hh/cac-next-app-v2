@@ -176,7 +176,7 @@ const Profile = () => {
                                                     <h4>Drop file anywhere to upload<br/>or</h4>
                                                     <p>Select another file</p>
                                                 </div> */}
-                                                <img src={base64String} className="w-96 h-96 max-w-full object-cover"/>
+                                                <img src={base64String || ''} className="w-96 h-96 max-w-full object-cover"/>
                                             </div>
                                             :
                                             <div className="flex flex-col items-center justify-center">
@@ -206,7 +206,7 @@ const Profile = () => {
                                 className="w-24 bg-gray-900 text-white transition-all ease-in-out duration-300 uppercase shadow-sm px-4 py-2 mt-5 rounded-md text-sm font-medium"
                             >
                                 Submit
-                                </button>
+                            </button>
                         </div>
                     </div>
                     <form
@@ -264,7 +264,7 @@ const Profile = () => {
                                     className="rounded-md block w-full p-3 mt-2 text-gray-700 bg-gray-200 focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                     type="email"
                                     placeholder="Enter your email"
-                                    value={emailAddress}
+                                    value={emailAddress || ''}
                                     onChange={handleOnChange}
                                     required
                                 />

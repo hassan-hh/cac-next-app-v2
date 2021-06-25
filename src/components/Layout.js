@@ -96,7 +96,7 @@ const Layout = ({ children, parsedCookies }) => {
                         <img
                             src="/drawerToggler.svg"
                             alt="toggler icon"
-                            className="w-16 h-auto absolute top-0 left-0 cursor-pointer block"
+                            className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
                             onClick={() => setOpen(!open)}
                         />
                         <main className="flex flex-row relative">
@@ -105,7 +105,7 @@ const Layout = ({ children, parsedCookies }) => {
                             :
                             <>
                                 <DrawerProvider>
-                                    <aside style={!open ? { width: '0px' } : {} } className="w-full sm:w-96 lg:w-96 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 block transition-all ease-in-out duration-500 z-20 lg:z-0">
+                                    <aside style={!open ? { width: '0px' } : {} } className="flex flex-col items-center lg:block w-full sm:w-96 lg:w-96 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 transition-all ease-in-out duration-500 z-20 lg:z-0">
                                         <Drawer open={open}/>
                                     </aside>
                                 </DrawerProvider>

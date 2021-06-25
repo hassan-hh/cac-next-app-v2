@@ -36,8 +36,12 @@ TabPanel.propTypes = {
 const AccountManagement = () => {
 
     const [value, setValue] = useState(0)
+    const [loading, setLoading] = useState(true)
     const handleChange = (event, newValue) => {
         setValue(newValue)
+    }
+    const loadingCallback = () => {
+        setLoading(false)
     }
 
     return (
@@ -47,19 +51,19 @@ const AccountManagement = () => {
             <div className="bg-white shadow-sm overflow-auto">
                 <nav value={value} onChange={handleChange} aria-label="File Browser Tabs" className="flex flex-col sm:flex-row">
                     <button
-                        onClick={() => setValue(0)}
+                        onClick={() => {setValue(0); setLoading(true)}}
                         className={"md:w-full lg:w-56 py-4 px-6 block hover:text-green-600 "
                         + (value === 0 ? "text-green-600 border-b-2 border-green-600 focus:outline-none " : "text-gray-600 border-b-2 border-white focus:outline-none")}>
                         Account Requests
                     </button>
                     <button
-                        onClick={() => setValue(1)}
+                        onClick={() => {setValue(1); setLoading(true)}}
                         className={"md:w-full lg:w-56 py-4 px-6 block hover:text-green-600 "
                         + (value === 1 ? "text-green-600 border-b-2 border-green-600 focus:outline-none" : "text-gray-600 border-b-2 border-white focus:outline-none")}>
                         Active Accounts
                     </button>
                     <button
-                        onClick={() => setValue(2)}
+                        onClick={() => {setValue(2); setLoading(true)}}
                         className={"md:w-full lg:w-56 py-4 px-6 block hover:text-green-600 "
                         + (value === 2 ? "text-green-600 border-b-2 border-green-600 focus:outline-none" : "text-gray-600 border-b-2 border-white focus:outline-none")}>
                         Deactivated Accounts
@@ -70,19 +74,28 @@ const AccountManagement = () => {
                 <div className="my-5">
                     Account Request
                 </div>
-                <AccountRequest />
+                <AccountRequest
+                    loading={loading}
+                    loadingCallback={loadingCallback}
+                />
             </TabPanel>
             <TabPanel key={1} value={value} index={1}>
                 <div className="my-5">
                     Active Accounts
                 </div>
-                <ActiveAccounts />
+                <ActiveAccounts
+                    //loading={loading}
+                    //loadingCallback={loadingCallback}
+                />
             </TabPanel>
             <TabPanel key={2} value={value} index={2}>
                 <div className="my-5">
                     Deactivated Accounts
                 </div>
-                <DeactivatedAccounts />
+                <DeactivatedAccounts
+                    //loading={loading}
+                    //loadingCallback={loadingCallback}
+                />
             </TabPanel>
         </>
     )

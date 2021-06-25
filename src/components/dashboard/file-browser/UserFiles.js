@@ -1,40 +1,58 @@
 import { useState, useEffect } from 'react'
 import FBLoadingSkeleton from '../loading-skeletons/FBLoadingSkeleton'
 import Error from '../../../pages/_error'
+import axios from 'axios'
 
 const UserFiles = () => {
 
     const [userFiles, setUserFiles] = useState([])
     const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState({
+        errorCode: null,
+        data: null
+    })
+    console.log('userFiles', userFiles)
 
     useEffect(() => {
         userFilesApi()
-        const x = setTimeout(() => { //to stop loading sekelton after 1 sec
-            if (userFiles) {
+        const x = setTimeout(() => {
+            if (success.data === true || success.data === false) {
                 setLoading(false)
             }
         }, 1000)
-        return () => {clearTimeout(x), setLoading(false)} //cleanup function error //Can't perform a React state update on an unmounted component...etc
-    }, [])
+        return () => {clearTimeout(x); setLoading(false);}
+    }, [success.data])
 
-    const userFilesApi = async () => {
+    const userFilesApi = () => {
         setLoading(true)
-        try {
-            const res = await fetch('/api/filebrowser/0/file')
-            const data = await res.json()
-            //setLoading(false)
-            setUserFiles(data)
-        }
-        catch (err) {
-            setLoading(false)
-        }
+        axios.get('/api/filebrowser/0/file')
+            .then(res => {
+                if (res.status < 300) {
+                    setUserFiles(res.data)
+                    setSuccess({
+                        ...success,
+                        errorCode: res.status,
+                        data: true
+                    })
+                }
+                console.log('res', res)
+            })
+            .catch(err => {
+                if (err.response.status > 300) {
+                    setSuccess({
+                        ...success,
+                        errorCode: err.response.status, 
+                        data: false
+                    })
+                }
+                console.log('err', err.response)
+            })
     }
-    //console.log('userFiles', userFiles)
 
     return (
         <>
-            {   !userFiles ?
-                <Error />
+            {   success.data === false ? //userFiles.length === 0 or just userFiles not important beacuse the res will always give userFiles.length === 0 in all senarios
+                <Error statusCode={success.errorCode}/>
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">
@@ -51,28 +69,34 @@ const UserFiles = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {userFiles.map(userFile => (
+                        <tbody className="relative bg-white divide-y divide-gray-200">
+                            {userFiles.length === 0 && success.data === true ?
+                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                    <td>No data available yet</td>
+                                </tr>
+                                :
                                 <>
-                                    {loading ?
-                                        <FBLoadingSkeleton />
-                                        :
+                                    {userFiles.map((userFile, idx) => (
                                         <tr key={idx} className={`hover:bg-gray-100 text-sm text-left`}>
-                                            <>
-                                                <td className="px-6 py-1 w-80 break-all">
-                                                    <p>UserFiles</p>
-                                                </td>
-                                                <td className="px-6 py-1 w-80 break-all">
-                                                    <p>Last Modified</p>
-                                                </td>
-                                                <td className="px-6 py-1 w-80 break-all">
-                                                    <p>Size</p>
-                                                </td>
-                                            </>
+                                            {loading ?
+                                                <FBLoadingSkeleton />
+                                            :
+                                                <>
+                                                    <td className="px-6 py-1 w-80 break-all">
+                                                        <p>{userFile.name}</p>
+                                                    </td>
+                                                    <td className="px-6 py-1 w-80 break-all">
+                                                        <p>{userFile.lastModified}</p>
+                                                    </td>
+                                                    <td className="px-6 py-1 w-80 break-all">
+                                                        <p>{userFile.size}</p>
+                                                    </td>
+                                                </>
+                                            }
                                         </tr>
-                                    }
+                                    ))}
                                 </>
-                            ))}
+                            }
                         </tbody>
                     </table>
                 </div>

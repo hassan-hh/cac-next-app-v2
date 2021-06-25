@@ -5,17 +5,18 @@ import Error from '../_error'
 
 export const getStaticProps = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/management/metrics`)
+    const errorCode = res.ok ? 200 : res.statusCode
     const data = await res.json()
 
     return {
         props: {
-            data
+            data, errorCode
         },
         revalidate: 1, //In seconds
     }
 }
 
-const Metrics = ({ data }) => {
+const Metrics = ({ data, errorCode }) => {
 
     const [memory, setMemory] = useState(0)
     const [heapMemory, setHeapMemory] = useState(0)
@@ -1783,8 +1784,8 @@ const Metrics = ({ data }) => {
         <>
             <Meta title="Metrics" />
             <Header title="Application Metrics" subTitle=""/>
-            {   !data ?
-                <Error />
+            {   errorCode > 300 ?
+                <Error statusCode={errorCode} />
                 :
                 <>
                     <div className="flex flex-col lg:flex-row justify-around mb-12">

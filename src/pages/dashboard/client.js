@@ -5,32 +5,32 @@ import Error from '../_error'
 
 export const getStaticProps = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installations/current`)
+    const errorCode = res.ok ? 200 : res.statusCode
     const data = await res.json()
-    const stringifyObject = JSON.stringify(data)
-    const convertedStr = stringifyObject.replace(/_/g,' ').toLowerCase()
-    const newData = JSON.parse(convertedStr)
 
     return {
         props: {
-            newData
+            data, errorCode
         }
     }
 }
 
-const Client = ({ newData }) => {
+const Client = ({ data, errorCode }) => {
     
     const [loading, setLoading] = useState(false)
+
+    console.log('data', data)
 
     return (
         <>
             <Meta title="Client download" />
-            <Header title={`Client Download For ${newData.description}`} subTitle="" />
-            {   !newData ?
-                <Error />
+            <Header title={`Client Download For ${data.description.replace(/_/g,' ').toLowerCase()}`} subTitle="" />
+            {   data && errorCode > 300 ?
+                <Error statusCode={errorCode}/>
             :
             <>
                 <div className="min-h-screen">
-                    <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {newData.description}</h1>
+                    <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {data.description.replace(/_/g,' ').toLowerCase()}</h1>
                     <a
                         type="button"
                         className={` ${!loading ? `w-32` : `w-36`} bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none`}

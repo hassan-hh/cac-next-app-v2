@@ -3,15 +3,23 @@ import { StoreContext } from '../providers/StoreContext'
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+// import PropTypes from 'prop-types'
 
-const Nav = ({loggedIn}) => {
 
+const Nav = ({ loggedIn }) => {
+    
     const router = useRouter()
     const container = useRef(null)
+    //const {value, index} = props
+    const [isActive, setIsActive] = useState(0)
     const { setLoggedIn, setLoadingScreen, profileImage, store, setStore }   = useContext(StoreContext)
     const [mobileMenu, setMobileMenu] = useState(false)
     const [userMenu, setUserMenu] = useState(false)
     const [dropDownMenu, setDropDownMenu] = useState(false)
+
+    const handleChange = (value) => {
+        setIsActive(value)
+    }
 
     // Allow for outside click - need to include nav bar ?
     useEffect(() => {
@@ -82,7 +90,7 @@ const Nav = ({loggedIn}) => {
     // }, [store.sessionId])
     
     return (
-        <div ref={container}>
+        <header ref={container}>
             <nav style={{background: '#2bbc9c'}}>
                     <div className="w-full mx-auto px-2 sm:px-12 lg:px-12">
                     <div className="relative flex items-center justify-between h-16">
@@ -100,60 +108,84 @@ const Nav = ({loggedIn}) => {
                                     <div className="hidden sm:block sm:ml-6">
                                         <div className="flex space-x-4">
                                             <Link href="/dashboard">
-                                                <a  className="bg-gray-900 text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+                                                <a
+                                                    aria-current="page"
+                                                    className={`${isActive === 0 ? `bg-gray-900` : 'bg-transparent'}  text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
+                                                    onClick={() => setIsActive(0)}
+                                                >
+                                                    Dashboard
+                                                </a>
                                             </Link>
                                             <Link href="/dashboard/file-browser">
-                                                <a className="text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium">File Browser</a>
+                                                <a
+                                                    className={`${isActive === 1 ? `bg-gray-900` : 'bg-transparent'} text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
+                                                    onClick={() => setIsActive(1)}
+                                                >
+                                                    File Browser
+                                                </a>
                                             </Link>
                                             <div className="relative inline-block text-left">
                                                 <div>
-                                                    <button onClick={() => setDropDownMenu(!dropDownMenu)} type="button" className={`${dropDownMenu ? 'bg-gray-900' : ''} transition-all ease-in-out duration-300 uppercase inline-flex justify-center px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-900 focus:outline-none`} id="drop-menu" aria-expanded={dropDownMenu} aria-haspopup="true">
+                                                    <button onClick={() => { setDropDownMenu(!dropDownMenu)}} type="button" className={`transition-all ease-in-out duration-300 uppercase inline-flex justify-center px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-900 focus:outline-none`} id="drop-menu" aria-expanded={dropDownMenu} aria-haspopup="true">
                                                     Admin
                                                     <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                         <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                                                     </svg>
                                                     </button>
                                                 </div>
-                                                <div className={`${dropDownMenu ? 'opacity-100 z-40' : 'opacity-0'} bg-white transition-all ease-in-out duration-300 origin-top-right absolute right-0 mt-2 w-52 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-0`}
+                                                <div className={`${dropDownMenu ? 'opacity-100 z-40' : 'opacity-0'} bg-white transition-all ease-in-out duration-300 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-0`}
                                                     role="menu"
                                                     aria-orientation="vertical"
                                                     aria-labelledby="drop-menu"
                                                 >
                                                     <div className="py-1" role="none" onClick={() => setDropDownMenu(false)}>
                                                         <Link href="/dashboard/account-management">
-                                                            <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                                                role="menuitem">
+                                                            <a
+                                                                className={`${isActive === 3 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
+                                                                role="menuitem"
+                                                                onClick={() => setIsActive(3)}
+                                                            >
                                                                 Account Management
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/installation-properties">
-                                                            <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                                                role="menuitem">
+                                                            <a className={`${isActive === 4 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                                role="menuitem"
+                                                                onClick={() => setIsActive(4)}
+                                                            >
                                                                 Installation Properties
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/metrics">
-                                                            <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                                                role="menuitem">
+                                                            <a className={`${isActive === 5 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                                role="menuitem"
+                                                                onClick={() => setIsActive(5)}
+                                                            >
                                                                 Metrics
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/rule-sets">
-                                                            <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                                                role="menuitem">
+                                                            <a className={`${isActive === 6 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                                role="menuitem"
+                                                                onClick={() => setIsActive(6)}
+                                                            >
                                                                 Rule Sets
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/data-message-definitions">
-                                                            <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                                                role="menuitem">
+                                                            <a className={`${isActive === 7 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
+                                                                role="menuitem"
+                                                                onClick={() => setIsActive(7)}
+                                                            >
                                                                 Data Message Definitions
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/support">
                                                             <a 
-                                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
-                                                                role="menuitem">
+                                                                className={`${isActive === 8 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                                role="menuitem"
+                                                                onClick={() => setIsActive(8)}
+                                                            >
                                                                 Support Dashboard
                                                             </a>
                                                         </Link>
@@ -184,25 +216,26 @@ const Nav = ({loggedIn}) => {
                                         {/* <p className="px-4 py-2 text-gray-700 uppercase text-xs text-left block sm:hidden">Welcome, <span className="capitalize">{store.name}</span></p> */}
                                         <Link href="/dashboard/profile">
                                             <a 
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                className={`${isActive === 9 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`} 
                                                 role="menuitem"
+                                                onClick={() => setIsActive(9)}
                                             >
                                                 Your Profile
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/client">
                                             <a 
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
+                                                className={`${isActive === 10 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`}
                                                 role="menuitem"
+                                                onClick={() => setIsActive(10)}
                                             >
                                                 Client Download
                                             </a>
                                         </Link>
-                                        <form method="POST" action="#" role="none">
-                                            <button type="submit" onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-                                                Sign out
-                                            </button>
-                                        </form>
+                                        <button type="submit" onClick={handleLogout} className="flex items-center justify-between mx-2 my-1 rounded-md text-left w-44 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                            Sign out
+                                            <img alt="Sign Out" className="w-4" src="/logout.svg" />
+                                        </button>
                                     </div>
                                 </div>
                             </>
@@ -277,7 +310,7 @@ const Nav = ({loggedIn}) => {
                     ''
                 }
             </nav>
-        </div>
+        </header>
     )
 }
 export default Nav

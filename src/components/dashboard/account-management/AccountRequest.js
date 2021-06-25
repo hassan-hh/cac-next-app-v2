@@ -1,36 +1,59 @@
 import { useState, useEffect } from 'react'
+import AMLoadingSkeleton from '../loading-skeletons/AMLoadingSkeleton'
 import Error from '../../../pages/_error'
+import axios from 'axios'
 
 const AccountRequest = () => {
 
     const [accountRequest, setAccountRequest] = useState([])
     const [update, setUpdate] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState({
+        errorCode: null,
+        data: null
+    })
+    console.log('accountRequest', accountRequest)
 
     useEffect(() => {
         AccountRequestApi()
-    }, [update])
+        const x = setTimeout(() => {
+            if (success.data === true || success.data === false) {
+                setLoading(false)
+            }
+        }, 1000)
+        return () => {clearTimeout(x); setLoading(false); setUpdate(0);}
+    }, [update, success.data])
 
     const AccountRequestApi = async () => {
-            setLoading(true)
-        try {
-            const res = await fetch('/api/user/admin/accountrequest?start=0&size=999')
-            const data = await res.json()
-            const stringifyObject = JSON.stringify(data)
-            const convertedStr = stringifyObject.replace(/_/g,' ').toLowerCase()
-            const newData = JSON.parse(convertedStr)
-            setAccountRequest(newData)
-            setLoading(false)
-        }
-        catch (err) {
-            setLoading(false)
-        }
+        setLoading(true)
+        axios.get('/api/user/admin/accountrequest?start=0&size=999')
+            .then(res => {
+                if (res.status < 300) {
+                    setAccountRequest(res.data)
+                    setSuccess({
+                        ...success,
+                        errorCode: res.status,
+                        data: true
+                    })
+                }
+                console.log('res', res)
+            })
+            .catch(err => {
+                if (err.response.status > 300) {
+                    setSuccess({
+                        ...success,
+                        errorCode: err.response.status, 
+                        data: false
+                    })
+                }
+                console.log('err', err.response)
+            })
     }
 
     return (
         <>
-            {   !accountRequest ?
-                <Error />
+            {   success.data === false ?
+                <Error statusCode={errorCode}/>
                 :
                 <>
                     <button
@@ -74,39 +97,40 @@ const AccountRequest = () => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {accountRequest.map((account, idx) => (
-                                    <tr key={idx} className="hover:bg-gray-100 text-sm">
-                                        <td className="px-6 py-1 w-80 break-all">
-                                            <p>{account.username}</p>
-                                        </td>
-                                        <td className="px-6 py-1 w-80 break-all">
-                                            <p>{account.email}</p>
-                                        </td>
-                                        <td className="px-6 py-1 w-80 break-all">
-                                            <p>{account.name}</p>
-                                        </td>
-                                        <td className="px-6 py-1 w-80 break-all capitalize">
-                                            <p>{account.type}</p>
-                                        </td>
-                                        <td className="px-6 py-1 w-80 break-all">
-                                            <p>{account.phoneNumber}</p>
-                                        </td>
-                                        {/* <td className="px-6 py-2">
-                                            <button
-                                                type="submit"
-                                                className={`${ !loading ? 'bg-red-500 hover:bg-red-600' : 'bg-yellow-500'} focus:outline-none text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-xs font-medium`}
-                                                onClick={() => handleDeactivate(account, idx)}
-                                                >
-                                                {   !loading ? 
-                                                    'Deactivate'
-                                                    :
-                                                    'Processing'
-                                                }
-                                            </button>
-                                        </td> */}
+                            <tbody className="relative bg-white divide-y divide-gray-200">
+                                {accountRequest.length === 0 && success.data === true ?
+                                    <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                        <td>No data available yet</td>
                                     </tr>
-                                ))}
+                                    :
+                                    <>
+                                        {accountRequest.map((account, idx) => (
+                                            <tr key={idx} className="hover:bg-gray-100 text-sm">
+                                                {   loading === true ?
+                                                    <AMLoadingSkeleton />
+                                                    :
+                                                    <>
+                                                        <td className="px-6 py-1 w-80 break-all">
+                                                            <p>{account.username}</p>
+                                                        </td>
+                                                        <td className="px-6 py-1 w-80 break-all">
+                                                            <p>{account.email}</p>
+                                                        </td>
+                                                        <td className="px-6 py-1 w-80 break-all">
+                                                            <p>{account.name}</p>
+                                                        </td>
+                                                        <td className="px-6 py-1 w-80 break-all capitalize">
+                                                            <p>{account.type.replace(/_/g,' ').toLowerCase()}</p>
+                                                        </td>
+                                                        <td className="px-6 py-1 w-80 break-all">
+                                                            <p>{account.phoneNumber}</p>
+                                                        </td>
+                                                    </>
+                                                }
+                                            </tr>
+                                        ))}
+                                    </>
+                                }
                             </tbody>
                         </table>
                     </div>

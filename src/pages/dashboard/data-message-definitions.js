@@ -9,17 +9,18 @@ import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLo
 
 export const getStaticProps = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
+    const errorCode = res.ok ? 200 : res.statusCode
     const data = await res.json()
     
     return {
         props: {
-            data
+            data, errorCode
         },
         revalidate: 1,
     }
 }
 
-const DataMessageDefinitions = ({ data }) => {
+const DataMessageDefinitions = ({ data, errorCode }) => {
 
     const router = useRouter()
     const [itemDetail, setItemDetail] = useState(null)
@@ -136,8 +137,8 @@ const DataMessageDefinitions = ({ data }) => {
         <>
             <Meta title="Data Message Definition Administation" />
             <Header title="Data Message Definition Administation" subTitle="" />
-            { !data ?
-                <Error />
+            {   errorCode > 300 ?
+                <Error statusCode={errorCode} />
                 :
                 <>
                     <div className="flex">
@@ -183,47 +184,55 @@ const DataMessageDefinitions = ({ data }) => {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {data.map((item, idx) => (
-                                    <tr
-                                        key={idx}
-                                        onClick={() => handleModal(item)}
-                                        className="hover:bg-gray-100 text-sm cursor-pointer"
-                                    >
-                                        {   loading ?
-                                            <DMLoadingSkeleton/>
-                                            :
-                                            <>
-                                                {   idx !== 0 ?
-                                                    <>
-                                                        <td className="px-6 py-1">
-                                                            <p className="w-52">
-                                                                {item.definitionKey}
-                                                            </p>
-                                                        </td>
-                                                        <td className="px-6 py-1">
-                                                            <p className="w-52">
-                                                                {item.idDataSource}
-                                                            </p>
-                                                        </td>
-                                                        <td className="px-6 py-1">
-                                                            <p className="w-52">
-                                                                {item.objectClass}
-                                                            </p>
-                                                        </td>
-                                                        <td className="px-6 py-1">
-                                                            <p className="w-52">
-                                                                {item.versionNumber}
-                                                            </p>
-                                                        </td>
-                                                    </>
-                                                    :
-                                                    ''
-                                                }
-                                            </>
-                                        }
+                            <tbody className="relative bg-white divide-y divide-gray-200">
+                                {data && data.length === 0 && errorCode < 300 ?
+                                    <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                        <td>no data available yet</td>
                                     </tr>
-                                ))}
+                                :
+                                <>
+                                    {data.map((item, idx ) => ( //item.filter(x => x !== null) =>
+                                        <tr
+                                            key={idx}
+                                            onClick={() => handleModal(item)}
+                                            className="hover:bg-gray-100 text-sm cursor-pointer"
+                                        >
+                                            {   loading ?
+                                                <DMLoadingSkeleton/>
+                                                :
+                                                <>
+                                                    {   idx !== 0 ?
+                                                        <>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-52">
+                                                                    {item.definitionKey}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-52">
+                                                                    {item.idDataSource}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-52">
+                                                                    {item.objectClass}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-52">
+                                                                    {item.versionNumber}
+                                                                </p>
+                                                            </td>
+                                                        </>
+                                                        :
+                                                        ''
+                                                    }
+                                                </>
+                                            }
+                                        </tr>
+                                    ))}
+                                </>
+                                }
                             </tbody>
                         </table>
                         {   !itemDetail ?

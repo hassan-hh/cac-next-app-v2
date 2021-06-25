@@ -2,37 +2,55 @@ import { useState, useEffect } from 'react'
 import AMLoadingSkeleton from '../loading-skeletons/AMLoadingSkeleton'
 import ItemLoadingSkeleton from '../loading-skeletons/ItemLoadingSkeleton'
 import Error from '../../../pages/_error'
+import axios from 'axios'
 
 const ActiveAccounts = () => {
 
     const [activeAccounts, setActiveAccounts] = useState([])
     const [update, setUpdate] = useState(0)
     const [deactivating, setDeactivating] = useState(null)
-    const [loading, setLoading] = useState(false)// it can be true or false doesn't make diff, because the api once run will set it to true then once state is updated the timer will set it to false
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState({
+        errorCode: null,
+        data: null
+    })
+
+    console.log('activeAccounts', activeAccounts)
 
     useEffect(() => {
         ActiveAccountsApi()
-        const x = setTimeout(() => { //to stop loading sekelton after 1 sec
-            if (activeAccounts) {
+        const x = setTimeout(() => {
+            if (success.data === true || success.data === false) {
                 setLoading(false)
             }
         }, 1000)
-        return () => clearTimeout(x)
-    }, [update])
+        return () => {clearTimeout(x); setLoading(false);}
+    }, [update, success.data])
 
-    const ActiveAccountsApi = async () => {
-            setLoading(true)
-        try {
-            const res = await fetch('/api/user/admin/account/active?start=0&size=999')
-            const data = await res.json()
-            const stringifyObject = JSON.stringify(data)
-            const convertedStr = stringifyObject.replace(/_/g,' ').toLowerCase()
-            const newData = JSON.parse(convertedStr)
-            setActiveAccounts(newData)
-        }
-        catch (err) {
-            setLoading(false)
-        }
+    const ActiveAccountsApi = () => {
+        setLoading(true)
+        axios.get('/api/user/admin/account/active?start=0&size=999')
+            .then(res => {
+                if (res.status < 300) {
+                    setActiveAccounts(res.data)
+                    setSuccess({
+                        ...success,
+                        errorCode: res.status,
+                        data: true
+                    })
+                }
+                console.log('res', res)
+            })
+            .catch(err => {
+                if (err.response.status > 300) {
+                    setSuccess({
+                        ...success,
+                        errorCode: err.response.status, 
+                        data: false
+                    })
+                }
+                console.log('err', err.response)
+            })
     }
 
     const DeactivateAccountsApi = async (username, idx) => {
@@ -48,22 +66,15 @@ const ActiveAccounts = () => {
             setDeactivating(null)
         }
     }
-
-    // const handleRemoveItem = idx => {
-    //     const newAccount = [...activeAccounts]
-    //     newAccount.splice(idx, 1)
-    //     setActiveAccounts(newAccount)
-    // }
     
     const handleDeactivate = (account, idx) => {
         DeactivateAccountsApi(account.username, idx)
-        //handleRemoveItem(idx) //causes a bug at the bottom of the list, deactivating an item
     }
 
     return (
         <>
-            {   !activeAccounts ?
-                <Error />
+            {   success.data === false ?
+                <Error statusCode={errorCode}/>
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">
@@ -88,64 +99,72 @@ const ActiveAccounts = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {activeAccounts.map((account, idx) => (
+                        <tbody className="relative bg-white divide-y divide-gray-200">
+                            {activeAccounts.length === 0 && success === true ?
+                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                    <td>No data available yet</td>
+                                </tr>
+                                :
                                 <>
-                                    {loading && update === 0 ?
-                                        <AMLoadingSkeleton />
-                                        :
+                                    {activeAccounts.map((account, idx) => (
                                         <tr key={account.username} className={`hover:bg-gray-100 text-sm text-left`}>
-                                            {deactivating !== idx ?
+                                            {loading && update === 0 ?
+                                                <AMLoadingSkeleton />
+                                                :
                                                 <>
+                                                    {deactivating !== idx ?
+                                                        <>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-48 break-all">
+                                                                    {account.username}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-48 break-all">
+                                                                    {account.email}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-48 break-all">
+                                                                    {account.name}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-48 break-all capitalize">
+                                                                    {account.type.replace(/_/g,' ').toLowerCase()}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-6 py-1">
+                                                                <p className="w-48 break-all">
+                                                                    {account.phoneNumber}
+                                                                </p>
+                                                            </td>
+                                                        </>
+                                                        :
+                                                        <ItemLoadingSkeleton />
+                                                    }
                                                     <td className="px-6 py-1">
-                                                        <p className="w-48 break-all">
-                                                            {account.username}
-                                                        </p>
-                                                    </td>
-                                                    <td className="px-6 py-1">
-                                                        <p className="w-48 break-all">
-                                                            {account.email}
-                                                        </p>
-                                                    </td>
-                                                    <td className="px-6 py-1">
-                                                        <p className="w-48 break-all">
-                                                            {account.name}
-                                                        </p>
-                                                    </td>
-                                                    <td className="px-6 py-1">
-                                                        <p className="w-48 break-all capitalize">
-                                                            {account.type}
-                                                        </p>
-                                                    </td>
-                                                    <td className="px-6 py-1">
-                                                        <p className="w-48 break-all">
-                                                            {account.phoneNumber}
-                                                        </p>
+                                                        <button
+                                                            type="submit"
+                                                            className={`${deactivating !== idx ? 'bg-red-500 hover:bg-red-600' : 'bg-yellow-500'} w-32 ml-auto block focus:outline-none text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-xs font-medium`}
+                                                            onClick={() => handleDeactivate(account, idx)}
+                                                        >
+                                                            {deactivating !== idx ?
+                                                                <span>Deactivate</span>
+                                                                :
+                                                                <div className="flex justify-start">
+                                                                    <img alt="loading" className="w-4 animate-spin text-white mr-1 -ml-1" src="/loading-w.svg" />
+                                                                    <span>Processing</span>
+                                                                </div>
+                                                            }
+                                                        </button>
                                                     </td>
                                                 </>
-                                                :
-                                                <ItemLoadingSkeleton />
                                             }
-                                            <td className="px-6 py-1">
-                                                <button
-                                                    type="submit"
-                                                    className={`${deactivating !== idx ? 'bg-red-500 hover:bg-red-600' : 'bg-yellow-500'} w-32 ml-auto block focus:outline-none text-white transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-xs font-medium`}
-                                                    onClick={() => handleDeactivate(account, idx)}
-                                                >
-                                                    {deactivating !== idx ?
-                                                        <span>Deactivate</span>
-                                                        :
-                                                        <div className="flex justify-start">
-                                                            <img alt="loading" className="w-4 animate-spin text-white mr-1 -ml-1" src="/loading-w.svg" />
-                                                            <span>Processing</span>
-                                                        </div>
-                                                    }
-                                                </button>
-                                            </td>
                                         </tr>
-                                    }
+                                    ))}
                                 </>
-                            ))}
+                            }
                         </tbody>
                     </table>
                 </div>

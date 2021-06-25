@@ -9,21 +9,26 @@ import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLo
 
 export const getStaticProps = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`)
+    const errorCode = res.ok ? 200 : res.statusCode
     const data = await res.json()
 
     return {
         props: {
-            data
+            data, errorCode,
         },
         revalidate: 1, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
     }
 }
 
-const InstallationProperties = ({ data }) => {
+const InstallationProperties = ({ data, errorCode }) => {
+
+    console.log('data', data)
+    console.log('errorCode', errorCode)
 
     const router = useRouter()
     const [modal, setModal] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [success, setSuccess] = useState(null)
     const [itemDetail, setItemDetail] = useState({
         osName: '',
         filter: '',
@@ -34,7 +39,7 @@ const InstallationProperties = ({ data }) => {
 
     useEffect(() => {
         const x = setTimeout(() => {
-            if (itemDetail.success) {
+            if (itemDetail.success === true) {
                 setModal(false)
             }
             if (data) { // our loading state is true by default, if data is not empty then display data and setLoading to false
@@ -95,8 +100,8 @@ const InstallationProperties = ({ data }) => {
         <>
             <Meta title="Installation Properties" />
             <Header title="Installation Properties" subTitle=""/>
-            {   !data ?
-                <Error />
+            {   errorCode > 300 ?
+                <Error statusCode={errorCode} />
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">
@@ -116,41 +121,49 @@ const InstallationProperties = ({ data }) => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody  className="bg-white divide-y divide-gray-200 text-sm">
-                            {data.map((item, idx) => (
-                                <tr
-                                    key={idx}
-                                    onClick={() => handleModal(item)}
-                                    className="hover:bg-gray-100 cursor-pointer"
-                                >
-                                    {   loading ?
-                                        <IPLoadingSkeleton />
-                                        :
-                                        <>
-                                            <td className="px-6 py-1">
-                                                <p className="w-48">
-                                                    {item.osName}
-                                                </p>
-                                            </td>
-                                            <td className="px-6 py-1">
-                                                <p className="w-48 break-all">
-                                                    {item.filter}
-                                                </p>
-                                            </td>
-                                            <td className="px-6 py-1">
-                                                <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
-                                                    {item.key}
-                                                </p>
-                                            </td>
-                                            <td className="px-6 py-1">
-                                                <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
-                                                    {item.value}
-                                                </p>
-                                            </td>
-                                        </>
-                                    }
+                        <tbody className="relative bg-white divide-y divide-gray-200 text-sm">
+                            {data && data.length === 0 && errorCode < 300 ?
+                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                    <td>no data available yet</td>
                                 </tr>
-                            ))}
+                                :
+                                <>
+                                    {data.map((item, idx) => (
+                                        <tr
+                                            key={idx}
+                                            onClick={() => handleModal(item)}
+                                            className="hover:bg-gray-100 cursor-pointer"
+                                        >
+                                            {   loading ?
+                                                <IPLoadingSkeleton />
+                                                :
+                                                <>
+                                                    <td className="px-6 py-1">
+                                                        <p className="w-48">
+                                                            {item.osName}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-6 py-1">
+                                                        <p className="w-48 break-all">
+                                                            {item.filter}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-6 py-1">
+                                                        <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
+                                                            {item.key}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-6 py-1">
+                                                        <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
+                                                            {item.value}
+                                                        </p>
+                                                    </td>
+                                                </>
+                                            }
+                                        </tr>
+                                    ))}
+                                </>
+                            }
                         </tbody>
                     </table>
                     {   !itemDetail ?

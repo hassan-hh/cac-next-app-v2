@@ -103,12 +103,12 @@ const LoginFull = () => {
                     console.warn('res', res)
                     const { emailAddress, idLogon, idLogonType, name, idAccount, sessionId } = res.data
                     console.log('res', res)
-                    const stringifyObjects = JSON.stringify(idLogonType) //this is being used in the context/store/localStorage
-                    const convertedStrs = stringifyObjects.toLowerCase()
-                    const lowerCaseidLogonType = JSON.parse(convertedStrs)
+                    // const stringifyObjects = JSON.stringify(idLogonType) //this is being used in the context/store/localStorage
+                    // const convertedStrs = stringifyObjects.toLowerCase()
+                    // const lowerCaseidLogonType = JSON.parse(convertedStrs)
                     localStorage.setItem('emailAddress', emailAddress)
                     localStorage.setItem('idLogon', idLogon)
-                    localStorage.setItem('idLogonType', lowerCaseidLogonType)
+                    localStorage.setItem('idLogonType', idLogonType.toLowerCase())
                     localStorage.setItem('name', name)
                     localStorage.setItem('idAccount', idAccount)
                     //localStorage.setItem('loggedIn', true)
@@ -118,7 +118,7 @@ const LoginFull = () => {
                         ...store,
                         emailAddress: emailAddress,
                         idLogon: idLogon,
-                        idLogonType: lowerCaseidLogonType,
+                        idLogonType: idLogonType,
                         name: name,
                         idAccount: idAccount,
                         //loggedIn: true,
@@ -195,7 +195,7 @@ const LoginFull = () => {
                                 id={user.idAccount}
                                 htmlFor={user.idAccount}
                             >
-                                <h1 className="text-xl">{user.name} {user.idLogonType}</h1>
+                                <h1 className="text-xl">{user.name} {user.idLogonType.toLowerCase()}</h1>
                                 <p>Avilable entities:</p>
                                 {   user.entities.map(entity => {
                                     return (

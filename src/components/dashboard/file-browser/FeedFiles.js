@@ -1,35 +1,58 @@
 import { useState, useEffect } from 'react'
 import FBLoadingSkeleton from '../loading-skeletons/FBLoadingSkeleton'
 import Error from '../../../pages/_error'
+import axios from 'axios'
  
 const FeedFiles = () => {
 
     const [feedFiles, setFeedFiles] = useState([])
+    console.log('feedFiles', feedFiles)
     const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState({
+        errorCode: null,
+        data: null
+    })
 
     useEffect(() => {
         feedFilesApi()
-        return () => {setLoading(false)}
-    }, [])
+        const x = setTimeout(() => {
+            if (success.data === true || success.data === false) {
+                setLoading(false)
+            }
+        }, 1000)
+        return () => {clearTimeout(x); setLoading(false);}
+    }, [success.data])
 
-    const feedFilesApi = async () => {
+    const feedFilesApi = () => {
         setLoading(true)
-        try {
-            const res = await fetch('/api/filebrowser/2/file')
-            const data = await res.json()
-            //setLoading(false)
-            setFeedFiles(data)
-        }
-        catch (err) {
-            setLoading(false)
-        }
+        axios.get('/api/filebrowser/2/file')
+            .then(res => {
+                if (res.status < 300) {
+                    setFeedFiles(res.data)
+                    setSuccess({
+                        ...success,
+                        errorCode: res.status,
+                        data: true
+                    })
+                }
+                console.log('res', res)
+            })
+            .catch(err => {
+                if (err.response.status > 300) {
+                    setSuccess({
+                        ...success,
+                        errorCode: err.response.status, 
+                        data: false
+                    })
+                }
+                console.log('err', err.response)
+            })
     }
-    //console.log('feedFiles', feedFiles)
     
     return (
         <>
-            {   !feedFiles ?
-                <Error />
+            {   success.data === false ?
+                <Error statusCode={success.errorCode}/>
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">
@@ -46,28 +69,34 @@ const FeedFiles = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {feedFiles.map(feedFile => (
+                        <tbody className="relative bg-white divide-y divide-gray-200">
+                            {feedFiles.length === 0 && success.data === true ?
+                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                    <td>No data available yet</td>
+                                </tr>
+                                :
                                 <>
-                                    {loading ?
-                                        <FBLoadingSkeleton />
-                                        :
+                                    {feedFiles.map((feedFile, idx) => (  
                                         <tr key={idx} className={`hover:bg-gray-100 text-sm text-left`}>
-                                            <>
-                                                <td className="px-6 py-1 w-80 break-all">
-                                                    <p>feedFiles</p>
-                                                </td>
-                                                <td className="px-6 py-1 w-80 break-all">
-                                                    <p>Last Modified</p>
-                                                </td>
-                                                <td className="px-6 py-1 w-80 break-all">
-                                                    <p>Size</p>
-                                                </td>
-                                            </>
+                                            {loading ?
+                                                <FBLoadingSkeleton />
+                                            :
+                                                <>
+                                                    <td className="px-6 py-1 w-80 break-all">
+                                                        <p>feedFiles</p>
+                                                    </td>
+                                                    <td className="px-6 py-1 w-80 break-all">
+                                                        <p>Last Modified</p>
+                                                    </td>
+                                                    <td className="px-6 py-1 w-80 break-all">
+                                                        <p>Size</p>
+                                                    </td>
+                                                </>
+                                            }
                                         </tr>
-                                    }
+                                    ))}
                                 </>
-                            ))}
+                            }
                         </tbody>
                     </table>
                 </div>
