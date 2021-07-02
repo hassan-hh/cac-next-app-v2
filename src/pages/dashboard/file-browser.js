@@ -67,21 +67,12 @@ const FileBrowser = () => {
                 </nav>
             </div>
             <TabPanel key={0} value={value} index={0}>
-                <div className="my-5">
-                    User Files
-                </div>
                 <UserFiles />
             </TabPanel>
             <TabPanel key={1} value={value} index={1}>
-                <div className="my-5">
-                    Log Files
-                </div>
                 <LogFiles />
             </TabPanel>
             <TabPanel key={2} value={value} index={2}>
-                <div className="my-5">
-                    Feed Files
-                </div>
                 <FeedFiles />
             </TabPanel>
         </>

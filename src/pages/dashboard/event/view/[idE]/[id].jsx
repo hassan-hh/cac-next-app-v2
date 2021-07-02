@@ -6,16 +6,17 @@ import Error from '../../../../_error'
 export const getServerSideProps = async (context) => {//this is single page for any type of post, pages, comments, with dynamic routing
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${context.params.idE}/${context.params.id}`) //e.g evets/SGP/2224 as the endpoint and it should return json res/display EVENTS DATA in the console log
     //const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${idEntity}/${idCA}`)
+    const errorCode = res.ok ? 200 : res.statusCode
     const data = await res.json()
 
     return {
         props: {
-            data
+            data, errorCode
         }
     }
 }
 
-const EventView = ({ data }) => {
+const EventView = ({ data, errorCode }) => {
     
     console.log('EVETS DATA', data)
 
@@ -23,8 +24,8 @@ const EventView = ({ data }) => {
         <>
             <Meta title="Event View" />
             <Header title="Event View" />
-            {   !data ?
-                <Error />
+            {   errorCode > 300 ?
+                <Error statusCode={errorCode} />
                 :
                 <>
                 <h1 className="text-green-500 text-lg mb-5 font-semibold">{data.idEntity}/{data.idCA}</h1>

@@ -23,6 +23,7 @@ export const DrawerProvider = ({ children }) => {
         AccountApi()
         BookmarksApi()
         SavedSearchesApi()
+        return () => { setLoading(false); } //cause memory leak error after login sucess 
     }, [])
     
     const DateApi = () => {
@@ -50,6 +51,7 @@ export const DrawerProvider = ({ children }) => {
         })
     }
     const RegionsApi = () => {
+        //setLoading(true)
         axios.get(`/api/account/regions`)
         .then(res => {
             if (res.status < 300) {
@@ -74,6 +76,7 @@ export const DrawerProvider = ({ children }) => {
         })
     }
     const AccountApi = () => {
+        //setLoading(true)
         axios.get(`/api/account/entities`)
         .then(res => {
             if (res.status < 300) {
@@ -98,6 +101,7 @@ export const DrawerProvider = ({ children }) => {
         })
     }
     const BookmarksApi = () => {
+        //setLoading(true)
         axios.get(`/api/bookmark`)
         .then(res => {
             if (res.status < 300) {
@@ -122,6 +126,7 @@ export const DrawerProvider = ({ children }) => {
         })
     }
     const SavedSearchesApi = () => {
+        //setLoading(true)
         axios.get(`/api/events/saved`)
         .then(res => {
             if (res.status < 300) {

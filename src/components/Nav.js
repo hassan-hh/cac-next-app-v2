@@ -21,30 +21,32 @@ const Nav = ({ loggedIn }) => {
         setIsActive(value)
     }
 
-    // Allow for outside click - need to include nav bar ?
+    console.log('container', container)
     useEffect(() => {
-        const handleOutsideClick = e => {
-            if (!container.current.contains(e.target)) {
-                if(!userMenu && !dropDownMenu) return
+        const handleOutsideClick = () => {
+            if (!container.current || container.current) { //container.current.contains(e.target) //error Cannot read the property 'contains' of null
+                if (!userMenu && !dropDownMenu)
+                return
                     setUserMenu(false)
                     setDropDownMenu(false)
             }
         }
-        window.addEventListener("click", handleOutsideClick);
-        return () => window.removeEventListener("click", handleOutsideClick);
+        window.addEventListener("click", handleOutsideClick)
+        return () => window.removeEventListener("click", handleOutsideClick)
     }, [userMenu, dropDownMenu, container])
 
    // Allow to use the `esc` key
     useEffect(() => {
         const handleEscape = e => {
-        if (!userMenu && !dropDownMenu) return
+            if (!userMenu && !dropDownMenu)
+            return
             if (e.key === "Escape") {
                 setUserMenu(false)
                 setDropDownMenu(false)
             }
         }
-        document.addEventListener("keyup", handleEscape);
-        return () => document.removeEventListener("keyup", handleEscape);
+        document.addEventListener("keyup", handleEscape)
+        return () => document.removeEventListener("keyup", handleEscape)
     }, [userMenu, dropDownMenu])
 
     const handleLogout = e => {
@@ -70,10 +72,12 @@ const Nav = ({ loggedIn }) => {
             //JSESSIONID: '',
         })
         //window.location.href = '/login'
-        //router.push('/login')
-        setLoggedIn(false)
-        // setLoggedIn(false)
         setLoadingScreen(true)
+        setLoggedIn(false)
+        router.push('/login')
+        
+        //setLoggedIn(false)
+        
         // router.push('/login')
     }
 
@@ -232,7 +236,7 @@ const Nav = ({ loggedIn }) => {
                                                 Client Download
                                             </a>
                                         </Link>
-                                        <button type="submit" onClick={handleLogout} className="flex items-center justify-between mx-2 my-1 rounded-md text-left w-44 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                        <button type="submit" onClick={handleLogout} className="flex items-center justify-between mx-2 my-1 rounded-md text-left w-44 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none" role="menuitem">
                                             Sign out
                                             <img alt="Sign Out" className="w-4" src="/logout.svg" />
                                         </button>

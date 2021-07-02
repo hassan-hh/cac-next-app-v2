@@ -22,6 +22,14 @@ import { parseCookies } from './helpers/index'
 //     }
 // }
 
+// export const ProtectRoute = ({ children }) => {
+//     //if (isLoading || (!isAuthenticated && window.location.pathname !== '/login')){
+//     if ((!sessionId && window.location.pathname !== '/login')){
+//         return <LoadingScreen />;
+//     }
+//     return children
+// }
+
 const Layout = ({ children, parsedCookies }) => {
 
     // console.log('parsedCookies/sessionId', parsedCookies)
@@ -45,20 +53,27 @@ const Layout = ({ children, parsedCookies }) => {
         if (store.sessionId) {
             //router.push('/dashboard')
             setLoggedIn(true)
-            setLoadingScreen(true)
+            //setLoadingScreen(true)
         }
+        // if (loggedIn) {
+        //     setLoadingScreen(true)
+        // }
         // if (loggedIn === false) {
         //     router.push('/login')
         // }
-        const x = setTimeout(() => {
-            if (loggedIn === false && router.pathname !== '/login') { //after login out to login url then set loading screen false, not on dashboad as we don't know what page the user will sign out from 
+        if (router.pathname !== '/login' || router.pathname === '/login' ) {// after redirected to dashboard remove loading screen
+            setLoadingScreen(false)
+        }
+        const x = setTimeout(() => { //on logout, before redirect to login keep loading scren for 1 second. it has been set to true on click logout button in nav
+            if (router.pathname === '/login' && loggedIn === false) { //after logout to login url then set loading screen false, not on dashboad as we don't know what page the user will sign out from 
                 setLoadingScreen(false)
+                //router.push('/login')
             }
             // if (store.sessionId) {
             //     router.push('/dashboard')
             // }
         }, 1000)
-        return () => clearTimeout(x)
+        return () => { clearTimeout(x);}
     }, [loggedIn, store.sessionId])
 
 
@@ -68,15 +83,16 @@ const Layout = ({ children, parsedCookies }) => {
     // } else if (loggedIn) {
     //     router.push('/dasboard')
     
-
-    if (loggedIn === false && loadingScreen === false && router.pathname !== '/login') { //&& router.pathname !== '/login' //protect all routes before login - this will display the LoadingScreen component and above will redirect user back to login.
+    //NotAuthScreen for non logged in users - before a user login and goes to another url then we protect it here
+    if (router.pathname !== '/login' && loggedIn === false) { //&& router.pathname !== '/login' //protect all routes before login - this will display the LoadingScreen component and above will redirect user back to login.
         return (
             <div style={!loggedIn ? { background: '#2bbc9c' } : {}}>
                 <NotAuthScreen />
             </div>
         )    
     }
-    else if (loadingScreen === true && router.pathname === '/login') { //&& !loggedIn //&& router.pathname === '/login' //or keep pathname !== '/login' and with timer on singout 
+    //LoadingScreen if //router.pathname === '/login' && 
+    else if ( router.pathname === '/login' && loadingScreen === true && loggedIn === true  ) { //&& !loggedIn //&& router.pathname === '/login' //or keep pathname !== '/login' and with timer on signout 
         return (
             <div className="h-screen flex items-center justify-center">
                 <LoadingScreen />
@@ -105,7 +121,7 @@ const Layout = ({ children, parsedCookies }) => {
                             :
                             <>
                                 <DrawerProvider>
-                                    <aside style={!open ? { width: '0px' } : {} } className="flex flex-col items-center lg:block w-full sm:w-96 lg:w-96 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 transition-all ease-in-out duration-500 z-20 lg:z-0">
+                                    <aside className={`${!open ? 'w-0' : ''} flex flex-col items-center lg:block custom-w-full sm:custom-w-24 lg:custom-w-318 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 transition-all ease-in-out duration-500 z-20 lg:z-0`}>
                                         <Drawer open={open}/>
                                     </aside>
                                 </DrawerProvider>

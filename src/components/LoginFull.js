@@ -56,7 +56,10 @@ const LoginFull = () => {
         else {
             setSelected(null)
         }
-        if (matchUser.length === 0 || matchUser.length !== 0 && login.password !== '' && loading === true) { //&& login.error === true // to replace the login.status === 401 or added it to it 
+        if (login.error === true || login.error === false) {//or just login.error for both
+            setConnectAccount(false)
+        }
+        if (matchUser.length === 0 || matchUser.length !== 0 && login.password !== '' && loading === true) { //&& login.error === true // to replace the login.status === 401 or added it 
         //reset error to empty string to remove error status 401 otherwise error message will always show 
         //we dont need matchUser.length === 0, because we need to find user first then submit the form so check user error will show instead and matchUser.length === 0 is used here to clear my 401 error to re-enter the password again without keeping the old error status 401
             setLogin({
@@ -65,8 +68,8 @@ const LoginFull = () => {
                 status: null
             })
         }
-        if (login.error === true) {
-            setConnectAccount(false)
+        if (matchUser.length !== 0 && login.password === '') {
+            setLoading(false)
         }
         // if (login.error === true) {
         //     setLoading(false)
@@ -81,7 +84,7 @@ const LoginFull = () => {
         //     setLoadingScreen(false)
         // }
         return () => { setLoading(false); setConnectAccount(false);} //clenup function
-    }, [login.username, matchUser.length, login.password]) //, login.error
+    }, [login.username, matchUser.length, login.password, login.error]) //, login.error
 
     const handleFormSubmit = e => {
         e.preventDefault()
@@ -90,7 +93,7 @@ const LoginFull = () => {
         //if username with single accountType like catsupp can login with or without selecting the account, username with mutliple accounts need to select an account type to login with or error
         //const userLogon = selected ? selected.idLogon : login.username //this goes with if i have users, select the first option
         //const userLogon = selected.idlogon ? selected.idlogon : matchUser.length !== 0 ? selected.idlogon : ''
-        const userLogon = selected.idLogon ? selected.idLogon : login.username
+        const userLogon = selected ? selected : login.username
         //{   selected.idLogon && login.password !== '' ?
             axios.post(`/api/user/login?username=${userLogon}&password=${login.password}`)
             .then(res => {
@@ -235,8 +238,7 @@ const LoginFull = () => {
                                 <img alt="loading" className="w-5 animate-spin" src="/loading.svg" />
                                 <span className="pl-2 w-96 text-sm leading-snug">Please wait while we connect you to your account.</span>
                             </>
-                        : 
-                        login.error === true && login.status === 401 ? //matchUser.length !== 0 && login.password !== '' && login.status === 401 the original code on top. I don't need the 401 because error code could be 500 server error.
+                        : login.error === true && login.status === 401 ? //matchUser.length !== 0 && login.password !== '' && login.status === 401 the original code on top. I don't need the 401 because error code could be 500 server error.
                         <>
                             <img alt="x-mark" className="w-5" src="/x-mark.svg" />
                             <span className="pl-2 w-96 text-sm leading-snug">Sorry, that password isn't right. We can help you recover your password
@@ -249,8 +251,7 @@ const LoginFull = () => {
                                 </Link>
                             </span>
                         </>
-                        :
-                        login.error === true && login.status > 300 ? //empty pink box remain in the same place
+                        : login.error === true && login.status > 300 ? //empty pink box remain in the same place
                         <>
                             <img alt="x-mark" className="w-5" src="/x-mark.svg" />
                             <span className="pl-2 w-96 text-sm leading-snug">

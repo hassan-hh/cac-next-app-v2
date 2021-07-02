@@ -2,3 +2,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*using custom classes for responsive desktop e.g sm: md: lg: we also have to create the custom class for mobile e.g. full width  */
+@layer utilities {
+  @variants responsive {
+    .custom-w-full {
+      /*for mobile screen*/
+      width: 100%;
+    }
+    .custom-w-318 {
+      /*for desktop screen*/
+      width: 30.5rem;
+    }
+    .custom-w-24 {
+      /*for iPad screen*/
+      width: 24rem;
+    }
+  }
+}

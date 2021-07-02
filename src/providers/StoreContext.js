@@ -5,14 +5,6 @@ import LoadingScreen from '../components/dashboard/LoadingScreen'
 
 export const StoreContext = createContext()
 
-// export const ProtectRoute = ({ children }) => {
-//     //if (isLoading || (!isAuthenticated && window.location.pathname !== '/login')){
-//     if ((!sessionId && window.location.pathname !== '/login')){
-//         return <LoadingScreen />;
-//     }
-//     return children
-// }
-
 export const StoreProvider = ({ children }) => {
 
     const router = useRouter()

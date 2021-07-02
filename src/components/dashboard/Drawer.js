@@ -19,12 +19,12 @@ const Drawer = ({open}) => {
     const formatedDate = `${displayText} ${day} ${month} ${date.getFullYear()}`
     
     useEffect(() => {
-         const x = setTimeout(() => {
+        const x = setTimeout(() => {
             if (success.data === true || success.data === false) {
                 setLoading(false)
             }
         }, 1000)
-        return () => { clearTimeout(x); setLoading(false); }
+        return () => { clearTimeout(x); }
     }, [success.data])
 
     if (!bookmarks.bookmark) { //nested array within an object bookmarks { bookmark[] }
@@ -66,9 +66,9 @@ const Drawer = ({open}) => {
                         }
                     </p>
                     <div className="bg-white p-6 w-full shadow-sm rounded-md">
-                        <img alt="Cats Logo" className="w-80 mb-5" src="/cats_logo_large.png" />
+                        <img alt="Cats Logo" className="h-50" src="/cats_logo_large.png" />
                         <div className="relative flex items-center flex-row mb-5">
-                            <p className="mr-2">Region</p>
+                            <p className="mr-2 mt-5">Region</p>
                             { regions.length === 0 && success.data === true ?
                                 'No data available yet'
                                 : regions.length !== 0 && success.data === true ?
