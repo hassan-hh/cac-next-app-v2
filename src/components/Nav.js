@@ -75,10 +75,6 @@ const Nav = ({ loggedIn }) => {
         setLoadingScreen(true)
         setLoggedIn(false)
         router.push('/login')
-        
-        //setLoggedIn(false)
-        
-        // router.push('/login')
     }
 
     // useEffect(() => {

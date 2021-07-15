@@ -58,7 +58,7 @@ const AccountRequest = () => {
                 <>
                     <button
                         type="button"
-                        className={`bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none`}
+                        className={`absolute top-11 bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none`}
                         onClick={() => setUpdate(update + 1)}
                     >
                         {   !loading ?
@@ -74,7 +74,7 @@ const AccountRequest = () => {
                         }
                     </button>
                     <div className="h-screen max-w-full overflow-auto">
-                        <table className="min-w-full divide-y divide-gray-200 shadow-sm mt-8">
+                        <table className="min-w-full divide-y divide-gray-200 shadow-sm mt-16">
                             <thead className="bg-gray-50">
                                 <tr className="text-left text-xs text-gray-500 tracking-wider">
                                     <th scope="col" className="px-6 py-3 w-80 font-medium">
@@ -99,7 +99,7 @@ const AccountRequest = () => {
                             </thead>
                             <tbody className="relative bg-white divide-y divide-gray-200">
                                 {accountRequest.length === 0 && success.data === true ?
-                                    <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                    <tr className="absolute top-80 inset-0 flex items-center justify-center h-10">
                                         <td>No data available yet</td>
                                     </tr>
                                     :

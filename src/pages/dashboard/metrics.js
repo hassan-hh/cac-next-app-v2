@@ -1794,20 +1794,20 @@ const Metrics = ({ data, errorCode }) => {
                             <h2 className="text-xl">Memory</h2>
                             <p className="text-sm mt-3">Total Memory ({usedMemory}M / {maxMemory}M)</p>
                             <div className="w-full lg:w-3/4">
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${memory}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${memory}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{memory}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Heap Memory ({usedHeapMemory}M / {maxHeapMemory}M)</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${heapMemory}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${heapMemory}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{heapMemory}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Non Heap Memory ({usedNonHeapMemory}M / {maxNonHeapMemory}M)</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-red-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${nonHeapMemory}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-red-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${nonHeapMemory}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{nonHeapMemory}%</span>
                                 </div>
@@ -1827,26 +1827,26 @@ const Metrics = ({ data, errorCode }) => {
                             </div>
                             <p className="text-sm mt-3">Runnable ({runnable})</p>
                             <div className="w-full lg:w-3/4">
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${runnableThread}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${runnableThread}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{runnableThread}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Timed Waiting ({timedWaiting})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${timedWaitingThread}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${timedWaitingThread}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{timedWaitingThread}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Waiting ({waiting})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${waitingThread}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${waitingThread}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{waitingThread}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Blocked ({blocked})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-gray-400 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${blockedThread}%` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-gray-400 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${blockedThread}%` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{blockedThread}%</span>
                                 </div>
@@ -1860,26 +1860,26 @@ const Metrics = ({ data, errorCode }) => {
                             </div>
                             <p className="text-sm mt-3">Mark Sweep count - G1 old ({markSweepTime})</p>
                             <div className="w-full lg:w-3/4">
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${markSweepTime}` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${markSweepTime}` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{markSweepTime}</span>
                                 </div>
                                 <p className="text-sm mt-3">Mark Sweep time - G1 old ({markSweepCount})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${markSweepCount}` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${markSweepCount}` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{markSweepCount}</span>
                                 </div>
                                 <p className="text-sm mt-3">Scavenge count - G1 young ({scavengeTime})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${scavengeTime}` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${scavengeTime}` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{scavengeTime}</span>
                                 </div>
                                 <p className="text-sm mt-3">Scavenge time - G1 young ({scavengeCount})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs">
-                                    <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000" style={{ width: `${scavengeCount}` }}>
+                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${scavengeCount}` }}>
                                     </div>
                                     <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{scavengeCount}</span>
                                 </div>

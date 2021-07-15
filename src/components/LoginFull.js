@@ -5,12 +5,13 @@ import axios from 'axios'
 import styles from '../styles/Login.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import LoadingScreen from './dashboard/LoadingScreen'
+import { getRouteMatcher } from 'next/dist/next-server/lib/router/utils'
 
 const LoginFull = () => {
 
     const router = useRouter()
-    const { loggedIn, setLoggedIn, setLoadingScreen, store, setStore } = useContext(StoreContext)
-    //const [openModal, setOpenModal] = useState(false)
+    const { loggedIn, setLoggedIn, setLoadingScreen, store, setStore, loadingScreen } = useContext(StoreContext)
     const [login, setLogin] = useState({
         username: '', //any of these objects if mathed with object destructure below line 124 then it will update the same object or it will create another object from line 124
         password: '',
@@ -20,14 +21,12 @@ const LoginFull = () => {
     console.log('LoginState', login)
     const [matchUser, setMatchUser] = useState([])
     console.log('MatchUser', matchUser)
-    const [selected, setSelected] = useState({})
+    const [selected, setSelected] = useState(null)
     console.log('Selected', selected)
     const [loading, setLoading] = useState(false)
     console.log('is loading', loading)
-    const [connectAccount, setConnectAccount] = useState(false) //login.error ? false : ''
+    const [connectAccount, setConnectAccount] = useState(false)
     console.log('connectAccount', connectAccount)
-
-
 
     const matchUserApi = async () => {
             setLoading(true)
@@ -35,9 +34,6 @@ const LoginFull = () => {
             const res = await fetch(`/api/user/match/${login.username}/account`) //this api used for fetching user account before login
             const account = await res.json()
             setLoading(false)
-            // const stringifyObjects = JSON.stringify(account)
-            // const convertedStrs = stringifyObjects.toLowerCase()
-            // const lowerCaseData = JSON.parse(convertedStrs)
             setMatchUser(account)
         }
         catch (err) {
@@ -53,12 +49,12 @@ const LoginFull = () => {
         if (matchUser.length !== 0) {
             setSelected(matchUser.[0].idLogon) //!== 0 if result displayed, select the first input/option avilable
         }
-        else {
-            setSelected(null)
-        }
-        if (login.error === true || login.error === false) {//or just login.error for both
-            setConnectAccount(false)
-        }
+        // if (login.error === true || login.error === false) {//or just login.error for both - need this for both success or error, otherwise the connect account message will not get removed if error is occurred
+        //     setConnectAccount(false)
+        // }
+        // if (matchUser.length !== 0 && login.password === '') {
+        //     setLoading(false)
+        // }
         if (matchUser.length === 0 || matchUser.length !== 0 && login.password !== '' && loading === true) { //&& login.error === true // to replace the login.status === 401 or added it 
         //reset error to empty string to remove error status 401 otherwise error message will always show 
         //we dont need matchUser.length === 0, because we need to find user first then submit the form so check user error will show instead and matchUser.length === 0 is used here to clear my 401 error to re-enter the password again without keeping the old error status 401
@@ -68,82 +64,64 @@ const LoginFull = () => {
                 status: null
             })
         }
-        if (matchUser.length !== 0 && login.password === '') {
-            setLoading(false)
-        }
-        // if (login.error === true) {
-        //     setLoading(false)
-        // }
-        // const id = setTimeout(() => {
-        //     if (login.username !== '' ) {
-        //         matchUserApi()
-        //     }
-        //  }, 2000)
-        // return () => clearTimeout(id)
-        // if (loggedIn == false && router.pathname === '/login') { //after login out to login url then set loading screen false, not on dashboad as we don't know what page the user will sign out from 
-        //     setLoadingScreen(false)
-        // }
-        return () => { setLoading(false); setConnectAccount(false);} //clenup function
+        return () => { setLoading(false); setConnectAccount(false);} //clenup function will immediatley set both to false after they are set to true - without the need to set it back manually
     }, [login.username, matchUser.length, login.password, login.error]) //, login.error
 
     const handleFormSubmit = e => {
         e.preventDefault()
         setConnectAccount(true)
         // HOW IT WORKS 
-        //if username with single accountType like catsupp can login with or without selecting the account, username with mutliple accounts need to select an account type to login with or error
-        //const userLogon = selected ? selected.idLogon : login.username //this goes with if i have users, select the first option
-        //const userLogon = selected.idlogon ? selected.idlogon : matchUser.length !== 0 ? selected.idlogon : ''
+        //matched user account will be setSelected automatically the first account
         const userLogon = selected ? selected : login.username
-        //{   selected.idLogon && login.password !== '' ?
-            axios.post(`/api/user/login?username=${userLogon}&password=${login.password}`)
-            .then(res => {
-                if (res.status < 300) {
-                    setLogin({
-                        ...login,
-                        error: false,
-                        status: res.status
-                    })
-                    console.warn('res', res)
-                    const { emailAddress, idLogon, idLogonType, name, idAccount, sessionId } = res.data
-                    console.log('res', res)
-                    // const stringifyObjects = JSON.stringify(idLogonType) //this is being used in the context/store/localStorage
-                    // const convertedStrs = stringifyObjects.toLowerCase()
-                    // const lowerCaseidLogonType = JSON.parse(convertedStrs)
-                    localStorage.setItem('emailAddress', emailAddress)
-                    localStorage.setItem('idLogon', idLogon)
-                    localStorage.setItem('idLogonType', idLogonType.toLowerCase())
-                    localStorage.setItem('name', name)
-                    localStorage.setItem('idAccount', idAccount)
-                    //localStorage.setItem('loggedIn', true)
-                    Cookies.set('sessionId', sessionId)
+        axios.post(`/api/user/login?username=${userLogon}&password=${login.password}`)
+        .then(res => {
+            if (res.status < 300) {
+                setLogin({
+                    ...login,
+                    error: false,
+                    status: res.status
+                })
+                const { emailAddress, idLogon, idLogonType, name, idAccount, sessionId } = res.data
+                localStorage.setItem('emailAddress', emailAddress)
+                localStorage.setItem('idLogon', idLogon)
+                localStorage.setItem('idLogonType', idLogonType.toLowerCase())
+                localStorage.setItem('name', name)
+                localStorage.setItem('idAccount', idAccount)
+                //localStorage.setItem('loggedIn', true)
+                Cookies.set('sessionId', sessionId)
 
-                    setStore({
-                        ...store,
-                        emailAddress: emailAddress,
-                        idLogon: idLogon,
-                        idLogonType: idLogonType,
-                        name: name,
-                        idAccount: idAccount,
-                        //loggedIn: true,
-                        sessionId: sessionId, // JSESSIONID already stored in the cookie and cookie usually comes from the rest route itself we don't need to store it manually. Not like auth token JWT must be passed to the headers and stored in the local storage.
-                    })
-                    console.log('LoginStore', store)
-                }
-            })
-            .catch(err => {
-                if (err.response.status > 300) {
-                    setLogin({
-                        ...login,
-                        error: true,
-                        status: err.response.status
-                    })
-                }
-                console.warn('errData', err.response)
-            })
-            //:
-            //''
-        //}
+                setStore({
+                    ...store,
+                    emailAddress: emailAddress,
+                    idLogon: idLogon,
+                    idLogonType: idLogonType,
+                    name: name,
+                    idAccount: idAccount,
+                    //loggedIn: true,
+                    sessionId: sessionId, // JSESSIONID already stored in the cookie and cookie usually comes from the rest route itself we don't need to store it manually. Not like auth token JWT must be passed to the headers and stored in the local storage.
+                })
+                console.log('LoginStore', store)
+            }
+        })
+        .catch(err => {
+            if (err.response.status > 300) {
+                setLogin({
+                    ...login,
+                    error: true,
+                    status: err.response.status
+                })
+            }
+            console.warn('errData', err.response)
+        })
     }
+
+    useEffect(() => {
+        if (store.sessionId) { //after authenticated redirect me to dashobard  //&& router.pathname === '/login'
+            router.push('/dashboard')
+            //setLoggedIn(true)
+            setLoadingScreen(true)
+        }
+    })
 
     const handleOnChange = e => {
         setLogin({...login, [e.target.name]: e.target.value})
@@ -152,13 +130,6 @@ const LoginFull = () => {
         setSelected({ [e.target.name]: e.target.value })
     }
     const { username, password } = login
-
-    if (store.sessionId) { //after authenticated redirect me to dashobard 
-        router.push('/dashboard')
-        setLoggedIn(true)
-        setLoadingScreen(true)
-        //setConnectAccount(false) //it should be false after auth, an error react renders too many ...etc
-    }
 
     return (
         <div className="w-96">
@@ -229,7 +200,7 @@ const LoginFull = () => {
                                 <span className="pl-2 w-96 text-sm leading-snug">Sorry, we couldn't find an account with that username. Please check your username.</span>
                             </>
                         :
-                        ''
+                        null
                     }
                 </div>
                 <div className={`${ connectAccount && login.password !== '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.error === true ? 'bg-red-100 h-24 mt-2 opacity-100' : '' } flex justify-evenly items-center opacity-0 rounded-md px-2 h-0 transition-all duration-300 ease-in-out`}>
@@ -262,7 +233,7 @@ const LoginFull = () => {
                             </span>
                         </>
                         :
-                        ''
+                        null
                     }
                 </div>
                 <label
@@ -283,8 +254,6 @@ const LoginFull = () => {
                     required
                 />
                 <button
-                    //onClick={() => setOpenModal(true)}
-                    //onClick={() => setLoading(true)}
                     type="submit"
                     className="rounded-md w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-gray-900 shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
                 >

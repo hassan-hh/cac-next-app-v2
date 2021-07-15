@@ -16,7 +16,7 @@ export const getStaticProps = async () => {
         props: {
             data, errorCode
         },
-        revalidate: 1,
+        revalidate: 30,
     }
 }
 

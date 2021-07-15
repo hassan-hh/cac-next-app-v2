@@ -16,7 +16,7 @@ export const getStaticProps = async () => {
         props: {
             data, errorCode,
         },
-        revalidate: 1, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
+        revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
     }
 }
 

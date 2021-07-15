@@ -9,8 +9,8 @@ const App = ({ Component, pageProps }) => {
   return (
     <StoreProvider>
       <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Component {...pageProps} />
+      </Layout>
     </StoreProvider>
   )
 }

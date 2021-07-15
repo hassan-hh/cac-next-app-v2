@@ -7,92 +7,46 @@ import Footer from './Footer'
 import { DrawerProvider } from '../providers/DrawerContext'
 import LoadingScreen from './dashboard/LoadingScreen'
 import NotAuthScreen from './dashboard/NotAuthScreen'
-import Cookies from 'js-cookie'
-import { parseCookies } from './helpers/index'
 
 
-// export async function getInitialProps({req}) {
-//     const parsedCookies = parseCookies(req)
-//   //
-//   //Cookies.parse(context.req.headers.Cookies);
-//     return {
-//         props: {
-//             parsedCookies
-//         }
-//     }
-// }
-
-// export const ProtectRoute = ({ children }) => {
-//     //if (isLoading || (!isAuthenticated && window.location.pathname !== '/login')){
-//     if ((!sessionId && window.location.pathname !== '/login')){
-//         return <LoadingScreen />;
-//     }
-//     return children
-// }
-
-const Layout = ({ children, parsedCookies }) => {
-
-    // console.log('parsedCookies/sessionId', parsedCookies)
+const Layout = ({ children}) => {
 
     const router = useRouter()
     const { store, setStore, loggedIn, setLoggedIn, loadingScreen, setLoadingScreen } = useContext(StoreContext)
-    
     console.log('loadingScreen', loadingScreen)
     const [open, setOpen] = useState(true)
     console.log('loggedIn', loggedIn)
-    //const [loggedIn, setLoggedIn] = useState(true)
-    //const [loadingScreen, setLoadingScreen] = useState(false)
-    //const [loading, setLoading] = useState(true)
-
-    //const { sessionId } = store
 
     useEffect(() => { //this will redirect the user when page is refreshed, page could be refreshed by visiting wrong url or hard resfresh the browser
-        // if (!store.sessionId && router.pathname !== '/login') {
-        //     router.push('/login')
-        // } 
         if (store.sessionId) {
-            //router.push('/dashboard')
             setLoggedIn(true)
-            //setLoadingScreen(true)
+            setLoadingScreen(true)
         }
-        // if (loggedIn) {
-        //     setLoadingScreen(true)
-        // }
-        // if (loggedIn === false) {
-        //     router.push('/login')
-        // }
-        if (router.pathname !== '/login' || router.pathname === '/login' ) {// after redirected to dashboard remove loading screen
+        if (router.pathname === '/login' && loggedIn === false) { //on log out
             setLoadingScreen(false)
         }
-        const x = setTimeout(() => { //on logout, before redirect to login keep loading scren for 1 second. it has been set to true on click logout button in nav
-            if (router.pathname === '/login' && loggedIn === false) { //after logout to login url then set loading screen false, not on dashboad as we don't know what page the user will sign out from 
-                setLoadingScreen(false)
-                //router.push('/login')
+        if (router.pathname !== '/login' && loggedIn === true) { //on logged in
+            setLoadingScreen(false);
+        }
+        const x = setTimeout(() => {
+            if (!store.sessionId) { //after logout/before auth, if user goes to another url 
+                router.push('/login')
             }
-            // if (store.sessionId) {
-            //     router.push('/dashboard')
-            // }
-        }, 1000)
-        return () => { clearTimeout(x);}
-    }, [loggedIn, store.sessionId])
-
-
-
-    // if (!loggedIn) {
-    //     router.push('/login')
-    // } else if (loggedIn) {
-    //     router.push('/dasboard')
+        }, 2000)
+        return () => { clearTimeout(x); }
+    }, [loggedIn, store.sessionId, router.pathname])
+    
     
     //NotAuthScreen for non logged in users - before a user login and goes to another url then we protect it here
-    if (router.pathname !== '/login' && loggedIn === false) { //&& router.pathname !== '/login' //protect all routes before login - this will display the LoadingScreen component and above will redirect user back to login.
+    
+    if (loadingScreen === false && !store.sessionId && router.pathname !== '/login') { //&& router.pathname !== '/login' //protect all routes before login - this will display the LoadingScreen component and above will redirect user back to login.
         return (
             <div style={!loggedIn ? { background: '#2bbc9c' } : {}}>
                 <NotAuthScreen />
             </div>
-        )    
+        )
     }
-    //LoadingScreen if //router.pathname === '/login' && 
-    else if ( router.pathname === '/login' && loadingScreen === true && loggedIn === true  ) { //&& !loggedIn //&& router.pathname === '/login' //or keep pathname !== '/login' and with timer on signout 
+    else if (loadingScreen === true) { //we cant use loggedIn true or router.pathname, because on login loggedIn is true and on logout loggedIn is false. route if still login page then loadingScreen and if route not login means on logout
         return (
             <div className="h-screen flex items-center justify-center">
                 <LoadingScreen />
@@ -102,42 +56,30 @@ const Layout = ({ children, parsedCookies }) => {
     else {
         return (
             <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}>
-                {/* {   loadingScreen ? //&& router.pathname === '/login' || router.pathname === '/dashboard/' //protect dashboard routes after login e.g loadingscreen spinner
-                    <div className="h-screen flex items-center justify-center">
-                        <LoadingScreen />
-                    </div>
-                    : */}
-                    <>
-                    <Nav loggedIn={loggedIn} />
-                        <img
-                            src="/drawerToggler.svg"
-                            alt="toggler icon"
-                            className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
-                            onClick={() => setOpen(!open)}
-                        />
-                        <main className="flex flex-row relative">
-                            {!loggedIn ?
-                                null
-                            :
-                            <>
-                                <DrawerProvider>
-                                    <aside className={`${!open ? 'w-0' : ''} flex flex-col items-center lg:block custom-w-full sm:custom-w-24 lg:custom-w-318 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 transition-all ease-in-out duration-500 z-20 lg:z-0`}>
-                                        <Drawer open={open}/>
-                                    </aside>
-                                </DrawerProvider>
-                            </>
-                            }
-                            <section className={`${loggedIn ? 'bg-gray-200' : ''} min-w-full lg:min-w-0 w-full overflow-auto p-4 sm:py-10 sm:px-10 min-h-screen z-10`}>
-                                {children}
-                            </section>
-                        </main>
-                        <Footer loggedIn={loggedIn} />
-                    </>
-                {/* } */}
+                <Nav loggedIn={loggedIn} />
+                <img
+                    src="/drawerToggler.svg"
+                    alt="toggler icon"
+                    className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    onClick={() => setOpen(!open)}
+                />
+                <main className="flex flex-row relative">
+                    {   !loggedIn ?
+                        null
+                    :
+                        <DrawerProvider>
+                            <aside className={`${!open ? 'w-0' : ''} flex flex-col items-center lg:block custom-w-full sm:custom-w-24 lg:custom-w-318 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 transition-all ease-in-out duration-500 z-20 lg:z-0`}>
+                                <Drawer open={open}/>
+                            </aside>
+                        </DrawerProvider>
+                    }
+                    <section className={`${loggedIn ? 'bg-gray-200' : ''} min-w-full lg:min-w-0 w-full overflow-auto p-4 sm:py-10 sm:px-10 min-h-screen z-10`}>
+                        {children}
+                    </section>
+                </main>
+                <Footer loggedIn={loggedIn} />
             </div>
         )
     }
 }
 export default Layout
-
-

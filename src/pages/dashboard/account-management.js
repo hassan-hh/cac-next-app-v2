@@ -12,6 +12,7 @@ const TabPanel = props => {
     
     return (
         <div
+            className="relative"
             role="tabpanel"
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
@@ -70,22 +71,19 @@ const AccountManagement = () => {
                 <div className="my-5">
                     Account Request
                 </div>
-                <AccountRequest
-                />
+                <AccountRequest/>
             </TabPanel>
             <TabPanel key={1} value={value} index={1}>
                 <div className="my-5">
                     Active Accounts
                 </div>
-                <ActiveAccounts
-                />
+                <ActiveAccounts/>
             </TabPanel>
             <TabPanel key={2} value={value} index={2}>
                 <div className="my-5">
                     Deactivated Accounts
                 </div>
-                <DeactivatedAccounts
-                />
+                <DeactivatedAccounts/>
             </TabPanel>
         </>
     )
