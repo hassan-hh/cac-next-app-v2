@@ -51,7 +51,7 @@ const Drawer = ({open}) => {
             {   loading === true ? //correct loading skeleton for all responses. then display data or each res error separatley 
                 <SBLoadingSkeleton />
                 :
-                <div className={`${open ? 'opacity-100' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto w-80 sm:w-96 absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
+                <div style={{width: '24rem'}} className={`${open ? 'opacity-100' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto w-80 sm:w-96 absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
                     <p className="text-center py-5" key="date">
                         {systemDate.length === 0 && success.data === true ?
                             'System Date: No data available yet'
@@ -61,7 +61,7 @@ const Drawer = ({open}) => {
                             </>
                             :
                             <>
-                                {customError}
+                                <p>{customError}</p>
                             </>
                         }
                     </p>

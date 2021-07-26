@@ -1449,9 +1449,9 @@ const Metrics = ({ data, errorCode }) => {
         
     const ucgmuaCount = data.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`].count
     const ucgmuaMean = data.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`].mean
-        let ucgmuaMeanTr = ucgmuaMean.toFixed(9)
+        //let ucgmuaMeanTr = ucgmuaMean.toFixed(9)
     const ucgmuaMin = data.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`].min
-        let ucgmuaMinTr = ucgmuaMin.toFixed(9)
+        //let ucgmuaMinTr = ucgmuaMin.toFixed(9)
     const ucgmuaP50 = data.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`].p50
         let ucgmuaP50Tr = ucgmuaP50.toFixed(9)
     const ucgmuaP75 = data.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`].p75
@@ -1756,7 +1756,7 @@ const Metrics = ({ data, errorCode }) => {
     //Instrumented Filter
     const ifrCount = data.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`].count
     const ifrMean = data.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`].mean
-        let ifrMeanTr = ifrMean.toFixed(9)
+        let ifrMeanTr = ifrMean//.toFixed(9)
     const ifrMin = data.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`].min
         let ifrMinTr = ifrMin.toFixed(9)
     const ifrP50 = data.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`].p50
@@ -1794,22 +1794,22 @@ const Metrics = ({ data, errorCode }) => {
                             <h2 className="text-xl">Memory</h2>
                             <p className="text-sm mt-3">Total Memory ({usedMemory}M / {maxMemory}M)</p>
                             <div className="w-full lg:w-3/4">
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
-                                    <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${memory}%` }}>
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                    <div className="bg-green-500 py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${memory}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{memory}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{memory}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Heap Memory ({usedHeapMemory}M / {maxHeapMemory}M)</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${heapMemory}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{heapMemory}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{heapMemory}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Non Heap Memory ({usedNonHeapMemory}M / {maxNonHeapMemory}M)</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-red-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${nonHeapMemory}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{nonHeapMemory}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{nonHeapMemory}%</span>
                                 </div>
                             </div>
                         </div>
@@ -1819,36 +1819,36 @@ const Metrics = ({ data, errorCode }) => {
                                     Threads -
                                 </h2>
                                 <span className="flex text-sm mt-1 ml-1">Total: {threads}
-                                    <span className="flex h-3 w-3 m-1 ml-1">
-                                    <span className="animate-ping relative inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                                    <span className="absolute inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    <span className="flex h-3 w-3 m-1 ml-1 relative">
+                                    <span className="animate-ping inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                                    <span className="absolute top-0 left-0 inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                                     </span>
                                 </span>
                             </div>
                             <p className="text-sm mt-3">Runnable ({runnable})</p>
                             <div className="w-full lg:w-3/4">
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${runnableThread}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{runnableThread}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{runnableThread}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Timed Waiting ({timedWaiting})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${timedWaitingThread}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{timedWaitingThread}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{timedWaitingThread}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Waiting ({waiting})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${waitingThread}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{waitingThread}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{waitingThread}%</span>
                                 </div>
                                 <p className="text-sm mt-3">Blocked ({blocked})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-gray-400 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${blockedThread}%` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{blockedThread}%</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{blockedThread}%</span>
                                 </div>
                             </div>
                         </div>
@@ -1860,28 +1860,28 @@ const Metrics = ({ data, errorCode }) => {
                             </div>
                             <p className="text-sm mt-3">Mark Sweep count - G1 old ({markSweepTime})</p>
                             <div className="w-full lg:w-3/4">
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${markSweepTime}` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{markSweepTime}</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{markSweepTime}</span>
                                 </div>
                                 <p className="text-sm mt-3">Mark Sweep time - G1 old ({markSweepCount})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${markSweepCount}` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{markSweepCount}</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{markSweepCount}</span>
                                 </div>
                                 <p className="text-sm mt-3">Scavenge count - G1 young ({scavengeTime})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${scavengeTime}` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{scavengeTime}</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{scavengeTime}</span>
                                 </div>
                                 <p className="text-sm mt-3">Scavenge time - G1 young ({scavengeCount})</p>
-                                <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
+                                <div className="relative h-8 mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                                     <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${scavengeCount}` }}>
                                     </div>
-                                    <span className="absolute transform translate-y-2/4 top-0 left-0 pl-2">{scavengeCount}</span>
+                                    <span className="absolute h-5 my-auto top-0 left-0 bottom-0 pl-2">{scavengeCount}</span>
                                 </div>
                             </div>
                         </div>
@@ -1890,27 +1890,27 @@ const Metrics = ({ data, errorCode }) => {
                     <p className="text-sm mt-2">Active Requests: {activeRequests} - Total Requests: {totalRequests}</p>
                     <div className="overflow-auto max-w-full">
                         <table className="min-w-full divide-y divide-gray-200 shadow-sm mt-5">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-white">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Request Name
                                     </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         HTTP Status Code
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Count
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Mean
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Average (1 min)
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Average (5 min)
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Average (15 min)
                                     </th>
                                 </tr>
@@ -2083,33 +2083,33 @@ const Metrics = ({ data, errorCode }) => {
                     <h1 className="text-2xl mt-10 mb-5">Services statistics (time in millisecond)</h1>
                     <div className="h-screen max-w-full overflow-auto">
                         <table className="min-w-full divide-y divide-gray-200 shadow-sm">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-white">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                     Service Name
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Count
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Mean
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Min
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         p50
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         p75
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         p95
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         p99
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-600 tracking-wider">
                                         Max
                                     </th>
                                 </tr>
@@ -4530,10 +4530,10 @@ const Metrics = ({ data, errorCode }) => {
                                         <p>{ucgmuaCount}</p>
                                     </td>
                                     <td className="px-6">
-                                        <p>{ucgmuaMeanTr > 0 ? ucgmuaMeanTr : ucgmuaMean}</p>
+                                        <p>{ucgmuaMean > 0 || ucgmuaMean !== 'NaN' ? ucgmuaMean.toFixed(9) : ''}</p>
                                     </td>
                                     <td className="px-6">
-                                        <p>{ucgmuaMinTr > 0 ? ucgmuaMinTr : ucgmuaMin}</p>
+                                        <p>{ucgmuaMin > 0 || ucgmuaMin !== 'NaN' ? ucgmuaMin.toFixed(9) : ''}</p>
                                     </td>
                                     <td className="px-6">
                                         <p>{ucgmuaP50Tr > 0 ? ucgmuaP50Tr : ucgmuaP50}</p>

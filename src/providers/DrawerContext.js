@@ -1,5 +1,4 @@
 import { useState, useEffect, createContext } from 'react'
-import Cookies from 'js-cookie'
 import axios from 'axios'
 
 export const DrawerContext = createContext()
@@ -18,17 +17,17 @@ export const DrawerProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        DateApi()
-        RegionsApi()
-        AccountApi()
-        BookmarksApi()
-        SavedSearchesApi()
+        // DateApi()
+        // RegionsApi()
+        // AccountApi()
+        // BookmarksApi()
+        // SavedSearchesApi()
         return () => { setLoading(false); } //cause memory leak error after login sucess 
     }, [])
     
     const DateApi = () => {
         axios.get(`/api/user/systemdate`)
-            .then(res => {
+        .then(res => {
             if (res.status < 300) {
                 setSystemDate(res.data)
                 setSuccess({
@@ -37,7 +36,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -47,7 +45,6 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const RegionsApi = () => {
@@ -62,7 +59,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -72,7 +68,6 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const AccountApi = () => {
@@ -87,7 +82,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -97,7 +91,6 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const BookmarksApi = () => {
@@ -112,7 +105,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -122,7 +114,6 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const SavedSearchesApi = () => {
@@ -137,7 +128,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -147,7 +137,6 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
 

@@ -132,7 +132,7 @@ const LoginFull = () => {
     const { username, password } = login
 
     return (
-        <div className="w-96">
+        <div style={{ width: '24rem' }}>
             <form onSubmit={handleFormSubmit} className="mt-6 z-30" autoComplete="on">
                 <label
                     htmlFor="text"
@@ -151,7 +151,7 @@ const LoginFull = () => {
                     onChange={handleOnChange}
                     required
                 />
-                <div className={`${ matchUser.length > 1 ? 'h-96 overflow-auto' : '' || matchUser.length === 1 ? 'h-44 overflow-auto' : '' } relative rounded-md w-full h-0 transition-all duration-300 ease-in-out`}>
+                <div className={`${ matchUser.length > 1 ? 'h-64 overflow-auto' : '' || matchUser.length === 1 ? 'h-56 overflow-auto' : '' } relative rounded-md w-full h-0 transition-all duration-300 ease-in-out`}>
                     {matchUser.map(user => (
                         <div
                             className={`${styles.customRadio} rounded-md text-sm p-3 mt-2 text-gray-600 bg-white capitalize`}
@@ -190,14 +190,14 @@ const LoginFull = () => {
                 <div className={`${ loading && login.password === '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 mt-2 opacity-100' : '' }  flex justify-evenly items-center opacity-0 rounded-md h-0 px-2 transition-all duration-300 ease-in-out`}>
                     {   loading && login.password === ''  ?
                             <>
-                                <img alt="loading" className="w-5 animate-spin" src="/loading.svg" />
-                                <span className="pl-2 w-96 text-sm leading-snug">Please wait while we check your username</span>
+                                <img alt="loading" className="w-5 h-5 animate-spin" src="/loading.svg" />
+                                <span className="pl-2 w-full text-sm leading-snug">Please wait while we check your username</span>
                             </>
                         :
                         login.username !== '' && matchUser.length === 0 ? //Please check your username as we are unable to find an account with the entered details.
                             <>
-                                <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                                <span className="pl-2 w-96 text-sm leading-snug">Sorry, we couldn't find an account with that username. Please check your username.</span>
+                                <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                                <span className="pl-2 w-full text-sm leading-snug">Sorry, we couldn't find an account with that username. Please check your username.</span>
                             </>
                         :
                         null
@@ -206,13 +206,13 @@ const LoginFull = () => {
                 <div className={`${ connectAccount && login.password !== '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.error === true ? 'bg-red-100 h-24 mt-2 opacity-100' : '' } flex justify-evenly items-center opacity-0 rounded-md px-2 h-0 transition-all duration-300 ease-in-out`}>
                     {   connectAccount && login.password !== ''  ? //login.password !== '' && matchUser.length !== 0
                             <>
-                                <img alt="loading" className="w-5 animate-spin" src="/loading.svg" />
-                                <span className="pl-2 w-96 text-sm leading-snug">Please wait while we connect you to your account.</span>
+                                <img alt="loading" className="w-5 h-5 animate-spin" src="/loading.svg" />
+                                <span className="pl-2 w-full text-sm leading-snug">Please wait while we connect you to your account.</span>
                             </>
                         : login.error === true && login.status === 401 ? //matchUser.length !== 0 && login.password !== '' && login.status === 401 the original code on top. I don't need the 401 because error code could be 500 server error.
                         <>
-                            <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                            <span className="pl-2 w-96 text-sm leading-snug">Sorry, that password isn't right. We can help you recover your password
+                            <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                            <span className="pl-2 w-full text-sm leading-snug">Sorry, that password isn't right. We can help you recover your password
                                 <Link href="#">
                                     <a className="underline"> contact your system administrator </a>
                                 </Link>
@@ -224,8 +224,8 @@ const LoginFull = () => {
                         </>
                         : login.error === true && login.status > 300 ? //empty pink box remain in the same place
                         <>
-                            <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                            <span className="pl-2 w-96 text-sm leading-snug">
+                            <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                            <span className="pl-2 w-full text-sm leading-snug">
                                 <p className="font-bold pr-1">
                                     {login.status}. <span className="font-normal">That's an error.</span>
                                 </p>

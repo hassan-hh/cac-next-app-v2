@@ -58,25 +58,25 @@ const AccountRequest = () => {
                 <>
                     <button
                         type="button"
-                        className={`absolute top-11 bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none`}
+                        className={`absolute top-11 bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-24 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none`}
                         onClick={() => setUpdate(update + 1)}
                     >
                         {   !loading ?
                             <>
-                                <img alt="plus" className="w-3 mr-1" src="/reload.svg" />
+                                <img alt="plus" className="w-3 h-3 mr-1" src="/reload.svg" />
                                 <span>Refresh</span>
                             </>
                             :
                             <>
-                                <img alt="plus" className="w-3 animate-spin mr-1" src="/reload.svg" />
+                                <img alt="plus" className="w-3 h-3 animate-spin mr-1" src="/reload.svg" />
                                 <span>Loading</span>
                             </>
                         }
                     </button>
                     <div className="h-screen max-w-full overflow-auto">
                         <table className="min-w-full divide-y divide-gray-200 shadow-sm mt-16">
-                            <thead className="bg-gray-50">
-                                <tr className="text-left text-xs text-gray-500 tracking-wider">
+                            <thead className="bg-white">
+                                <tr className="text-left text-xs text-gray-600 tracking-wider">
                                     <th scope="col" className="px-6 py-3 w-80 font-medium">
                                         Username
                                     </th>
