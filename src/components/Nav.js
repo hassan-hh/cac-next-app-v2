@@ -10,16 +10,10 @@ const Nav = ({ loggedIn }) => {
     
     const router = useRouter()
     const container = useRef(null)
-    //const {value, index} = props
-    const [isActive, setIsActive] = useState(0)
     const { setLoggedIn, setLoadingScreen, profileImage, store, setStore }   = useContext(StoreContext)
     const [mobileMenu, setMobileMenu] = useState(false)
     const [userMenu, setUserMenu] = useState(false)
     const [dropDownMenu, setDropDownMenu] = useState(false)
-
-    const handleChange = (value) => {
-        setIsActive(value)
-    }
 
     console.log('container', container)
     useEffect(() => {
@@ -110,16 +104,14 @@ const Nav = ({ loggedIn }) => {
                                             <Link href="/dashboard">
                                                 <a
                                                     aria-current="page"
-                                                    className={`${isActive === 0 ? `bg-gray-900` : 'bg-transparent'}  text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
-                                                    onClick={() => setIsActive(0)}
+                                                    className={`${router.pathname == '/dashboard' ? `bg-gray-900` : 'bg-transparent'}  text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
                                                 >
                                                     Dashboard
                                                 </a>
                                             </Link>
                                             <Link href="/dashboard/file-browser">
                                                 <a
-                                                    className={`${isActive === 1 ? `bg-gray-900` : 'bg-transparent'} text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
-                                                    onClick={() => setIsActive(1)}
+                                                    className={`${router.pathname == '/dashboard/file-browser' ? `bg-gray-900` : 'bg-transparent'} text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
                                                 >
                                                     File Browser
                                                 </a>
@@ -141,50 +133,48 @@ const Nav = ({ loggedIn }) => {
                                                     <div className="py-1" role="none" onClick={() => setDropDownMenu(false)}>
                                                         <Link href="/dashboard/account-management">
                                                             <a
-                                                                className={`${isActive === 3 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
+                                                                className={`${router.pathname == '/dashboard/account-management' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-                                                                onClick={() => setIsActive(3)}
                                                             >
                                                                 Account Management
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/installation-properties">
-                                                            <a className={`${isActive === 4 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                            <a className={`${router.pathname == '/dashboard/installation-properties' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-                                                                onClick={() => setIsActive(4)}
                                                             >
                                                                 Installation Properties
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/metrics">
-                                                            <a className={`${isActive === 5 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                            <a className={`${router.pathname == '/dashboard/metrics' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-                                                                onClick={() => setIsActive(5)}
+        
                                                             >
                                                                 Metrics
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/rule-sets">
-                                                            <a className={`${isActive === 6 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                            <a className={`${router.pathname == '/dashboard/rule-sets' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-                                                                onClick={() => setIsActive(6)}
+        
                                                             >
                                                                 Rule Sets
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/data-message-definitions">
-                                                            <a className={`${isActive === 7 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
+                                                            <a className={`${router.pathname == '/dashboard/data-message-definitions' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-                                                                onClick={() => setIsActive(7)}
+        
                                                             >
                                                                 Data Message Definitions
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/support">
                                                             <a 
-                                                                className={`${isActive === 8 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
+                                                                className={`${router.pathname == '/dashboard/support' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-                                                                onClick={() => setIsActive(8)}
+        
                                                             >
                                                                 Support Dashboard
                                                             </a>
@@ -216,18 +206,16 @@ const Nav = ({ loggedIn }) => {
                                         {/* <p className="px-4 py-2 text-gray-700 uppercase text-xs text-left block sm:hidden">Welcome, <span className="capitalize">{store.name}</span></p> */}
                                         <Link href="/dashboard/profile">
                                             <a 
-                                                className={`${isActive === 9 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`} 
+                                                className={`${router.pathname == '/dashboard/profile' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`}
                                                 role="menuitem"
-                                                onClick={() => setIsActive(9)}
                                             >
                                                 Your Profile
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/client">
                                             <a 
-                                                className={`${isActive === 10 ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`}
+                                                className={`${router.pathname == '/dashboard/client' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`}
                                                 role="menuitem"
-                                                onClick={() => setIsActive(10)}
                                             >
                                                 Client Download
                                             </a>
@@ -246,10 +234,19 @@ const Nav = ({ loggedIn }) => {
                     <div className={`${mobileMenu && dropDownMenu ? 'h-auto' : mobileMenu ? 'h-36' : ''} h-0 transition-all ease-in-out duration-300 block sm:hidden`} id="mobile-menu">
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             <Link href="/dashboard">
-                                <a className="bg-gray-900 text-white block transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+                                <a
+                                    className={`${router.pathname == "/dashboard" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
+                                    aria-current="page"
+                                >
+                                    Dashboard
+                                </a>
                             </Link>
                             <Link href="/dashboard/file-browser">
-                                <a className="hover:bg-gray-900 text-white block transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium">File Browser</a>
+                                <a
+                                    className={`${router.pathname == "/dashboard/file-browser" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
+                                >
+                                    File Browser
+                                </a>
                             </Link>
                             <div className="relative">
                                 <button onClick={() => setDropDownMenu(!dropDownMenu)} type="button" className={`${dropDownMenu ? 'bg-gray-900' : ''} block w-full text-left transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-900 focus:outline-none`} id="drop-menu" aria-expanded={dropDownMenu} aria-haspopup="true">
@@ -265,38 +262,43 @@ const Nav = ({ loggedIn }) => {
                                 >
                                     <div className="py-2" role="none">
                                         <Link href="/dashboard/account-management">
-                                            <a className="block px-4 py-2" 
+                                            <a
+                                                className={`${router.pathname == "/dashboard/account-management" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Account Management
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/installation-properties">
-                                            <a className="block px-4 py-2" 
+                                            <a
+                                                className={`${router.pathname == "/dashboard/installation-properties" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Installation Properties
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/metrics">
-                                            <a className="block px-4 py-2" 
+                                            <a
+                                                className={`${router.pathname == "/dashboard/metrics" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Metrics
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/rule-sets">
-                                            <a className="block px-4 py-2" 
+                                            <a
+                                                className={`${router.pathname == "/dashboard/rule-sets" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Rule Sets
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/data-message-definitions">
-                                            <a className="block px-4 py-2" 
+                                            <a
+                                                className={`${router.pathname == "/dashboard/data-message-definitions" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Data Message Definitions
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/support">
-                                            <a 
-                                                className="block px-4 py-2" 
+                                            <a
+                                                className={`${router.pathname == "/dashboard/support" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Support Dashboard
                                             </a>

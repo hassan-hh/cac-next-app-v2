@@ -53,7 +53,7 @@ const AccountRequest = () => {
     return (
         <>
             {   success.data === false ?
-                <Error statusCode={errorCode}/>
+                <Error statusCode={success.errorCode}/>
                 :
                 <>
                     <button

@@ -69,7 +69,7 @@ const Layout = ({ children}) => {
                     :
                         <DrawerProvider>
                             <aside className={`${!open ? 'w-0' : ''} flex flex-col items-center lg:block custom-w-full sm:custom-w-24 lg:custom-w-318 top-0 left-0 absolute lg:relative min-h-full lg:min-h-screen bg-gray-100 transition-all ease-in-out duration-500 z-20 lg:z-0`}>
-                                <Drawer open={open}/>
+                                <Drawer open={open} />
                             </aside>
                         </DrawerProvider>
                     }

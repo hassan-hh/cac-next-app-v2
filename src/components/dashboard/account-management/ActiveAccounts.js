@@ -74,7 +74,7 @@ const ActiveAccounts = () => {
     return (
         <>
             {   success.data === false ?
-                <Error statusCode={errorCode}/>
+                <Error statusCode={success.errorCode}/>
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">

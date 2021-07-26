@@ -8,7 +8,7 @@ const Drawer = ({open}) => {
 
     const router = useRouter()
     const { idE, id } = router.query
-    const { systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setSuccess, setLoading } = useContext(DrawerContext)
+    const { sysError, systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setSuccess, setLoading } = useContext(DrawerContext)
     const [openBookmarks, setOpenBookmarks] = useState(false)
     const [openSavedSearch, setOpenSavedSearch] = useState(false)
     const displayText = 'System Date:' 
@@ -23,6 +23,7 @@ const Drawer = ({open}) => {
             if (success.data === true || success.data === false) {
                 setLoading(false)
             }
+            console.warn('sysError', sysError.sysData)
         }, 1000)
         return () => { clearTimeout(x); }
     }, [success.data])
@@ -39,31 +40,45 @@ const Drawer = ({open}) => {
     // console.log('drawer-loading', loading)
     console.log('bookmarks here', bookmarks)
     console.log('savedSearches', savedSearches)
+    console.warn('sysError', sysError)
 
     const customError = success.errorCode === 404 ?
         `Error ${success.errorCode} data source not found.`
         : success.errorCode >= 500 ? 
         `An error ${success.errorCode} occurred on server.`
         : `An error occurred on client.`
-
+    
+    
     return (
         <>
             {   loading === true ? //correct loading skeleton for all responses. then display data or each res error separatley 
                 <SBLoadingSkeleton />
                 :
                 <div className={`${open ? 'opacity-100' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto w-80 sm:w-96 absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
+                   <h1>test</h1>
                     <p className="text-center py-5" key="date">
-                        {systemDate.length === 0 && success.data === true ?
-                            'System Date: No data available yet'
-                            : systemDate.length !== 0 && success.data === true ?
-                            <>
-                                {systemDate && formatedDate}
-                            </>
-                            :
-                            <>
-                                {customError}
-                            </>
-                        }
+                        <p>{//systemDate.length && sysError.sysData === false ?
+                            // systemDate.length === 0 && sysError.sysData === true ?
+                            // 'System Date: No data available yet'
+                            // : systemDate.length !== 0 && sysError.sysData === true ?
+                            // <>
+                            //     {systemDate && formatedDate}
+                            // </>
+                                //: systemDate.length && sysError.sysData === false ?
+                            // <>
+                                
+                                      
+                                          
+                            sysError.sysCode ?
+                                {sysError}
+                                :
+                            ''
+                
+                            // </>
+                            //:
+                            // ''
+                        }hello</p>
+                        <h1>hello</h1>
                     </p>
                     <div className="bg-white p-6 w-full shadow-sm rounded-md">
                         <img alt="Cats Logo" className="h-50" src="/cats_logo_large.png" />

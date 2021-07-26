@@ -11,10 +11,14 @@ export const DrawerProvider = ({ children }) => {
     const [accountEntity, setAccountEntity] = useState([])
     const [bookmarks, setBookmarks] = useState({})
     const [savedSearches, setSavedSearches] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState({
         errorCode: null,
         data: null
+    })
+    const [sysError, setSysError] = useState({
+        sysCode: null,
+        sysData: null
     })
 
     useEffect(() => {
@@ -36,6 +40,11 @@ export const DrawerProvider = ({ children }) => {
                     errorCode: res.status,
                     data: true
                 })
+                setSysError({
+                    ...sysError,
+                    sysCode: res.status,
+                    sysData: true
+                })
             }
             console.log('res', res)
         })
@@ -46,8 +55,14 @@ export const DrawerProvider = ({ children }) => {
                     errorCode: err.response.status, 
                     data: false
                 })
+                setSysError({
+                    ...sysError,
+                    sysCode: err.response.statusText,
+                    sysData: false
+                })
             }
-            console.log('err', err.response)
+            console.log('err', err.response.status)
+            console.log('sysError', sysError.sysCode)
         })
     }
     const RegionsApi = () => {
@@ -151,8 +166,9 @@ export const DrawerProvider = ({ children }) => {
         })
     }
 
+
     return ( 
-        <DrawerContext.Provider value={{systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setLoading, setSuccess}}>
+        <DrawerContext.Provider value={{sysError, systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setLoading, setSuccess}}>
             {children}  
         </DrawerContext.Provider>
     )
