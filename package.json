@@ -8,9 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "axios": "^0.21.1",
     "js-cookie": "^2.2.1",
     "next": "^11.1.0",

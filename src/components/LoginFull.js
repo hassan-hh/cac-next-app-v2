@@ -5,8 +5,8 @@ import axios from 'axios'
 import styles from '../styles/Login.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import LoadingScreen from './dashboard/LoadingScreen'
-import { getRouteMatcher } from 'next/dist/next-server/lib/router/utils'
+// import LoadingScreen from './dashboard/LoadingScreen'
+// import { getRouteMatcher } from 'next/dist/next-server/lib/router/utils'
 
 const LoginFull = () => {
 
