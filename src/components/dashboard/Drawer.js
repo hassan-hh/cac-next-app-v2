@@ -1,14 +1,14 @@
 import { useContext, useState, useEffect } from 'react'
 import { DrawerContext } from '../../providers/DrawerContext'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+//import { useRouter } from 'next/router'
 import SBLoadingSkeleton from './loading-skeletons/SBLoadingSkeleton'
 
 const Drawer = ({open}) => {
 
-    const router = useRouter()
-    const { idE, id } = router.query
-    const { sysError, systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setSuccess, setLoading } = useContext(DrawerContext)
+    //const router = useRouter() //we should use this once this line as={`/dashboard/event/view/${event.name.replace(/:/g, '/')}`} is fixed by backend team
+    //const { idE, id } = router.query //this belong to the line above
+    const { systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setSuccess, setLoading } = useContext(DrawerContext)
     const [openBookmarks, setOpenBookmarks] = useState(false)
     const [openSavedSearch, setOpenSavedSearch] = useState(false)
     const displayText = 'System Date:' 
@@ -23,67 +23,43 @@ const Drawer = ({open}) => {
             if (success.data === true || success.data === false) {
                 setLoading(false)
             }
-            console.warn('sysError', sysError.sysData)
         }, 1000)
         return () => { clearTimeout(x); }
     }, [success.data])
-
-    if (!bookmarks.bookmark) { //nested array within an object bookmarks { bookmark[] }
-        return null
-        //we need to check our state/object 'bookmarks' that has an array bookmark. 
-        //If statement must be on the component before the return if we have an array within our object such bookmarks is an object and bookmark is array.
-    }
-
-    // console.log('drawer-date', systemDate)
-    // console.log('drawer-regions', regions)
-    //console.log('drawer-account', accountEntity)
-    // console.log('drawer-loading', loading)
-    console.log('bookmarks here', bookmarks)
-    console.log('savedSearches', savedSearches)
-    console.warn('sysError', sysError)
-
+   
     const customError = success.errorCode === 404 ?
         `Error ${success.errorCode} data source not found.`
         : success.errorCode >= 500 ? 
         `An error ${success.errorCode} occurred on server.`
         : `An error occurred on client.`
     
-    
+    // if (!bookmarks.bookmark) { //nested array within an object bookmarks { bookmark[] }
+    //     return null
+    //     //we need to check our state/object 'bookmarks' that has an array bookmark. 
+    //     //If statement must be on the component before the return if we have an array within our object such bookmarks is an object and bookmark is array.
+    // }
+
     return (
         <>
             {   loading === true ? //correct loading skeleton for all responses. then display data or each res error separatley 
                 <SBLoadingSkeleton />
                 :
                 <div className={`${open ? 'opacity-100' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto w-80 sm:w-96 absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
-                   <h1>test</h1>
                     <p className="text-center py-5" key="date">
-                        <p>{//systemDate.length && sysError.sysData === false ?
-                            // systemDate.length === 0 && sysError.sysData === true ?
-                            // 'System Date: No data available yet'
-                            // : systemDate.length !== 0 && sysError.sysData === true ?
-                            // <>
-                            //     {systemDate && formatedDate}
-                            // </>
-                                //: systemDate.length && sysError.sysData === false ?
-                            // <>
-                                
-                                      
-                                          
-                            sysError.sysCode ?
-                                {sysError}
-                                :
-                            ''
-                
-                            // </>
-                            //:
-                            // ''
-                        }hello</p>
-                        <h1>hello</h1>
+                        {systemDate.length === 0 && success.data === true ?
+                            'System Date: No data available yet'
+                            : systemDate.length !== 0 && success.data === true ?
+                            <>
+                                {systemDate && formatedDate}
+                            </>
+                            : 
+                            <p>{displayText} {customError}</p>
+                        }
                     </p>
                     <div className="bg-white p-6 w-full shadow-sm rounded-md">
-                        <img alt="Cats Logo" className="h-50" src="/cats_logo_large.png" />
+                        <img alt="Cats Logo" className="h-50 mb-5" src="/cats_logo_large.png" />
                         <div className="relative flex items-center flex-row mb-5">
-                            <p className="mr-2 mt-5">Region</p>
+                            <p className="mr-2">Region</p>
                             { regions.length === 0 && success.data === true ?
                                 'No data available yet'
                                 : regions.length !== 0 && success.data === true ?
@@ -151,7 +127,7 @@ const Drawer = ({open}) => {
                                         </li>
                                     ))}
                                 </ul>
-                                :
+                                : 
                                 <p>{customError}</p>
                             }
                         </div>

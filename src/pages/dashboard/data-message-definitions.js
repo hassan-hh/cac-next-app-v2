@@ -8,15 +8,26 @@ import { useRouter } from 'next/router';
 import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLoadingSkeleton'
 
 export const getStaticProps = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
-    const errorCode = res.ok ? 200 : res.statusCode
-    const data = await res.json()
-    
-    return {
-        props: {
-            data, errorCode
-        },
-        revalidate: 30,
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
+        //const errorCode = res.ok ? 200 : res.statusCode
+        const data = await res.json()
+        
+        return {
+            props: {
+                data, errorCode
+            },
+            revalidate: 30,
+        }
+    }
+    catch (err) {
+        const errorCode = err ? 500 : null
+        //const errMessage = err.message //it will display error message after passed as props
+        return {
+            props: {
+                errorCode
+            },
+        }
     }
 }
 

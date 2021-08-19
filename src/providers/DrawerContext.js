@@ -11,14 +11,10 @@ export const DrawerProvider = ({ children }) => {
     const [accountEntity, setAccountEntity] = useState([])
     const [bookmarks, setBookmarks] = useState({})
     const [savedSearches, setSavedSearches] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState({
         errorCode: null,
         data: null
-    })
-    const [sysError, setSysError] = useState({
-        sysCode: null,
-        sysData: null
     })
 
     useEffect(() => {
@@ -40,33 +36,19 @@ export const DrawerProvider = ({ children }) => {
                     errorCode: res.status,
                     data: true
                 })
-                setSysError({
-                    ...sysError,
-                    sysCode: res.status,
-                    sysData: true
-                })
             }
-            console.log('res', res)
         })
         .catch(err => {
-            if (err.response.status > 300) {
+           if (err.response.status > 300) {
                 setSuccess({
                     ...success,
                     errorCode: err.response.status, 
                     data: false
                 })
-                setSysError({
-                    ...sysError,
-                    sysCode: err.response.statusText,
-                    sysData: false
-                })
             }
-            console.log('err', err.response.status)
-            console.log('sysError', sysError.sysCode)
         })
     }
     const RegionsApi = () => {
-        //setLoading(true)
         axios.get(`/api/account/regions`)
         .then(res => {
             if (res.status < 300) {
@@ -77,7 +59,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -87,11 +68,9 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const AccountApi = () => {
-        //setLoading(true)
         axios.get(`/api/account/entities`)
         .then(res => {
             if (res.status < 300) {
@@ -102,7 +81,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -112,11 +90,9 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const BookmarksApi = () => {
-        //setLoading(true)
         axios.get(`/api/bookmark`)
         .then(res => {
             if (res.status < 300) {
@@ -127,7 +103,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -137,11 +112,9 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
     const SavedSearchesApi = () => {
-        //setLoading(true)
         axios.get(`/api/events/saved`)
         .then(res => {
             if (res.status < 300) {
@@ -152,7 +125,6 @@ export const DrawerProvider = ({ children }) => {
                     data: true
                 })
             }
-            console.log('res', res)
         })
         .catch(err => {
             if (err.response.status > 300) {
@@ -162,13 +134,12 @@ export const DrawerProvider = ({ children }) => {
                     data: false
                 })
             }
-            console.log('err', err.response)
         })
     }
 
 
     return ( 
-        <DrawerContext.Provider value={{sysError, systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setLoading, setSuccess}}>
+        <DrawerContext.Provider value={{systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setLoading, setSuccess}}>
             {children}  
         </DrawerContext.Provider>
     )
