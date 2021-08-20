@@ -91,7 +91,7 @@ const Nav = ({ loggedIn }) => {
                             <h1 className="text-white text-3xl font-semibold ml-2 sm:-ml-2">CATS</h1>
                             :
                             <>
-                                <div className="absolute flex items-center justify-center sm:hidden w-full">
+                                <div className="absolute flex items-center justify-center sm:hidden w-full inset-0">
                                     <button onClick={() => setMobileMenu(!mobileMenu)} type="button" className="inline-flex items-center justify-center focus:outline-none p-2" aria-controls="mobile-menu" aria-expanded={mobileMenu}>
                                         <span className="sr-only">Open main menu</span>
                                         <img alt="mobile icon" className="block" src="/mobileHamberg.svg" />

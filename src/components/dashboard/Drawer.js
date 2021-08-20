@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from 'react'
 import { DrawerContext } from '../../providers/DrawerContext'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+//import { useRouter } from 'next/router'
 import SBLoadingSkeleton from './loading-skeletons/SBLoadingSkeleton'
 
 const Drawer = ({open}) => {
 
-    const router = useRouter()
-    const { idE, id } = router.query
+    //const router = useRouter() //we should use this once this line as={`/dashboard/event/view/${event.name.replace(/:/g, '/')}`} is fixed by backend team
+    //const { idE, id } = router.query //this belong to the line above
     const { systemDate, accountEntity, regions, bookmarks, savedSearches, loading, success, setSuccess, setLoading } = useContext(DrawerContext)
     const [openBookmarks, setOpenBookmarks] = useState(false)
     const [openSavedSearch, setOpenSavedSearch] = useState(false)
@@ -27,18 +27,13 @@ const Drawer = ({open}) => {
         return () => { clearTimeout(x); }
     }, [success.data])
 
-    if (!bookmarks.bookmark) { //nested array within an object bookmarks { bookmark[] }
-        return null
-        //we need to check our state/object 'bookmarks' that has an array bookmark. 
-        //If statement must be on the component before the return if we have an array within our object such bookmarks is an object and bookmark is array.
-    }
+    // if (!bookmarks.bookmark) { //nested array within an object bookmarks { bookmark[] }
+    //     return null
+    //     //we need to check our state/object 'bookmarks' that has an array bookmark. 
+    //     //If statement must be on the component before the return if we have an array within our object such bookmarks is an object and bookmark is array.
+    // }
 
-    // console.log('drawer-date', systemDate)
-    // console.log('drawer-regions', regions)
-    //console.log('drawer-account', accountEntity)
-    // console.log('drawer-loading', loading)
-    console.log('bookmarks here', bookmarks)
-    console.log('savedSearches', savedSearches)
+    console.warn('systemDate', systemDate)
 
     const customError = success.errorCode === 404 ?
         `Error ${success.errorCode} data source not found.`
@@ -51,7 +46,7 @@ const Drawer = ({open}) => {
             {   loading === true ? //correct loading skeleton for all responses. then display data or each res error separatley 
                 <SBLoadingSkeleton />
                 :
-                <div style={{width: '24rem'}} className={`${open ? 'opacity-100' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto w-80 sm:w-96 absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
+                <div style={{width: '24rem'}} className={`${open ? 'opacity-100 left-0 right-0 mx-auto md:left-0' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
                     <p className="text-center py-5" key="date">
                         {systemDate.length === 0 && success.data === true ?
                             'System Date: No data available yet'
@@ -66,15 +61,15 @@ const Drawer = ({open}) => {
                         }
                     </p>
                     <div className="bg-white p-6 w-full shadow-sm rounded-md">
-                        <img alt="Cats Logo" className="h-50" src="/cats_logo_large.png" />
+                        <img alt="Cats Logo" className="h-50 mb-5" src="/cats_logo_large.png" />
                         <div className="relative flex items-center flex-row mb-5">
-                            <p className="mr-2 mt-5">Region</p>
+                            <p className="mr-2">Region</p>
                             { regions.length === 0 && success.data === true ?
                                 'No data available yet'
                                 : regions.length !== 0 && success.data === true ?
                                 <>
-                                    <svg className="w-3 h-3 absolute top-0 right-0 my-4 mr-3 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fillRule="nonzero" /></svg>
-                                    <select disabled className="w-full border border-gray-300 rounded-full text-gray-700 h-10 pl-3 bg-gray-100 focus:outline-none appearance-none opacity-70 cursor-not-allowed">
+                                    {/* <svg className="w-3 h-3 absolute top-0 right-0 my-4 mr-3 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fillRule="nonzero" /></svg> */}
+                                    <select disabled className="w-full border border-gray-300 rounded-full text-gray-700 h-10 pl-3 bg-gray-100 focus:outline-none opacity-70 cursor-not-allowed">
                                         {regions.map(region => (
                                             <option
                                                 key={region.idPartyType}
@@ -95,8 +90,8 @@ const Drawer = ({open}) => {
                                 'No data available yet'
                                 : accountEntity.length !== 0 && success.data === true ?
                                 <>
-                                    <svg className="w-3 h-3 absolute top-0 right-0 my-4 mr-3 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fillRule="nonzero" /></svg>
-                                    <select className="w-full cursor-pointer border border-gray-300 rounded-full text-gray-700 h-10 pl-3 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                                    {/* <svg className="w-3 h-3 absolute top-0 right-0 my-4 mr-3 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232"><path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#648299" fillRule="nonzero" /></svg> */}
+                                    <select className="w-full cursor-pointer border border-gray-300 rounded-full text-gray-700 h-10 pl-3 bg-white hover:border-gray-400 focus:outline-none">
                                         {accountEntity.map(entity => (
                                             <option
                                                 key={entity.idAccount}

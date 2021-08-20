@@ -18,6 +18,11 @@ const LoginFull = () => {
         error: null,
         status: null
     })
+    const [matchUserStatus, setMatchUserStatus] = useState({
+        error: null,
+        status: null,
+    })
+    console.warn('matchUserStatus', matchUserStatus)
     console.log('LoginState', login)
     const [matchUser, setMatchUser] = useState([])
     console.log('MatchUser', matchUser)
@@ -28,19 +33,30 @@ const LoginFull = () => {
     const [connectAccount, setConnectAccount] = useState(false)
     console.log('connectAccount', connectAccount)
 
-    const matchUserApi = async () => {
-            setLoading(true)
-        try {
-            const res = await fetch(`/api/user/match/${login.username}/account`) //this api used for fetching user account before login
-            const account = await res.json()
-            setLoading(false)
-            setMatchUser(account)
-        }
-        catch (err) {
-            setLoading(false)
-            console.warn('New error', err)
-            //if username is correct and didn't get the data, set server error > 500. 500 Server error please try again in 30 seconds.
-        }
+    const matchUserApi = () => {
+        setLoading(true)
+        axios.get(`/api/user/match/${login.username}/account`)
+            .then(res => {
+                if (res.status < 300) {
+                    setLoading(false)
+                    setMatchUser(account)
+                    setMatchUserStatus({
+                        ...matchUserStatus,
+                        error: false,
+                        status: res.status,
+                    })
+                }
+            })
+            .catch(err => {
+                if (err.response && err.response.status > 300) {
+                    setLoading(false)
+                    setMatchUserStatus({
+                        ...matchUserStatus,
+                        error: true,
+                        status: err.response.status,
+                    })
+            }
+        })
     }
     useEffect(() => {
         if (login.username !== '') {
@@ -55,6 +71,13 @@ const LoginFull = () => {
         // if (matchUser.length !== 0 && login.password === '') {
         //     setLoading(false)
         // }
+        if (matchUserStatus.error === true && login.password === '') {
+            setMatchUserStatus({
+                ...matchUserStatus,
+                error: null,
+                status: null
+            })
+        }
         if (matchUser.length === 0 || matchUser.length !== 0 && login.password !== '' && loading === true) { //&& login.error === true // to replace the login.status === 401 or added it 
         //reset error to empty string to remove error status 401 otherwise error message will always show 
         //we dont need matchUser.length === 0, because we need to find user first then submit the form so check user error will show instead and matchUser.length === 0 is used here to clear my 401 error to re-enter the password again without keeping the old error status 401
@@ -187,7 +210,7 @@ const LoginFull = () => {
                 </div>
                 {/* //if username and password incorrect, show this same message. because username must be found/avilable before the password is entered
                 //this is loading state which happnes when we type in the login inpput and useEffect run the api as we type - true as we type false as we stop */}
-                <div className={`${ loading && login.password === '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 mt-2 opacity-100' : '' }  flex justify-evenly items-center opacity-0 rounded-md h-0 px-2 transition-all duration-300 ease-in-out`}>
+                {/* <div className={`${ loading && login.password === '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 mt-2 opacity-100' : '' }  `}>
                     {   loading && login.password === ''  ?
                             <>
                                 <img alt="loading" className="w-5 h-5 animate-spin" src="/loading.svg" />
@@ -195,6 +218,33 @@ const LoginFull = () => {
                             </>
                         :
                         login.username !== '' && matchUser.length === 0 ? //Please check your username as we are unable to find an account with the entered details.
+                            <>
+                                <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                                <span className="pl-2 w-full text-sm leading-snug">Sorry, we couldn't find an account with that username. Please check your username.</span>
+                            </>
+                        :
+                        null
+                    }
+                </div> */}
+                <div className={`${loading && login.password === '' ? 'bg-blue-100 h-16 mt-2 opacity-100' : matchUserStatus.error === true && matchUserStatus.status > 300 ? 'bg-red-100 h-24 mt-2 opacity-100' : login.username !== '' && matchUser.length === 0 ? 'bg-red-100 h-16 mt-2 opacity-100' : '' }  flex justify-evenly items-center opacity-0 rounded-md h-0 px-2 transition-all duration-300 ease-in-out`}>
+                    {   loading && login.password === ''  ?
+                            <>
+                                <img alt="loading" className="w-5 h-5 animate-spin" src="/loading.svg" />
+                                <span className="pl-2 w-full text-sm leading-snug">Please wait while we check your username</span>
+                            </>
+                        :
+                        matchUserStatus.status > 300 ? //server throwing error 500 before finding the user. i.e. server is down ...etc
+                            <>
+                                <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                                <span className="pl-2 w-full text-sm leading-snug">
+                                    <p className="font-bold pr-1">
+                                        {matchUserStatus.status}. <span className="font-normal">That's an error.</span>
+                                    </p>
+                                    The server encountered a temporary error and could not complete your request. Please try again in 30 seconds.
+                                </span>
+                            </>
+                        :
+                        matchUserStatus.status < 300 && matchUser.length === 0 ? //Please check your username as we are unable to find an account with the entered details.
                             <>
                                 <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
                                 <span className="pl-2 w-full text-sm leading-snug">Sorry, we couldn't find an account with that username. Please check your username.</span>

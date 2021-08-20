@@ -72,6 +72,8 @@ const Layout = ({ children}) => {
                                 <Drawer open={open}/>
                             </aside>
                         </DrawerProvider>
+                        // <>
+                        // </>
                     }
                     <section className={`${loggedIn ? 'bg-gray-200' : ''} min-w-full lg:min-w-0 w-full overflow-auto p-4 sm:py-10 sm:px-10 min-h-screen z-10`}>
                         {children}

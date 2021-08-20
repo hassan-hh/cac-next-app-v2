@@ -8,15 +8,26 @@ import { useRouter } from 'next/router';
 import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLoadingSkeleton'
 
 export const getStaticProps = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`)
-    const errorCode = res.ok ? 200 : res.statusCode
-    const data = await res.json()
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`)
+        const errorCode = res.ok ? 200 : res.statusCode
+        const data = await res.json()
 
-    return {
-        props: {
-            data, errorCode,
-        },
-        revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
+        return {
+            props: {
+                data, errorCode,
+            },
+            revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
+        }
+    }
+    catch (err) {
+        const errorCode = err ? 500 : null
+        //const errMessage = err.message //it will display error message after passed as props
+        return {
+            props: {
+                errorCode
+            },
+        }
     }
 }
 
