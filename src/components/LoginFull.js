@@ -35,17 +35,6 @@ const LoginFull = () => {
 
     const matchUserApi = () => {
         setLoading(true)
-        // try {
-        //     const res = await fetch(`/api/user/match/${login.username}/account`) //this api used for fetching user account before login
-        //     const account = await res.json()
-        //     setLoading(false)
-        //     setMatchUser(account)
-        // }
-        // catch (err) {
-        //     setLoading(false)
-        //     console.warn('New error', err)
-        //     //if username is correct and didn't get the data, set server error > 500. 500 Server error please try again in 30 seconds.
-        // }
         axios.get(`/api/user/match/${login.username}/account`)
             .then(res => {
                 if (res.status < 300) {
