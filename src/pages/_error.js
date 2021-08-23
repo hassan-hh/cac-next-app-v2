@@ -6,7 +6,7 @@ const Error = ({ statusCode }) => {
   const { loggedIn, store } = useContext(StoreContext)
 
   return (
-    <h2 className={`${loggedIn || store ? 'text-black' : 'text-white'} text-lg h-screen flex items-center justify-center flex-row`}>
+    <h2 className={`${loggedIn ? 'text-black' : 'text-white'} text-lg h-screen flex items-center justify-center flex-row`}>
       { statusCode === 404 ?
         `Error ${statusCode} page not found`
         : statusCode ? `An error ${statusCode} occurred on server. Try again in 30 seconds.`
