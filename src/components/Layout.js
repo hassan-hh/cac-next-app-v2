@@ -29,9 +29,9 @@ const Layout = ({ children}) => {
             setLoadingScreen(false);
         }
         const x = setTimeout(() => {
-            if (!store.sessionId) { //after logout/before auth, if user goes to another url 
-                router.push('/login')
-            }
+            // if (!store.sessionId) { //after logout/before auth, if user goes to another url 
+            //     router.push('/login')
+            // }
         }, 2000)
         return () => { clearTimeout(x); }
     }, [loggedIn, store.sessionId, router.pathname])
@@ -39,30 +39,33 @@ const Layout = ({ children}) => {
     
     //NotAuthScreen for non logged in users - before a user login and goes to another url then we protect it here
     
-    if (loadingScreen === false && !store.sessionId && router.pathname !== '/login') { //&& router.pathname !== '/login' //protect all routes before login - this will display the LoadingScreen component and above will redirect user back to login.
+    // if (loadingScreen === false && !store.sessionId && router.pathname !== '/login') { //&& router.pathname !== '/login' //protect all routes before login - this will display the LoadingScreen component and above will redirect user back to login.
+    //     return (
+    //         <div style={!loggedIn ? { background: '#2bbc9c' } : {}}>
+    //             <NotAuthScreen />
+    //         </div>
+    //     )
+    // }
+    // else if (loadingScreen === true) { //we cant use loggedIn true or router.pathname, because on login loggedIn is true and on logout loggedIn is false. route if still login page then loadingScreen and if route not login means on logout
+    //     return (
+    //         <div className="h-screen flex items-center justify-center">
+    //             <LoadingScreen />
+    //         </div>
+    //     )
+    // }
+    // else {
         return (
-            <div style={!loggedIn ? { background: '#2bbc9c' } : {}}>
-                <NotAuthScreen />
-            </div>
-        )
-    }
-    else if (loadingScreen === true) { //we cant use loggedIn true or router.pathname, because on login loggedIn is true and on logout loggedIn is false. route if still login page then loadingScreen and if route not login means on logout
-        return (
-            <div className="h-screen flex items-center justify-center">
-                <LoadingScreen />
-            </div>
-        )
-    }
-    else {
-        return (
-            <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}>
+            <div className={!store.sessionId ? 'relative h-screen flex flex-col justify-between' : ''} style={!store.sessionId? { background: '#2bbc9c' } : {}}>
+            {/* <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}> */}
                 <Nav loggedIn={loggedIn} />
                 <img
                     src="/drawerToggler.svg"
                     alt="toggler icon"
-                    className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    className={`${store.sessionId ? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    //className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
                     onClick={() => setOpen(!open)}
                 />
+                {/* <main className={`${store.sessionId ? 'flex' : 'hidden' } flex-row relative`}> */}
                 <main className="flex flex-row relative">
                     {   !loggedIn ?
                         null
@@ -82,6 +85,6 @@ const Layout = ({ children}) => {
                 <Footer loggedIn={loggedIn} />
             </div>
         )
-    }
+   // }
 }
 export default Layout

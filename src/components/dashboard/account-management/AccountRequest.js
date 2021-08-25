@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { StoreContext } from '../../../providers/StoreContext'
 import AMLoadingSkeleton from '../loading-skeletons/AMLoadingSkeleton'
 import Error from '../../../pages/_error'
 import axios from 'axios'
+import Cookies, { set } from 'js-cookie'
 
 const AccountRequest = () => {
 
+    const {store, setStore} = useContext(StoreContext)
     const [accountRequest, setAccountRequest] = useState([])
     const [update, setUpdate] = useState(0)
     const [loading, setLoading] = useState(false)
@@ -35,11 +38,18 @@ const AccountRequest = () => {
                         errorCode: res.status,
                         data: true
                     })
+                    console.log('res ar', res)
+                    const { sessionId } = res.headers
+                    Cookies.set('sessionId', res.headers.sessionid)
+                    setStore({
+                        ...store,
+                        sessionId: sessionId, // JSESSIONID already stored in the cookie and cookie usually comes from the rest route itself we don't need to store it manually. Not like auth token JWT must be passed to the headers and stored in the local storage.
+                    })
                 }
                 console.log('res', res)
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response && err.response.status > 300) {
                     setSuccess({
                         ...success,
                         errorCode: err.response.status, 
