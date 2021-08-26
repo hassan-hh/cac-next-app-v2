@@ -9,6 +9,26 @@ module.exports = {
             },
         ]
     },
+<<<<<<< HEAD
+=======
+    async headers() {
+        return [
+            {
+                source: '/api/:path*',
+                headers: [
+                    {
+                        key: 'sessionid',
+                        value: 'E07AB675BD9049A6B2BE18A48F494C32',
+                    },
+                    // {
+                    //     key: 'XSRF-TOKEN',
+                    //     value: 'E07AB675BD9049A6B2BE18A48F494C32'//process.env.CSRF_SECRET,
+                    // },
+                ],
+            }
+        ]
+    },
+>>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
     // httpAgentOptions: {
     //     keepAlive: false,
     // },

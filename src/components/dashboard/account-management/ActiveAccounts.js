@@ -78,8 +78,8 @@ const ActiveAccounts = () => {
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">
-                        <thead className="bg-gray-50">
-                            <tr className="text-left text-xs text-gray-500 tracking-wider">
+                        <thead className="bg-white">
+                            <tr className="text-left text-xs text-gray-600 tracking-wider">
                                 <th scope="col" className="px-6 py-3 w-80 font-medium">
                                     Username
                                     </th>

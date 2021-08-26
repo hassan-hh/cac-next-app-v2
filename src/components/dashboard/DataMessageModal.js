@@ -34,19 +34,20 @@ const DataMessageModal = ({
         <div  className={`${showModalProp ? 'bg-gray-900 bg-opacity-75 pointer-events-auto' : 'opacity-0 pointer-events-none' } h-screen transition-all ease-in-out duration-300 fixed flex justify-center items-center z-10 inset-0`} aria-labelledby="modal-title" role="dialog" aria-modal="true" id="iModal">
             <form
                 onSubmit={handleFormSubmitProp}
-                className="relative bg-white z-20 rounded-lg overflow-hidden shadow-xl mx-4 sm:align-middle sm:max-w-2xl sm:w-full h-5/6 overflow-y-auto"
+                className="relative bg-white z-20 rounded-lg overflow-hidden shadow-xl mx-4 sm:align-middle sm:max-w-2xl sm:w-full overflow-y-auto"
+                style={{height: '90%'}}
             >
                 <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <img
                         alt="close"
-                        className="w-4 absolute right-6 cursor-pointer"
+                        className="mr-6 w-4 absolute right-0 cursor-pointer"
                         src="/close.svg"
                         onClick={closeModalProp}
                     />
                     <h3 className="text-lg leading-6 font-medium text-gray-900 pb-3 border-b-2 border-fuchsia-600" id="modal-title">
                         Edit Data Message Definition
                     </h3>
-                    <div className="mt-7">
+                    <div className="mt-8">
                         <div className="flex items-start flex-col sm:items-center sm:justify-between sm:flex-row mb-4">
                             <label
                                 htmlFor="definitionKey"
@@ -58,7 +59,8 @@ const DataMessageModal = ({
                                 disabled={clearFormField ? false : true}
                                 id="definitionKey"
                                 name="definitionKey"
-                                className={`${clearFormField ? 'bg-gray-200 opacity-100 cursor-auto' : 'bg-gray-100 opacity-70 cursor-not-allowed'} rounded-md block w-96 px-3 py-2 text-gray-700 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner`}
+                                className={`${clearFormField ? 'bg-gray-200 opacity-100 cursor-auto' : 'bg-gray-100 opacity-70 cursor-not-allowed'} rounded-md block px-3 py-2 text-gray-700 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner`}
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Definition Key"
                                 value={definitionKey || ''}
@@ -76,7 +78,8 @@ const DataMessageModal = ({
                             <input
                                 id="idDataSource"
                                 name="idDataSource"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Definition Key"
                                 value={idDataSource || ''}
@@ -93,7 +96,8 @@ const DataMessageModal = ({
                             <input
                                 id="objectClass"
                                 name="objectClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Object Class"
                                 value={objectClass || ''}
@@ -110,7 +114,8 @@ const DataMessageModal = ({
                             <input
                                 id="versionNumber"
                                 name="versionNumber"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Version Number"
                                 value={versionNumber || ''}
@@ -127,7 +132,8 @@ const DataMessageModal = ({
                             <input
                                 id="idClient"
                                 name="idClient"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Client Identifier"
                                 value={idClient || ''}
@@ -144,7 +150,8 @@ const DataMessageModal = ({
                             <input
                                 id="messageTypes"
                                 name="messageTypes"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Message Types"
                                 value={messageTypes || ''}
@@ -161,7 +168,8 @@ const DataMessageModal = ({
                             <input
                                 id="instrumentDummySource"
                                 name="instrumentDummySource"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Instrument Dummy Source"
                                 value={instrumentDummySource || ''}
@@ -178,7 +186,8 @@ const DataMessageModal = ({
                             <input
                                 id="idRegion"
                                 name="idRegion"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Region Identifier"
                                 value={idRegion || ''}
@@ -195,7 +204,8 @@ const DataMessageModal = ({
                             <input
                                 id="messageToEventClass"
                                 name="messageToEventClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Message To Event Class"
                                 value={messageToEventClass || ''}
@@ -212,7 +222,8 @@ const DataMessageModal = ({
                             <input
                                 id="messageFromEventClass"
                                 name="messageFromEventClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Message From Event Class"
                                 value={messageFromEventClass || ''}
@@ -229,7 +240,8 @@ const DataMessageModal = ({
                             <input
                                 id="validationClass"
                                 name="validationClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Validation Class"
                                 value={validationClass || ''}
@@ -246,7 +258,8 @@ const DataMessageModal = ({
                             <input
                                 id="matchingClass"
                                 name="matchingClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Matching Class"
                                 value={matchingClass || ''}
@@ -263,7 +276,8 @@ const DataMessageModal = ({
                             <input
                                 id="comparingClass"
                                 name="comparingClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Comparing Class"
                                 value={comparingClass || ''}
@@ -280,7 +294,8 @@ const DataMessageModal = ({
                             <input
                                 id="dataSourceMessageClass"
                                 name="dataSourceMessageClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Data Source Message Class"
                                 value={dataSourceMessageClass || ''}
@@ -297,7 +312,8 @@ const DataMessageModal = ({
                             <input
                                 id="mergeClass"
                                 name="mergeClass"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="rounded-md block px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                style={{width: '24rem'}}
                                 type="text"
                                 placeholder="Merge Class"
                                 value={mergeClass || ''}
@@ -313,7 +329,8 @@ const DataMessageModal = ({
                             </label>
                             <select
                                 name="insertValidation"
-                                className="w-96 border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                className="border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                style={{width: '24rem'}}
                                 onChange={handleOnChangeProp}
                                 value={insertValidation}
                             >
@@ -336,7 +353,8 @@ const DataMessageModal = ({
                             </label>
                             <select
                                 name="updateValidation"
-                                className="w-96 border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                className="border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                style={{width: '24rem'}}
                                 onChange={handleOnChangeProp}
                                 value={updateValidation}
                             >
@@ -359,7 +377,8 @@ const DataMessageModal = ({
                             </label>
                             <select
                                 name="deleteValidation"
-                                className="w-96 border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                className="border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                style={{width: '24rem'}}
                                 onChange={handleOnChangeProp}
                                 value={deleteValidation}
                             >
@@ -382,7 +401,8 @@ const DataMessageModal = ({
                             </label>
                             <select
                                 name="mergeValidation"
-                                className="w-96 border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                className="border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                style={{width: '24rem'}}
                                 onChange={handleOnChangeProp}
                                 value={mergeValidation}
                             >
@@ -396,16 +416,16 @@ const DataMessageModal = ({
                                 </option>
                             </select>
                         </div>
-                        <div className={`${ success ? 'bg-green-100 h-10 mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 mb-2 mt-6 opacity-100' : '' } ml-auto w-96 opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
+                        <div className={`${ success ? 'bg-green-100 h-10 mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 mb-2 mt-6 opacity-100' : '' } ml-auto w-full opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
                             {   success ? 
                                 <div className="h-full flex justify-evenly items-center">
-                                    <img alt="check-mark" className="w-5" src="/check-mark.svg" />
-                                    <span className="pl-2 w-96 text-sm leading-snug">Rules has been successfully updated.</span>
+                                    <img alt="check-mark" className="w-5 h-5" src="/check-mark.svg" />
+                                    <span className="pl-2 w-full text-sm leading-snug">Rules has been successfully updated.</span>
                                 </div>
                                 : success === false ?
                                 <div className="h-full flex justify-evenly items-center">
-                                    <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                                    <span className="pl-2 w-96 text-sm leading-snug">Rules has not been updated due to an error.</span>
+                                    <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                                    <span className="pl-2 w-full text-sm leading-snug">Rules has not been updated due to an error.</span>
                                 </div>
                                 :
                                 null

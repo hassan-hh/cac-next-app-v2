@@ -55,14 +55,21 @@ const Layout = ({ children}) => {
     // }
     // else {
         return (
+<<<<<<< HEAD
             <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}>
+=======
+            <div className={!store.sessionId ? 'relative h-screen flex flex-col justify-between' : ''} style={!store.sessionId? { background: '#2bbc9c' } : {}}>
+            {/* <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}> */}
+>>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                 <Nav loggedIn={loggedIn} />
                 <img
                     src="/drawerToggler.svg"
                     alt="toggler icon"
-                    className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    className={`${store.sessionId ? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    //className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
                     onClick={() => setOpen(!open)}
                 />
+                {/* <main className={`${store.sessionId ? 'flex' : 'hidden' } flex-row relative`}> */}
                 <main className="flex flex-row relative">
                     {   !loggedIn ?
                         null
@@ -72,6 +79,8 @@ const Layout = ({ children}) => {
                                 <Drawer open={open} />
                             </aside>
                         </DrawerProvider>
+                        // <>
+                        // </>
                     }
                     <section className={`${loggedIn ? 'bg-gray-200' : ''} min-w-full lg:min-w-0 w-full overflow-auto p-4 sm:py-10 sm:px-10 min-h-screen z-10`}>
                         {children}
@@ -80,6 +89,10 @@ const Layout = ({ children}) => {
                 <Footer loggedIn={loggedIn} />
             </div>
         )
+<<<<<<< HEAD
     //}
+=======
+   // }
+>>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
 }
 export default Layout

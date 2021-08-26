@@ -10,9 +10,7 @@ const Profile = () => {
 
     const router = useRouter()
     const { setProfileImage, store, setStore } = useContext(StoreContext)
-    //console.log('store', store)
     const [selectedFile, setSelectedFile] = useState([])
-    //console.log('selectedFile', selectedFile)
     const [base64String, setBase64String] = useState('')
     const [isFilePicked, setIsFilePicked] = useState(false)
     const [success, setSuccess] = useState({
@@ -56,17 +54,15 @@ const Profile = () => {
                         data: true
                     })
                 }
-                //console.log('res', res)
             })
             .catch(err => {
                 if (err.response.status > 300) {
-                    //setStore({ ...store }) //not sure about this why need to have copy of our state if error
+                    setStore({ ...store })
                     setSuccess({
                         ...success,
                         data: false
                     })
                 }
-                //console.warn('error', err.response)
             })
         refreshData()
     }
@@ -84,18 +80,15 @@ const Profile = () => {
             reader.onload = () => {
                 let Base64 = reader.result
                 setBase64String(Base64)
-                //console.warn('Base64', Base64)
             }
             reader.onerror = () => {
-                //console.warn('error', error)
             }
         }
     }
 
     const handleSubmission = () => {
-        //setProfileImage(base64String) //if you want the photo to be displayed on the nav then it can be stored in localStoarge temproray otherwise a get request is made to the iamge api and passed to the nav
         if (base64String === ''){
-            return; //breaking out of the function - means I dont need to wrap the below with the funcion
+            return;
         }
         const payLoad = {
             height: 178,
@@ -116,8 +109,6 @@ const Profile = () => {
                         ...success,
                         image: true
                     })
-                    //res.json()
-                    //console.log('res', res)
                 }
             })
             .catch(err => {
@@ -127,7 +118,6 @@ const Profile = () => {
                         image: false
                     })
                 }
-            //console.error('Error:', err);
 			})
 
         refreshData()
@@ -151,35 +141,18 @@ const Profile = () => {
                         <div className="h-full flex flex-col justify-between">
                             <span className="text-xl font-semibold block pb-5 md:pb-0">{name}</span>
                             <div className="rounded w-96 h-auto max-w-full shadow-md mx-auto">
-                                {/* <label class="cursor-pointer mt-1"> */}
-                                {/* <span class="text-sm font-bold text-white bg-gray-700 rounded-full px-4 py-2 hover:bg-gray-800" >Edit</span> */}
-                                {/* <input
-                                            type="file"
-                                            name="file"
-                                            onChange={imgHandler}
-                                            className="hidden"
-                                            //:multiple="multiple" :accept="accept"
-                                        /> */}
-                                {/* </label> */}
-                                <div className="h-96 w-full max-w-full relative flex items-center justify-center">
+                                <div style={{height: '24rem'}} className="w-full max-w-full relative flex items-center justify-center">
                                     <input
                                         type="file"
                                         name="file"
                                         className="cursor-pointer block opacity-0 w-full h-full max-w-full z-50"
                                         onChange={imgHandler}
                                     />
-                                    <div className="text-center absolute">
+                                    <div className="flex items-center justify-center text-center absolute inset-0">
                                         {isFilePicked ?
-                                            <div className="flex flex-col items-center justify-center">
-                                                {/* <p>"{selectedFile.name}"</p> */}
-                                                {/* <div className="">
-                                                    <h4>Drop file anywhere to upload<br/>or</h4>
-                                                    <p>Select another file</p>
-                                                </div> */}
-                                                <img src={base64String || ''} className="w-96 h-96 max-w-full object-cover"/>
-                                            </div>
+                                            <img src={base64String || ''} style={{height: '24rem', width: '24rem'}} className="max-w-full object-cover"/>
                                             :
-                                            <div className="flex flex-col items-center justify-center">
+                                            <div>
                                                 <h4>Drop file anywhere to upload<br />or</h4>
                                                 <p>Select File</p>
                                             </div>
@@ -187,15 +160,15 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`${success.image === true ? 'bg-green-100 h-10 mt-6 lg:mt-0 opacity-100 py-10 md:py-6' : success.image === false ? 'bg-red-100 h-10 mt-6 lg:mt-0 py-10 md:py-6 opacity-100' : ''} opacity-0 rounded-md mx-auto w-96 max-w-full h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
+                            <div style={{width: '24rem'}} className={`${success.image === true ? 'bg-green-100 h-10 mt-6 lg:mt-0 opacity-100 py-10 md:py-6' : success.image === false ? 'bg-red-100 h-10 mt-6 lg:mt-0 py-10 md:py-6 opacity-100' : ''} opacity-0 rounded-md mx-auto max-w-full h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
                                 {success.image === true ?
                                     <div className="h-full flex justify-start items-center">
-                                        <img alt="check-mark" className="w-5" src="/check-mark.svg" />
+                                        <img alt="check-mark" className="w-5 h-5" src="/check-mark.svg" />
                                         <span className="pl-2 text-sm leading-snug">Your profile photo has been successfully submitted.</span>
                                     </div>
                                     :
                                     <div className="h-full flex justify-start items-center">
-                                        <img alt="x-mark" className="w-5" src="/x-mark.svg" />
+                                        <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
                                         <span className="pl-2 text-sm leading-snug">Your profile photo has not been submitted due to an error. Please contact support.</span>
                                     </div>
                                 }
@@ -308,12 +281,12 @@ const Profile = () => {
                             <div className={`${success.data === true ? 'bg-green-100 h-10 py-8 sm:py-6 mb-2 mt-6 opacity-100' : success.data === false ? 'bg-red-100 h-10 mb-2 mt-6 py-10 sm:py-6 opacity-100' : ''} w-full opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
                                 {success.data === true ?
                                     <div className="h-full flex justify-start items-center">
-                                        <img alt="check-mark" className="w-5" src="/check-mark.svg" />
+                                        <img alt="check-mark" className="w-5 h-5" src="/check-mark.svg" />
                                         <span className="pl-2 text-sm leading-snug">Your personal information has been successfully updated.</span>
                                     </div>
                                     :
                                     <div className="h-full flex justify-start items-center">
-                                        <img alt="x-mark" className="w-5" src="/x-mark.svg" />
+                                        <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
                                         <span className="pl-2 text-sm leading-snug">Your personal information has not been updated due to an error. Please contact support.</span>
                                     </div>
                                 }

@@ -113,7 +113,7 @@ const LogFiles = () => {
                         null
                     }
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm mt-5">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-white">
                             <tr className="text-left text-xs text-gray-500 tracking-wider">
                                 <th scope="col" className="px-6 py-3 w-80 font-medium">
                                     Filename

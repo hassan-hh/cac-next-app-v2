@@ -2,7 +2,6 @@ const Footer = ({ loggedIn }) => {
 
     return (
       <footer className={`${loggedIn ? 'text-gray-900' : 'text-white'} text-lg h-40 flex flex-col items-center justify-center`}>
-        
         <a
           href="#"
           target="_blank"
@@ -10,7 +9,7 @@ const Footer = ({ loggedIn }) => {
         >
           Corporate Action Company{' '}
         </a>
-        <div className="w-1/6 flex flex-row justify-evenly pt-5">
+        <div className="w-56 flex flex-row justify-around pt-5">
           <a
             href="/dashboard"
             target="_blank"

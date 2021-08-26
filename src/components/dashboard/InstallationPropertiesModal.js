@@ -18,7 +18,7 @@ const InstallaionPropertiesModal = ({
                 <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <img
                         alt="close"
-                        className="w-4 absolute right-6 cursor-pointer"
+                        className="w-4 absolute right-0 mr-5 cursor-pointer"
                         src="/close.svg"
                         onClick={closeModalProp}
                     />
@@ -38,7 +38,7 @@ const InstallaionPropertiesModal = ({
                             </label>
                             <select
                                 name="osName"
-                                className="w-96 border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
+                                className="ml-10 w-full border border-gray-200 rounded-md text-gray-700 h-10 px-3 py-2 bg-gray-200 hover:border-gray-400 focus:outline-none"
                                 onChange={handleOnChangeProp}
                             >
                                 <option value={osName}>
@@ -62,7 +62,7 @@ const InstallaionPropertiesModal = ({
                             <input
                                 id="filter"
                                 name="filter"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="ml-6 rounded-md block w-full px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="*"
                                 value={filter || ''}
@@ -79,7 +79,7 @@ const InstallaionPropertiesModal = ({
                             <input
                                 id="key"
                                 name="key"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="ml-8 rounded-md block w-full px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="property-key"
                                 value={key || ''}
@@ -97,23 +97,23 @@ const InstallaionPropertiesModal = ({
                             <input
                                 id="value"
                                 name="value"
-                                className="rounded-md block w-96 px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                className="ml-5 rounded-md block w-full px-3 py-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 type="text"
                                 placeholder="property-value"
                                 value={value || ''}
                                 onChange={handleOnChangeProp}
                             />
                         </div>
-                        <div className={`${ success === true ? 'bg-green-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : '' } opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
+                        <div className={`${ success === true ? 'bg-green-100 h-10 w-full ml-auto mb-2 mt-6 opacity-100' : success === false ? 'bg-red-100 h-10 w-96 ml-auto mb-2 mt-6 opacity-100' : '' } opacity-0 rounded-md h-0 py-0 my-0 px-2 transition-all duration-300 ease-in-out`}>
                             { success ? 
                                 <div className="h-full flex justify-evenly items-center">
-                                    <img alt="check-mark" className="w-5" src="/check-mark.svg" />
-                                    <span className="pl-2 w-96 text-sm leading-snug">Installation property has been successfully saved.</span>
+                                    <img alt="check-mark" className="w-5 h-5" src="/check-mark.svg" />
+                                    <span className="pl-2 w-full text-sm leading-snug">Installation property has been successfully saved.</span>
                                 </div>
                                 :
                                 <div className="h-full flex justify-evenly items-center">
-                                    <img alt="x-mark" className="w-5" src="/x-mark.svg" />
-                                    <span className="pl-2 w-96 text-sm leading-snug">Installation property has not been saved due to an error.</span>
+                                    <img alt="x-mark" className="w-5 h-5" src="/x-mark.svg" />
+                                    <span className="pl-2 w-full text-sm leading-snug">Installation property has not been saved due to an error.</span>
                                 </div>
                             }
                         </div>
