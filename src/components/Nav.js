@@ -67,7 +67,7 @@ const Nav = ({ loggedIn }) => {
         //window.location.href = '/login'
         setLoadingScreen(true)
         setLoggedIn(false)
-        //router.push('/login') //removed because of new way of auth -- 23/08/2021// //
+        //router.push('/login') //removed because of new way of auth -- 23/08/2021
         router.push(router.asPath) //after new auth - this line will keep user on the same page once logout
     }
 
