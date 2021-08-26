@@ -10,16 +10,6 @@ import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLo
 export const getStaticProps = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
-<<<<<<< HEAD
-        //const errorCode = res.ok ? 200 : res.statusCode
-        const data = await res.json()
-        
-        return {
-            props: {
-                data, errorCode
-            },
-            revalidate: 30,
-=======
         const errorCode = res.ok ? 200 : res.statusCode
         const data = await res.json()
 
@@ -28,7 +18,6 @@ export const getStaticProps = async () => {
                 data, errorCode,
             },
             revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
         }
     }
     catch (err) {

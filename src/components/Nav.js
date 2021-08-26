@@ -103,10 +103,6 @@ const Nav = ({ loggedIn }) => {
                                         <div style={{width: '22rem'}} className="flex items-center justify-around">
                                             <Link href="/dashboard">
                                                 <a
-<<<<<<< HEAD
-                                                    aria-current="page"
-=======
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                     className={`${router.pathname == '/dashboard' ? `bg-gray-900` : 'bg-transparent'}  text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
                                                 >
                                                     Dashboard
@@ -143,38 +139,22 @@ const Nav = ({ loggedIn }) => {
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/installation-properties">
-<<<<<<< HEAD
-                                                            <a className={`${router.pathname == '/dashboard/installation-properties' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
-=======
                                                             <a className={`${router.pathname == '/dashboard/installation-properties' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                                 role="menuitem"
                                                             >
                                                                 Installation Properties
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/metrics">
-<<<<<<< HEAD
-                                                            <a className={`${router.pathname == '/dashboard/metrics' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
-                                                                role="menuitem"
-        
-=======
                                                             <a className={`${router.pathname == '/dashboard/metrics' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
                                                                 role="menuitem"
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                             >
                                                                 Metrics
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/rule-sets">
-<<<<<<< HEAD
-                                                            <a className={`${router.pathname == '/dashboard/rule-sets' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
-                                                                role="menuitem"
-        
-=======
                                                             <a className={`${router.pathname == '/dashboard/rulte-sets' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
                                                                 role="menuitem"
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                             >
                                                                 Rule Sets
                                                             </a>
@@ -182,24 +162,14 @@ const Nav = ({ loggedIn }) => {
                                                         <Link href="/dashboard/data-message-definitions">
                                                             <a className={`${router.pathname == '/dashboard/data-message-definitions' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
                                                                 role="menuitem"
-<<<<<<< HEAD
-        
-=======
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                             >
                                                                 Data Message Definitions
                                                             </a>
                                                         </Link>
                                                         <Link href="/dashboard/support">
                                                             <a 
-<<<<<<< HEAD
-                                                                className={`${router.pathname == '/dashboard/support' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`}
-                                                                role="menuitem"
-        
-=======
                                                                 className={`${router.pathname == '/dashboard/support' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 rounded-md px-4 py-2 text-sm`} 
                                                                 role="menuitem"
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                             >
                                                                 Support Dashboard
                                                             </a>
@@ -231,11 +201,7 @@ const Nav = ({ loggedIn }) => {
                                         {/* <p className="px-4 py-2 text-gray-700 uppercase text-xs text-left block sm:hidden">Welcome, <span className="capitalize">{store.name}</span></p> */}
                                         <Link href="/dashboard/profile">
                                             <a 
-<<<<<<< HEAD
-                                                className={`${router.pathname == '/dashboard/profile' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`}
-=======
                                                 className={`${router.pathname == '/dashboard/profile' ? `bg-gray-900 text-white hover:bg-gray-900` : 'bg-transparent text-gray-700 hover:text-gray-700 hover:bg-gray-100'} block mx-2 my-1 px-4 py-2 text-sm rounded-md`} 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 role="menuitem"
                                             >
                                                 Your Profile
@@ -265,11 +231,7 @@ const Nav = ({ loggedIn }) => {
                     <div className={`${mobileMenu && dropDownMenu ? 'h-auto' : mobileMenu ? 'h-40' : ''} h-0 transition-all ease-in-out duration-300 block sm:hidden`} id="mobile-menu">
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             <Link href="/dashboard">
-<<<<<<< HEAD
-                                <a
-=======
                                 <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                     className={`${router.pathname == "/dashboard" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
                                     aria-current="page"
                                 >
@@ -277,11 +239,7 @@ const Nav = ({ loggedIn }) => {
                                 </a>
                             </Link>
                             <Link href="/dashboard/file-browser">
-<<<<<<< HEAD
-                                <a
-=======
                                 <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                     className={`${router.pathname == "/dashboard/file-browser" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 uppercase px-3 py-2 rounded-md text-sm font-medium`}
                                 >
                                     File Browser
@@ -301,68 +259,43 @@ const Nav = ({ loggedIn }) => {
                                 >
                                     <div className="py-2" role="none">
                                         <Link href="/dashboard/account-management">
-<<<<<<< HEAD
-                                            <a
-=======
                                             <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 className={`${router.pathname == "/dashboard/account-management" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Account Management
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/installation-properties">
-<<<<<<< HEAD
-                                            <a
-=======
                                             <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 className={`${router.pathname == "/dashboard/installation-properties" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Installation Properties
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/metrics">
-<<<<<<< HEAD
-                                            <a
-=======
                                             <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 className={`${router.pathname == "/dashboard/metrics" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Metrics
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/rule-sets">
-<<<<<<< HEAD
-                                            <a
-=======
                                             <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 className={`${router.pathname == "/dashboard/rule-sets" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Rule Sets
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/data-message-definitions">
-<<<<<<< HEAD
-                                            <a
-=======
                                             <a 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 className={`${router.pathname == "/dashboard/data-message-definitions" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
                                                 role="menuitem">
                                                 Data Message Definitions
                                             </a>
                                         </Link>
                                         <Link href="/dashboard/support">
-<<<<<<< HEAD
-                                            <a
-                                                className={`${router.pathname == "/dashboard/support" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`}
-=======
                                             <a 
                                                 className={`${router.pathname == "/dashboard/support" ? `bg-gray-900` : 'bg-transparent'} block text-white hover:bg-gray-900 transition-all ease-in-out duration-300 px-4 py-2 rounded-md`} 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                                                 role="menuitem">
                                                 Support Dashboard
                                             </a>

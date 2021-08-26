@@ -26,9 +26,6 @@ const Drawer = ({open}) => {
         }, 1000)
         return () => { clearTimeout(x); }
     }, [success.data])
-<<<<<<< HEAD
-   
-=======
 
     // if (!bookmarks.bookmark) { //nested array within an object bookmarks { bookmark[] }
     //     return null
@@ -38,7 +35,6 @@ const Drawer = ({open}) => {
 
     console.warn('systemDate', systemDate)
 
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
     const customError = success.errorCode === 404 ?
         `Error ${success.errorCode} data source not found.`
         : success.errorCode >= 500 ? 
@@ -64,15 +60,10 @@ const Drawer = ({open}) => {
                             <>
                                 {systemDate && formatedDate}
                             </>
-<<<<<<< HEAD
-                            : 
-                            <p>{displayText} {customError}</p>
-=======
                             :
                             <>
                                 <p>{customError}</p>
                             </>
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                         }
                     </p>
                     <div className="bg-white p-6 w-full shadow-sm rounded-md">

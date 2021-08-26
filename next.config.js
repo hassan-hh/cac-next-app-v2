@@ -9,8 +9,6 @@ module.exports = {
             },
         ]
     },
-<<<<<<< HEAD
-=======
     async headers() {
         return [
             {
@@ -28,7 +26,6 @@ module.exports = {
             }
         ]
     },
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
     // httpAgentOptions: {
     //     keepAlive: false,
     // },

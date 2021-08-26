@@ -55,12 +55,8 @@ const Layout = ({ children}) => {
     // }
     // else {
         return (
-<<<<<<< HEAD
-            <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}>
-=======
             <div className={!store.sessionId ? 'relative h-screen flex flex-col justify-between' : ''} style={!store.sessionId? { background: '#2bbc9c' } : {}}>
             {/* <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}> */}
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
                 <Nav loggedIn={loggedIn} />
                 <img
                     src="/drawerToggler.svg"
@@ -89,10 +85,6 @@ const Layout = ({ children}) => {
                 <Footer loggedIn={loggedIn} />
             </div>
         )
-<<<<<<< HEAD
-    //}
-=======
    // }
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
 }
 export default Layout

@@ -8,18 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "axios": "^0.21.1",
-    "js-cookie": "^2.2.1",
-    "next": "^11.1.0",
-=======
     "axios": "^0.21.1",
     "js-cookie": "^2.2.1",
     "next": "^11.0.1",
->>>>>>> ec7975f00a75d8fc79aab06685164445a22b7386
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
