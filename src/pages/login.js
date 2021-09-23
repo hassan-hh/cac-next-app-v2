@@ -12,12 +12,12 @@ export const getStaticProps = async () => {
     try {
         //const CatsUrl = ClientConfig.apiUrl //env.local might not work in production so we keep clientconfig.js
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installations/current`)
-        const errorCode = res.ok ? 200 : res.statusCode
+        //const errorCode = res.ok ? 200 : res.statusCode
         const data = await res.json()
 
         return {
             props: {
-                data, errorCode,
+                data, //errorCode,
             }
         }
     }
@@ -61,7 +61,7 @@ const LoginPage = ({ data, errorCode }) => {
                 :
             <>
                 <div className="min-h-screen flex items-center justify-center flex-col">
-                    <h1 style={{width: '25rem'}} className="mb-10 text-white text-3xl text-left capitalize">Login to {data.description.replace(/_/g,' ').toLowerCase()}</h1>
+                    <h1 style={{width: '25rem'}} className="mb-10 text-white text-3xl text-left capitalize">Login to Test Account{data.description && data.description.replace(/_/g,' ').toLowerCase()}</h1>
                     <LoginFull />
                 </div>
             </>
