@@ -10,12 +10,12 @@ import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLo
 export const getStaticProps = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`)
-        const errorCode = res.ok ? 200 : res.statusCode
+       // const errorCode = res.ok ? 200 : res.statusCode
         const data = await res.json()
 
         return {
             props: {
-                data, errorCode,
+                data, //errorCode,
             },
             revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
         }
@@ -139,7 +139,7 @@ const InstallationProperties = ({ data, errorCode }) => {
                                 </tr>
                                 :
                                 <>
-                                    {data.map((item, idx) => (
+                                    {data && data.length !== 0 && data.map((item, idx) => (
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}

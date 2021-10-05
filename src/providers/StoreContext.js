@@ -8,7 +8,7 @@ export const StoreContext = createContext()
 export const StoreProvider = ({ children }) => {
 
     const router = useRouter()
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(true)
     const [loadingScreen, setLoadingScreen] = useState(false)
     const [profileImage, setProfileImage] = useState('')
     const [store, setStore] = useState({
