@@ -3,26 +3,21 @@ import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
 
-export const getStaticProps = async () => {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installations/current`)
-        const errorCode = res.ok ? 200 : res.statusCode
-        const data = await res.json()
+export const getServerSideProps = async (context) => {
+    const { req } = context || {}
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installations/current`, {
+        headers: { 
+            Cookie: req?.headers?.cookie || ''
+        }
+    })
+    const data = await res.json()
+    const errorCode = res.ok ? 200 : res.statusCode
 
-        return {
-            props: {
-                data, errorCode,
-            }
-        }
-    }
-    catch (err) {
-        const errorCode = err ? 500 : null
-        //const errMessage = err.message //it will display error message after passed as props
-        return {
-            props: {
-                errorCode
-            },
-        }
+    return {
+        props: {
+            data: data || [], 
+            errorCode: errorCode || null
+        },
     }
 }
 
@@ -43,9 +38,9 @@ const Client = ({ data, errorCode }) => {
     return (
         <>
             <Meta title="Client download" />
-            <Header title={`Client Download For ${data.description.replace(/_/g,' ').toLowerCase()}`} subTitle="" />
+            <Header title={`Client Download For ${data?.description?.replace(/_/g,' ').toLowerCase()}`} subTitle="" />
             <div className="min-h-screen">
-                <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {data.description.replace(/_/g,' ').toLowerCase()}</h1>
+                <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {data?.description?.replace(/_/g,' ').toLowerCase()}</h1>
                     <button
                         type="button"
                         onClick={() => setLoading(true)}

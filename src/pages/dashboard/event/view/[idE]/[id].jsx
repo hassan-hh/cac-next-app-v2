@@ -4,22 +4,26 @@ import TabsPanel from '../../../../../components/dashboard/TabsPanel'
 import Error from '../../../../_error'
 
 export const getServerSideProps = async (context) => {//this is single page for any type of post, pages, comments, with dynamic routing
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${context.params.idE}/${context.params.id}`) //e.g evets/SGP/2224 as the endpoint and it should return json res/display EVENTS DATA in the console log
+    const { req } = context || {}
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${context.params.idE}/${context.params.id}`, {
+        headers: { 
+            Cookie: req?.headers?.cookie 
+        }
+    }) 
+    //e.g evets/SGP/2224 as the endpoint and it should return json res/display EVENTS DATA in the console log
     //const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${idEntity}/${idCA}`)
     const errorCode = res.ok ? 200 : res.statusCode
     const data = await res.json()
 
     return {
         props: {
-            data, errorCode
+            data: data || [], 
+            errorCode: errorCode || null
         }
     }
 }
 
 const EventView = ({ data, errorCode }) => {
-    
-    console.log('EVETS DATA', data)
-
     return (
         <>
             <Meta title="Event View" />
@@ -28,42 +32,42 @@ const EventView = ({ data, errorCode }) => {
                 <Error statusCode={errorCode} />
                 :
                 <>
-                <h1 className="text-green-500 text-lg mb-5 font-semibold">{data.idEntity}/{data.idCA}</h1>
+                <h1 className="text-green-500 text-lg mb-5 font-semibold">{data?.idEntity}/{data?.idCA}</h1>
                 <div className="flex flex-col lg:flex-row lg:space-x-4 mb-4">
                     <div className="overflow-auto w-full lg:w-2/3 mb-4 lg:mb-0 shadow-sm rounded-md">
                         <table className="min-w-full bg-white text-sm h-60">
                             <tbody className="">
                                 <tr>
                                     <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Reference</span> {data.idEntity}/{data.idCA}</p>
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Reference</span> {data?.idEntity}/{data?.idCA}</p>
                                     </td>
                                     <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Entitled Date</span> {data.entitledDate || 'Unknown'}</p>
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Entitled Date</span> {data?.entitledDate || 'Unknown'}</p>
                                     </td>
                                     <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Settled Date</span> {data.settledDate || 'Unknown'}</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Instrument</span> {data.instrument.txInstName || 'Unknown'}</p>
-                                    </td>
-                                    <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">ISIN</span> {data.instrument.idISIN || 'Unknown'}</p>
-                                    </td>
-                                    <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Country</span> {data.idEntity || 'Unknown'}</p>
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Settled Date</span> {data?.settledDate || 'Unknown'}</p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Event Status</span> {data.idEntity}/{data.idCA}</p>
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Instrument</span> {data?.instrument?.txInstName || 'Unknown'}</p>
                                     </td>
                                     <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Modified Date</span> {data.dtModified || 'Unknown'}</p>
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">ISIN</span> {data?.instrument?.idISIN || 'Unknown'}</p>
                                     </td>
                                     <td className="px-6">
-                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Source</span> {data.instrument.idSource || 'Unknown'}</p>
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Country</span> {data?.idEntity || 'Unknown'}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6">
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Event Status</span> {data?.idEntity}/{data?.idCA}</p>
+                                    </td>
+                                    <td className="px-6">
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Modified Date</span> {data?.dtModified || 'Unknown'}</p>
+                                    </td>
+                                    <td className="px-6">
+                                        <p className="flex flex-row justify-between w-60 text-right"><span className="text-green-500">Source</span> {data?.instrument?.idSource || 'Unknown'}</p>
                                     </td>
                                 </tr>
                             </tbody>

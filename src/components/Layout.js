@@ -17,6 +17,11 @@ const Layout = ({ children }) => {
     const [open, setOpen] = useState(true)
     console.log('loggedIn', loggedIn)
 
+    const refreshData = () => { //similar to AJAX in this case we might not need revalidate. 
+        router.replace(router.asPath)
+    }
+    
+
     useEffect(() => { //this will redirect the user when page is refreshed, page could be refreshed by visiting wrong url or hard resfresh the browser
         if (store.sessionId) {
             setLoggedIn(true)
@@ -28,14 +33,17 @@ const Layout = ({ children }) => {
         if (router.pathname !== '/login' && loggedIn === true) { //on logged in
             setLoadingScreen(false);
         }
+        
         const x = setTimeout(() => {
             // if (!store.sessionId) { //after logout/before auth, if user goes to another url 
             //     router.push('/login')
             // }
+            if (router.pathname === router.asPath) {
+                refreshData()
+            }
         }, 2000)
         return () => { clearTimeout(x); }
     }, [loggedIn, store.sessionId, router.pathname])
-    
     
     //NotAuthScreen for non logged in users - before a user login and goes to another url then we protect it here
     

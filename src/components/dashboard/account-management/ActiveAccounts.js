@@ -20,32 +20,32 @@ const ActiveAccounts = () => {
     useEffect(() => {
         ActiveAccountsApi()
         const x = setTimeout(() => {
-            if (success.data === true || success.data === false) {
+            if (success?.data === true || success?.data === false) {
                 setLoading(false)
             }
         }, 1000)
         return () => {clearTimeout(x); setLoading(false);}
-    }, [update, success.data])
+    }, [update, success?.data])
 
     const ActiveAccountsApi = () => {
         setLoading(true)
         axios.get('/api/user/admin/account/active?start=0&size=999')
             .then(res => {
-                if (res.status < 300) {
-                    setActiveAccounts(res.data)
+                if (res?.status < 300) {
+                    setActiveAccounts(res?.data)
                     setSuccess({
                         ...success,
-                        errorCode: res.status,
+                        errorCode: res?.status,
                         data: true
                     })
                 }
                 console.log('res', res)
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err?.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status, 
+                        errorCode: err?.response?.status, 
                         data: false
                     })
                 }
@@ -68,13 +68,13 @@ const ActiveAccounts = () => {
     }
     
     const handleDeactivate = (account, idx) => {
-        DeactivateAccountsApi(account.username, idx)
+        DeactivateAccountsApi(account?.username, idx)
     }
 
     return (
         <>
-            {   success.data === false ?
-                <Error statusCode={success.errorCode}/>
+            {   success?.data === false ?
+                <Error statusCode={success?.errorCode}/>
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="min-w-full divide-y divide-gray-200 shadow-sm">
@@ -100,14 +100,14 @@ const ActiveAccounts = () => {
                             </tr>
                         </thead>
                         <tbody className="relative bg-white divide-y divide-gray-200">
-                            {activeAccounts.length === 0 && success === true ?
-                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                            {activeAccounts.length === 0 && success?.data === true ?
+                                <tr className="h-screen absolute top-40 inset-0 flex items-center justify-center">
                                     <td>No data available yet</td>
                                 </tr>
                                 :
                                 <>
                                     {activeAccounts.map((account, idx) => (
-                                        <tr key={account.username} className={`hover:bg-gray-100 text-sm text-left`}>
+                                        <tr key={account?.username} className={`hover:bg-gray-100 text-sm text-left`}>
                                             {loading && update === 0 ?
                                                 <AMLoadingSkeleton />
                                                 :
@@ -116,27 +116,27 @@ const ActiveAccounts = () => {
                                                         <>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account.username}
+                                                                    {account?.username}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account.email}
+                                                                    {account?.email}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account.name}
+                                                                    {account?.name}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all capitalize">
-                                                                    {account.type.replace(/_/g,' ').toLowerCase()}
+                                                                    {account?.type.replace(/_/g,' ').toLowerCase()}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account.phoneNumber}
+                                                                    {account?.phoneNumber}
                                                                 </p>
                                                             </td>
                                                         </>

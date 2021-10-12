@@ -8,9 +8,10 @@ import { useRouter } from 'next/router';
 import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLoadingSkeleton'
 
 export const getServerSideProps = async (context) => {
+    const { req } = context || {}
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`, {
         headers: { 
-            Cookie: context.req.headers.cookie 
+            Cookie: req?.headers?.cookie || ''
         }
     })
     const data = await res.json()
@@ -45,11 +46,11 @@ const InstallationProperties = ({ data, errorCode }) => {
             }
             if (data) { // our loading state is true by default, if data is not empty then display data and setLoading to false
                 setLoading(false)
+                //refreshData()
             }
         }, 1000)
         return () => clearTimeout(x)
     }, [itemDetail.success, data])
-
   
     const refreshData = () => { //similar to AJAX in this case we might not need revalidate. 
         router.replace(router.asPath)
@@ -124,13 +125,13 @@ const InstallationProperties = ({ data, errorCode }) => {
                             </tr>
                         </thead>
                         <tbody className="relative bg-white divide-y divide-gray-200 text-sm">
-                            {data && data.length === 0 && errorCode < 300 ?
-                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                            {data?.length === 0 && errorCode < 300 ?
+                                <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                     <td>no data available yet</td>
                                 </tr>
                                 :
                                 <>
-                                    {data.length > 0 && data.map((item, idx) => (
+                                    {data?.length && data.map((item, idx) => (
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}
@@ -142,22 +143,22 @@ const InstallationProperties = ({ data, errorCode }) => {
                                                 <>
                                                     <td className="px-6 py-1">
                                                         <p className="w-48">
-                                                            {item.osName}
+                                                            {item?.osName}
                                                         </p>
                                                     </td>
                                                     <td className="px-6 py-1">
                                                         <p className="w-48 break-all">
-                                                            {item.filter}
+                                                            {item?.filter}
                                                         </p>
                                                     </td>
                                                     <td className="px-6 py-1">
                                                         <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
-                                                            {item.key}
+                                                            {item?.key}
                                                         </p>
                                                     </td>
                                                     <td className="px-6 py-1">
                                                         <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
-                                                            {item.value}
+                                                            {item?.value}
                                                         </p>
                                                     </td>
                                                 </>
@@ -177,7 +178,7 @@ const InstallationProperties = ({ data, errorCode }) => {
                             closeModalProp={closeModal}
                             handleOnChangeProp={handleOnChange}
                             handleFormSubmitProp={handleFormSubmit}
-                            success={itemDetail.success}
+                            success={itemDetail?.success}
                         />
                     }
                 </div>

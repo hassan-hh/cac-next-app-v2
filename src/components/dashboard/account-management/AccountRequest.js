@@ -20,27 +20,27 @@ const AccountRequest = () => {
     useEffect(() => {
         AccountRequestApi()
         const x = setTimeout(() => {
-            if (success.data === true || success.data === false) {
+            if (success?.data === true || success?.data === false) {
                 setLoading(false)
             }
         }, 1000)
         return () => {clearTimeout(x); setLoading(false); setUpdate(0);}
-    }, [update, success.data])
+    }, [update, success?.data])
 
     const AccountRequestApi = async () => {
         setLoading(true)
         axios.get('/api/user/admin/accountrequest?start=0&size=999')
             .then(res => {
-                if (res.status < 300) {
-                    setAccountRequest(res.data)
+                if (res?.status < 300) {
+                    setAccountRequest(res?.data)
                     setSuccess({
                         ...success,
-                        errorCode: res.status,
+                        errorCode: res?.status,
                         data: true
                     })
                     console.log('res ar', res)
-                    const { sessionId } = res.headers
-                    Cookies.set('sessionId', res.headers.sessionid)
+                    const { sessionId } = res?.headers
+                    Cookies.set('sessionId', res?.headers?.sessionid)
                     setStore({
                         ...store,
                         sessionId: sessionId, // JSESSIONID already stored in the cookie and cookie usually comes from the rest route itself we don't need to store it manually. Not like auth token JWT must be passed to the headers and stored in the local storage.
@@ -49,21 +49,21 @@ const AccountRequest = () => {
                 console.log('res', res)
             })
             .catch(err => {
-                if (err.response && err.response.status > 300) {
+                if (err?.response && err?.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status, 
+                        errorCode: err?.response?.status, 
                         data: false
                     })
                 }
-                console.log('err', err.response)
+                console.log('err', err?.response)
             })
     }
 
     return (
         <>
-            {   success.data === false ?
-                <Error statusCode={success.errorCode}/>
+            {   success?.data === false ?
+                <Error statusCode={success?.errorCode}/>
                 :
                 <>
                     <button
@@ -108,32 +108,32 @@ const AccountRequest = () => {
                                 </tr>
                             </thead>
                             <tbody className="relative bg-white divide-y divide-gray-200">
-                                {accountRequest.length === 0 && success.data === true ?
-                                    <tr className="absolute top-80 inset-0 flex items-center justify-center h-10">
+                                {accountRequest?.length === 0 && success?.data === true ?
+                                    <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                         <td>No data available yet</td>
                                     </tr>
                                     :
                                     <>
-                                        {accountRequest.map((account, idx) => (
+                                        {accountRequest && accountRequest.map((account, idx) => (
                                             <tr key={idx} className="hover:bg-gray-100 text-sm">
                                                 {   loading === true ?
                                                     <AMLoadingSkeleton />
                                                     :
                                                     <>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account.username}</p>
+                                                            <p>{account?.username}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account.email}</p>
+                                                            <p>{account?.email}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account.name}</p>
+                                                            <p>{account?.name}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all capitalize">
-                                                            <p>{account.type.replace(/_/g,' ').toLowerCase()}</p>
+                                                            <p>{account?.type.replace(/_/g,' ').toLowerCase()}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account.phoneNumber}</p>
+                                                            <p>{account?.phoneNumber}</p>
                                                         </td>
                                                     </>
                                                 }
