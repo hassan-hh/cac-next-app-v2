@@ -9,7 +9,7 @@ import LoadingScreen from './dashboard/LoadingScreen'
 import NotAuthScreen from './dashboard/NotAuthScreen'
 
 
-const Layout = ({ children}) => {
+const Layout = ({ children }) => {
 
     const router = useRouter()
     const { store, setStore, loggedIn, setLoggedIn, loadingScreen, setLoadingScreen } = useContext(StoreContext)
@@ -61,8 +61,8 @@ const Layout = ({ children}) => {
                 <img
                     src="/drawerToggler.svg"
                     alt="toggler icon"
-                    className={`${store.sessionId ? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
-                    //className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    //className={`${store.sessionId ? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
+                    className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
                     onClick={() => setOpen(!open)}
                 />
                 {/* <main className={`${store.sessionId ? 'flex' : 'hidden' } flex-row relative`}> */}

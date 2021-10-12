@@ -7,39 +7,29 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLoadingSkeleton'
 
-export const getStaticProps = async () => {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`)
-       // const errorCode = res.ok ? 200 : res.statusCode
-        const data = await res.json()
+export const getServerSideProps = async (context) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`, {
+        headers: { 
+            Cookie: context.req.headers.cookie 
+        }
+    })
+    const data = await res.json()
+    const errorCode = res.ok ? 200 : res.statusCode
 
-        return {
-            props: {
-                data, //errorCode,
-            },
-            revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
-        }
-    }
-    catch (err) {
-        const errorCode = err ? 500 : null
-        //const errMessage = err.message //it will display error message after passed as props
-        return {
-            props: {
-                errorCode
-            },
-        }
+    return {
+        props: {
+            data: data || [], 
+            errorCode: errorCode || null
+        },
     }
 }
 
 const InstallationProperties = ({ data, errorCode }) => {
 
-    console.log('data', data)
-    console.log('errorCode', errorCode)
-
     const router = useRouter()
     const [modal, setModal] = useState(false)
     const [loading, setLoading] = useState(true)
-    const [success, setSuccess] = useState(null)
+    //const [success, setSuccess] = useState(null)
     const [itemDetail, setItemDetail] = useState({
         osName: '',
         filter: '',
@@ -60,6 +50,7 @@ const InstallationProperties = ({ data, errorCode }) => {
         return () => clearTimeout(x)
     }, [itemDetail.success, data])
 
+  
     const refreshData = () => { //similar to AJAX in this case we might not need revalidate. 
         router.replace(router.asPath)
     }
@@ -139,7 +130,7 @@ const InstallationProperties = ({ data, errorCode }) => {
                                 </tr>
                                 :
                                 <>
-                                    {data && data.length !== 0 && data.map((item, idx) => (
+                                    {data.length > 0 && data.map((item, idx) => (
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}
@@ -190,7 +181,7 @@ const InstallationProperties = ({ data, errorCode }) => {
                         />
                     }
                 </div>
-            }
+            } 
         </>
     )
 }

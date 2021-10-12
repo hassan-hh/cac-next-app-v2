@@ -7,27 +7,20 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLoadingSkeleton'
 
-export const getStaticProps = async () => {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
-        const errorCode = res.ok ? 200 : res.statusCode
-        const data = await res.json()
+export const getServerSideProps = async (context) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`, {
+        headers: { 
+            Cookie: context.req.headers.cookie 
+        }
+    })
+    const data = await res.json()
+    const errorCode = res.ok ? 200 : res.statusCode
 
-        return {
-            props: {
-                data, errorCode,
-            },
-            revalidate: 30, //only works when the app is deployed to production - npm run start can run the app in prod mode instead of npm run dev
-        }
-    }
-    catch (err) {
-        const errorCode = err ? 500 : null
-        //const errMessage = err.message //it will display error message after passed as props
-        return {
-            props: {
-                errorCode
-            },
-        }
+    return {
+        props: {
+            data: data || [], 
+            errorCode: errorCode || null
+        },
     }
 }
 
@@ -202,7 +195,7 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
                                     </tr>
                                 :
                                 <>
-                                    {data.map((item, idx ) => ( //item.filter(x => x !== null) =>
+                                    {data.length > 0 && data.map((item, idx ) => ( //item.filter(x => x !== null) =>
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}
