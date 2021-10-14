@@ -13,9 +13,7 @@ const Layout = ({ children }) => {
 
     const router = useRouter()
     const { store, setStore, loggedIn, setLoggedIn, loadingScreen, setLoadingScreen } = useContext(StoreContext)
-    console.log('loadingScreen', loadingScreen)
     const [open, setOpen] = useState(true)
-    console.log('loggedIn', loggedIn)
 
     const refreshData = () => { //similar to AJAX in this case we might not need revalidate. 
         router.replace(router.asPath)

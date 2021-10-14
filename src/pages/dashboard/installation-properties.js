@@ -7,19 +7,18 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import IPLoadingSkeleton from '../../components/dashboard/loading-skeletons/IPLoadingSkeleton'
 
-export const getServerSideProps = async (context) => {
-    const { req } = context || {}
+export const getServerSideProps = async ({req}) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installation/properties`, {
         headers: { 
-            Cookie: req?.headers?.cookie || ''
+            Cookie: req.headers?.cookie || ''
         }
-    })
+    })  
     const data = await res.json()
     const errorCode = res.ok ? 200 : res.statusCode
 
     return {
         props: {
-            data: data || [], 
+            data: data || [],
             errorCode: errorCode || null
         },
     }
@@ -85,7 +84,7 @@ const InstallationProperties = ({ data, errorCode }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setItemDetail({
                     ...itemDetail,
                     success: false
@@ -125,13 +124,13 @@ const InstallationProperties = ({ data, errorCode }) => {
                             </tr>
                         </thead>
                         <tbody className="relative bg-white divide-y divide-gray-200 text-sm">
-                            {data?.length === 0 && errorCode < 300 ?
+                            {data.length === 0 && errorCode < 300 ?
                                 <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                     <td>no data available yet</td>
                                 </tr>
                                 :
                                 <>
-                                    {data?.length && data.map((item, idx) => (
+                                    {data.length > 0 && data.map((item, idx) => (
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}
@@ -143,22 +142,22 @@ const InstallationProperties = ({ data, errorCode }) => {
                                                 <>
                                                     <td className="px-6 py-1">
                                                         <p className="w-48">
-                                                            {item?.osName}
+                                                            {item.osName}
                                                         </p>
                                                     </td>
                                                     <td className="px-6 py-1">
                                                         <p className="w-48 break-all">
-                                                            {item?.filter}
+                                                            {item.filter}
                                                         </p>
                                                     </td>
                                                     <td className="px-6 py-1">
                                                         <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
-                                                            {item?.key}
+                                                            {item.key}
                                                         </p>
                                                     </td>
                                                     <td className="px-6 py-1">
                                                         <p className="w-96 md:w-40 lg:w-44 xl:w-72 break-all">
-                                                            {item?.value}
+                                                            {item.value}
                                                         </p>
                                                     </td>
                                                 </>

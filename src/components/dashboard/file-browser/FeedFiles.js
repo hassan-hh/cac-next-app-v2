@@ -48,10 +48,10 @@ const FeedFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -71,10 +71,10 @@ const FeedFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -82,7 +82,7 @@ const FeedFiles = () => {
     }
 
     const handleFileBrowser = (feedFile) => {
-        setBreadCrumbs(feedFile.pathFromRoot.replace(/\//g, ' > '))
+        setBreadCrumbs(feedFile.pathFromRoot?.replace(/\//g, ' > '))
         setBaseUrl(feedFile.base64PathFromRoot) //.replace(/=/g, '%3D')
         setDirectory(feedFile.directory)
         baseUrlApi(feedFile.base64PathFromRoot)
@@ -128,7 +128,7 @@ const FeedFiles = () => {
                         </thead>
                         <tbody className="relative bg-white divide-y divide-gray-200">
                             {feedFiles.length === 0 && success.data === true ?
-                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                     <td>No data available yet</td>
                                 </tr>
                                 :
@@ -140,26 +140,26 @@ const FeedFiles = () => {
                                                 :
                                                 <>
                                                     <td className="px-6 py-1 w-80 break-all">
-                                                        {feedFile.directory === true ?
+                                                        {   feedFile.directory === true ?
                                                             <div className="flex items-center" onClick={() => handleFileBrowser(feedFile)}>
                                                                 <img alt="folder" className="w-5 mr-5" src="/folder.svg" />
                                                                 <p>{feedFile.name}</p>
                                                             </div>
                                                             : feedFile.name.includes('zip') ?
-                                                                <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                    <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
-                                                                    {feedFile.name}
-                                                                </a>
-                                                                : feedFile.name.includes('pdf') ?
-                                                                    <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                        <img alt="folder" className="w-5 mr-5" src="/pdf.svg" />
-                                                                        {feedFile.name}
-                                                                    </a>
-                                                                    :
-                                                                    <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                        <img alt="folder" className="w-5 mr-5" src="/file.svg" />
-                                                                        {feedFile.name}
-                                                                    </a>
+                                                            <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
+                                                                {feedFile.name}
+                                                            </a>
+                                                            : feedFile.name.includes('pdf') ?
+                                                            <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/pdf.svg" />
+                                                                {feedFile.name}
+                                                            </a>
+                                                            :
+                                                            <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/file.svg" />
+                                                                {feedFile.name}
+                                                            </a>
                                                         }
                                                     </td>
                                                     <td className="px-6 py-1 w-80 break-all">

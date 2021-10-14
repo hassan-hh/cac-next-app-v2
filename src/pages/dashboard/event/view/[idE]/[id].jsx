@@ -3,11 +3,10 @@ import Header from '../../../../../components/dashboard/Header'
 import TabsPanel from '../../../../../components/dashboard/TabsPanel'
 import Error from '../../../../_error'
 
-export const getServerSideProps = async (context) => {//this is single page for any type of post, pages, comments, with dynamic routing
-    const { req } = context || {}
+export const getServerSideProps = async ({req}) => {//this is single page for any type of post, pages, comments, with dynamic routing
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${context.params.idE}/${context.params.id}`, {
         headers: { 
-            Cookie: req?.headers?.cookie 
+            Cookie: req.headers?.cookie 
         }
     }) 
     //e.g evets/SGP/2224 as the endpoint and it should return json res/display EVENTS DATA in the console log

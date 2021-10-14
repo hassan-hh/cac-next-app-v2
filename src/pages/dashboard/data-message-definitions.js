@@ -7,15 +7,14 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLoadingSkeleton'
 
-export const getServerSideProps = async (context) => {
-    const { req } = context || {}
+export const getServerSideProps = async ({req}) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`, {
         headers: { 
-            Cookie: req?.headers?.cookie || ''
+            Cookie: req.headers?.cookie || ''
         }
     })
     const data = await res.json()
-    const errorCode = res?.ok ? 200 : res?.statusCode
+    const errorCode = res.ok ? 200 : res.statusCode
 
     return {
         props: {
@@ -120,7 +119,7 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setItemDetail({...itemDetail})
                 setSuccess(false)
                 refreshData()
@@ -190,13 +189,13 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
                                 </tr>
                             </thead>
                             <tbody className="relative bg-white divide-y divide-gray-200">
-                                {data?.length === 0 && errorCode < 300 ?
+                                {data.length === 0 && errorCode < 300 ?
                                     <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                         <td>no data available yet</td>
                                     </tr>
                                 :
                                 <>
-                                    {data?.length > 0 && data.map((item, idx ) => ( //item.filter(x => x !== null) =>
+                                    {data.length > 0 && data.map((item, idx ) => ( //item.filter(x => x !== null) =>
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}
@@ -210,22 +209,22 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
                                                         <>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-52">
-                                                                    {item?.definitionKey}
+                                                                    {item.definitionKey}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-52">
-                                                                    {item?.idDataSource}
+                                                                    {item.idDataSource}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-52">
-                                                                    {item?.objectClass}
+                                                                    {item.objectClass}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-52">
-                                                                    {item?.versionNumber}
+                                                                    {item.versionNumber}
                                                                 </p>
                                                             </td>
                                                         </>

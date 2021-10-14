@@ -6,7 +6,6 @@ import styles from '../styles/Login.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import LoadingScreen from './dashboard/LoadingScreen'
-import { getRouteMatcher } from 'next/dist/next-server/lib/router/utils'
 
 const LoginFull = () => {
 
@@ -22,16 +21,11 @@ const LoginFull = () => {
         error: null,
         status: null,
     })
-    console.warn('matchUserStatus', matchUserStatus)
-    console.log('LoginState', login)
+
     const [matchUser, setMatchUser] = useState([])
-    console.log('MatchUser', matchUser)
     const [selected, setSelected] = useState(null)
-    console.log('Selected', selected)
     const [loading, setLoading] = useState(false)
-    console.log('is loading', loading)
     const [connectAccount, setConnectAccount] = useState(false)
-    console.log('connectAccount', connectAccount)
 
     const matchUserApi = () => {
         setLoading(true)

@@ -7,7 +7,6 @@ import axios from 'axios'
 const DeactivatedAccounts = () => {
 
     const [deactivatedAccounts, setDeactivatedAccounts] = useState([])
-    console.log('check', deactivatedAccounts)
     const [update, setUpdate] = useState(0)
     const [reactivating, setReactivating] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -30,25 +29,23 @@ const DeactivatedAccounts = () => {
         setLoading(true)
         axios.get('/api/user/admin/account/deactivated?start=0&size=999')
             .then(res => {
-                if (res?.status < 300) {
-                    setDeactivatedAccounts(res?.data)
+                if (res.status < 300) {
+                    setDeactivatedAccounts(res.data)
                     setSuccess({
                         ...success,
-                        errorCode: res?.status,
+                        errorCode: res.status,
                         data: true
                     })
                 }
-                console.log('res', res)
             })
             .catch(err => {
-                if (err?.response?.status > 300) {
+                if (err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err?.response?.status, 
+                        errorCode: err.response?.status, 
                         data: false
                     })
                 }
-                console.log('err', err?.response)
             })
     }
 
@@ -116,27 +113,27 @@ const DeactivatedAccounts = () => {
                                                         <>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account?.username}
+                                                                    {account.username}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account?.email}
+                                                                    {account.email}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account?.name}
+                                                                    {account.name}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all capitalize">
-                                                                    {account?.type.replace(/_/g,' ').toLowerCase()}
+                                                                    {account.type.replace(/_/g,' ').toLowerCase()}
                                                                 </p>
                                                             </td>
                                                             <td className="px-6 py-1">
                                                                 <p className="w-48 break-all">
-                                                                    {account?.phoneNumber}
+                                                                    {account.phoneNumber}
                                                                 </p>
                                                             </td>
                                                         </>

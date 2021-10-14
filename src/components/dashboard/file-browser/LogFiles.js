@@ -48,10 +48,10 @@ const LogFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -71,10 +71,10 @@ const LogFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -82,7 +82,7 @@ const LogFiles = () => {
     }
 
     const handleFileBrowser = (logFile) => {
-        setBreadCrumbs(logFile.pathFromRoot.replace(/\//g, ' > '))
+        setBreadCrumbs(logFile.pathFromRoot?.replace(/\//g, ' > '))
         setBaseUrl(logFile.base64PathFromRoot) //.replace(/=/g, '%3D')
         setDirectory(logFile.directory)
         baseUrlApi(logFile.base64PathFromRoot)
@@ -128,7 +128,7 @@ const LogFiles = () => {
                         </thead>
                         <tbody className="relative bg-white divide-y divide-gray-200">
                             {logFiles.length === 0 && success.data === true ?
-                                <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                     <td>No data available yet</td>
                                 </tr>
                                 :
@@ -140,26 +140,26 @@ const LogFiles = () => {
                                                 :
                                                 <>
                                                     <td className="px-6 py-1 w-80 break-all">
-                                                        {logFile.directory === true ?
+                                                        {   logFile.directory === true ?
                                                             <div className="flex items-center" onClick={() => handleFileBrowser(logFile)}>
                                                                 <img alt="folder" className="w-5 mr-5" src="/folder.svg" />
                                                                 <p>{logFile.name}</p>
                                                             </div>
                                                             : logFile.name.includes('zip') ?
-                                                                <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                    <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
-                                                                    {logFile.name}
-                                                                </a>
-                                                                : logFile.name.includes('log') ?
-                                                                    <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                        <img alt="folder" className="w-5 mr-5" src="/log-format.svg" />
-                                                                        {logFile.name}
-                                                                    </a>
-                                                                    :
-                                                                    <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                        <img alt="folder" className="w-5 mr-5" src="/file.svg" />
-                                                                        {logFile.name}
-                                                                    </a>
+                                                            <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
+                                                                {logFile.name}
+                                                            </a>
+                                                            : logFile.name.includes('log') ?
+                                                            <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/log-format.svg" />
+                                                                {logFile.name}
+                                                            </a>
+                                                            :
+                                                            <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/file.svg" />
+                                                                {logFile.name}
+                                                            </a>
                                                         }
                                                     </td>
                                                     <td className="px-6 py-1 w-80 break-all">

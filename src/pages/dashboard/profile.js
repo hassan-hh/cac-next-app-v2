@@ -56,7 +56,7 @@ const Profile = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response?.status > 300) {
                     setStore({ ...store })
                     setSuccess({
                         ...success,
@@ -88,7 +88,7 @@ const Profile = () => {
 
     const handleSubmission = () => {
         if (base64String === ''){
-            return;
+            return
         }
         const payLoad = {
             height: 178,

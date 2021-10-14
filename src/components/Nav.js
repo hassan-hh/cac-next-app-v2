@@ -14,7 +14,6 @@ const Nav = ({ loggedIn }) => {
     const [userMenu, setUserMenu] = useState(false)
     const [dropDownMenu, setDropDownMenu] = useState(false)
 
-    console.log('container', container)
     useEffect(() => {
         const handleOutsideClick = () => {
             if (!container.current || container.current) { //container.current.contains(e.target) //error Cannot read the property 'contains' of null
@@ -70,18 +69,6 @@ const Nav = ({ loggedIn }) => {
         //router.push('/login') //removed because of new way of auth -- 23/08/2021
         router.push(router.asPath) //after new auth - this line will keep user on the same page once logout
     }
-
-    // useEffect(() => {
-    //     // if (!store.sessionId && router.pathname === '/dashboard') {
-    //     //     router.push('/login')
-    //     //     setLoggedIn(false)
-    //     //     setLoadingScreen(true)
-    //     // }
-    //     if (!store.sessionId && router.pathname === '/login') { //if no sessionId and i am leaving the dahsboard page or i am in login page
-    //         setLoggedIn(false)
-    //         setLoadingScreen(false)
-    //     }
-    // }, [store.sessionId])
     
     return (
         <header ref={container}>

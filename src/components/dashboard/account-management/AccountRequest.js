@@ -3,7 +3,6 @@ import { StoreContext } from '../../../providers/StoreContext'
 import AMLoadingSkeleton from '../loading-skeletons/AMLoadingSkeleton'
 import Error from '../../../pages/_error'
 import axios from 'axios'
-import Cookies, { set } from 'js-cookie'
 
 const AccountRequest = () => {
 
@@ -15,7 +14,6 @@ const AccountRequest = () => {
         errorCode: null,
         data: null
     })
-    console.log('accountRequest', accountRequest)
 
     useEffect(() => {
         AccountRequestApi()
@@ -31,32 +29,27 @@ const AccountRequest = () => {
         setLoading(true)
         axios.get('/api/user/admin/accountrequest?start=0&size=999')
             .then(res => {
-                if (res?.status < 300) {
-                    setAccountRequest(res?.data)
+                if (res.status < 300) {
+                    setAccountRequest(res.data)
                     setSuccess({
                         ...success,
-                        errorCode: res?.status,
+                        errorCode: res.status,
                         data: true
                     })
-                    console.log('res ar', res)
-                    const { sessionId } = res?.headers
-                    Cookies.set('sessionId', res?.headers?.sessionid)
                     setStore({
                         ...store,
                         sessionId: sessionId, // JSESSIONID already stored in the cookie and cookie usually comes from the rest route itself we don't need to store it manually. Not like auth token JWT must be passed to the headers and stored in the local storage.
                     })
                 }
-                console.log('res', res)
             })
             .catch(err => {
-                if (err?.response && err?.response?.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err?.response?.status, 
+                        errorCode: err.response?.status, 
                         data: false
                     })
                 }
-                console.log('err', err?.response)
             })
     }
 
@@ -121,19 +114,19 @@ const AccountRequest = () => {
                                                     :
                                                     <>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account?.username}</p>
+                                                            <p>{account.username}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account?.email}</p>
+                                                            <p>{account.email}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account?.name}</p>
+                                                            <p>{account.name}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all capitalize">
-                                                            <p>{account?.type.replace(/_/g,' ').toLowerCase()}</p>
+                                                            <p>{account.type.replace(/_/g,' ').toLowerCase()}</p>
                                                         </td>
                                                         <td className="px-6 py-1 w-80 break-all">
-                                                            <p>{account?.phoneNumber}</p>
+                                                            <p>{account.phoneNumber}</p>
                                                         </td>
                                                     </>
                                                 }

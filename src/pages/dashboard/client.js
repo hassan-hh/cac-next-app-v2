@@ -3,11 +3,10 @@ import Header from '../../components/dashboard/Header'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
 
-export const getServerSideProps = async (context) => {
-    const { req } = context || {}
+export const getServerSideProps = async ({req}) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/installations/current`, {
         headers: { 
-            Cookie: req?.headers?.cookie || ''
+            Cookie: req.headers?.cookie || ''
         }
     })
     const data = await res.json()
@@ -15,7 +14,7 @@ export const getServerSideProps = async (context) => {
 
     return {
         props: {
-            data: data || [], 
+            data: data || [],
             errorCode: errorCode || null
         },
     }
@@ -38,9 +37,9 @@ const Client = ({ data, errorCode }) => {
     return (
         <>
             <Meta title="Client download" />
-            <Header title={`Client Download For ${data?.description?.replace(/_/g,' ').toLowerCase()}`} subTitle="" />
+            <Header title={`Client Download For ${data?.description?.replace(/_/g,' ')}`} subTitle="" />
             <div className="min-h-screen">
-                <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {data?.description?.replace(/_/g,' ').toLowerCase()}</h1>
+                <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {data?.description?.replace(/_/g,' ')}</h1>
                     <button
                         type="button"
                         onClick={() => setLoading(true)}

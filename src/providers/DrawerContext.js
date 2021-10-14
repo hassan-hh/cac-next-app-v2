@@ -17,7 +17,7 @@ export const DrawerProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        //DateApi()
+        DateApi()
         RegionsApi()
         AccountApi()
         BookmarksApi()
