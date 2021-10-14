@@ -17,7 +17,7 @@ export const DrawerProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        DateApi()
+        DateApi() //causing a bug with IE
         RegionsApi()
         AccountApi()
         BookmarksApi()
