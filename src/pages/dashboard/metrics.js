@@ -40,1030 +40,1030 @@ const Metrics = ({ data, errorCode }) => {
     const [waitingThread, setWaitingThread] = useState(0)
     const [blockedThread, setBlockedThread] = useState(0)
 
-    const usedMemory = data?.gauges[`jvm.memory.total.used`]?.value
-    const maxMemory = data?.gauges[`jvm.memory.total.max`]?.value
+    const usedMemory = data?.gauges && data?.gauges[`jvm.memory.total.used`]?.value
+    const maxMemory = data?.gauges && data?.gauges[`jvm.memory.total.max`]?.value
     const memoryDiff = usedMemory / maxMemory * 100
 
-    const usedHeapMemory = data?.gauges[`jvm.memory.heap.used`]?.value
-    const maxHeapMemory = data?.gauges[`jvm.memory.heap.max`]?.value
+    const usedHeapMemory = data?.gauges && data?.gauges[`jvm.memory.heap.used`]?.value
+    const maxHeapMemory = data?.gauges && data?.gauges[`jvm.memory.heap.max`]?.value
     const heapMemoryDiff = usedHeapMemory / maxHeapMemory * 100
 
-    const usedNonHeapMemory = data?.gauges[`jvm.memory.non-heap.used`]?.value
-    const maxNonHeapMemory = data?.gauges[`jvm.memory.non-heap.committed`]?.value
+    const usedNonHeapMemory = data?.gauges && data?.gauges[`jvm.memory.non-heap.used`]?.value
+    const maxNonHeapMemory = data?.gauges && data?.gauges[`jvm.memory.non-heap.committed`]?.value
     const nonHeapMemoryDiff = usedNonHeapMemory / maxNonHeapMemory * 100
 
-    const threads = data?.gauges[`jvm.threads.count`]?.value
+    const threads = data?.gauges && data?.gauges[`jvm.threads.count`]?.value
     
-    const runnable = data?.gauges[`jvm.threads.runnable.count`]?.value
+    const runnable = data?.gauges && data?.gauges[`jvm.threads.runnable.count`]?.value
     const runnableDiff = runnable / threads * 100
 
-    const timedWaiting = data?.gauges[`jvm.threads.timed_waiting.count`]?.value
+    const timedWaiting = data?.gauges && data?.gauges[`jvm.threads.timed_waiting.count`]?.value
     const timedWaitingDiff = timedWaiting / threads * 100
     
-    const waiting = data?.gauges[`jvm.threads.waiting.count`]?.value
+    const waiting = data?.gauges && data?.gauges[`jvm.threads.waiting.count`]?.value
     const waitingDiff = waiting / threads * 100
 
-    const blocked = data?.gauges[`jvm.threads.blocked.count`]?.value
+    const blocked = data?.gauges && data?.gauges[`jvm.threads.blocked.count`]?.value
     const blockedDiff = blocked / threads * 100
 
-    const markSweepTime = data?.gauges[`jvm.garbage.G1-Old-Generation.count`]?.value 
-    const markSweepCount = data?.gauges[`jvm.garbage.G1-Old-Generation.time`]?.value
-    const scavengeTime = data?.gauges[`jvm.garbage.G1-Young-Generation.count`]?.value
-    const scavengeCount = data?.gauges[`jvm.garbage.G1-Young-Generation.time`]?.value
+    const markSweepTime = data?.gauges && data?.gauges[`jvm.garbage.G1-Old-Generation.count`]?.value 
+    const markSweepCount = data?.gauges && data?.gauges[`jvm.garbage.G1-Old-Generation.time`]?.value
+    const scavengeTime = data?.gauges && data?.gauges[`jvm.garbage.G1-Young-Generation.count`]?.value
+    const scavengeCount = data?.gauges && data?.gauges[`jvm.garbage.G1-Young-Generation.time`]?.value
 
     //active requests
-    const activeRequests = data?.counters[`com.codahale.metrics.servlet.InstrumentedFilter.activeRequests`]?.count
+    const activeRequests = data?.counters && data?.counters[`com.codahale.metrics.servlet.InstrumentedFilter.activeRequests`]?.count
     //total requests
-    const totalRequests = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.count
+    const totalRequests = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.count
 
     //HTTP requests (events per second) - response meters
-    const brCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.count
-    const brM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.m1_rate
-    const brM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.m5_rate
-    const brM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.m15_rate
-    const brMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.mean_rate
+    const brCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.count
+    const brM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.m1_rate
+    const brM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.m5_rate
+    const brM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.m15_rate
+    const brMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.badRequest`]?.mean_rate
 
-    const crCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.count
-    const crM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.m1_rate
-    const crM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.m5_rate
-    const crM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.m15_rate
-    const crMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.mean_rate
+    const crCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.count
+    const crM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.m1_rate
+    const crM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.m5_rate
+    const crM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.m15_rate
+    const crMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.created`]?.mean_rate
 
-    const ncCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.count 
-    const ncM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.m1_rate
-    const ncM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.m5_rate
-    const ncM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.m15_rate
-    const ncMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.mean_rate
+    const ncCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.count 
+    const ncM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.m1_rate
+    const ncM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.m5_rate
+    const ncM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.m15_rate
+    const ncMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.noContent`]?.mean_rate
 
-    const nfCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.count
-    const nfM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.m1_rate
-    const nfM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.m5_rate
-    const nfM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.m15_rate
-    const nfMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.mean_rate
+    const nfCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.count
+    const nfM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.m1_rate
+    const nfM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.m5_rate
+    const nfM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.m15_rate
+    const nfMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound`]?.mean_rate
     
-    const okCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.count
-    const okM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.m1_rate
-    const okM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.m5_rate
-    const okM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.m15_rate
-    const okMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.mean_rate
+    const okCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.count
+    const okM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.m1_rate
+    const okM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.m5_rate
+    const okM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.m15_rate
+    const okMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok`]?.mean_rate
     
-    const otherCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.count
-    const otherM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.m1_rate
-    const otherM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.m5_rate
-    const otherM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.m15_rate
-    const otherMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.mean_rate
+    const otherCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.count
+    const otherM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.m1_rate
+    const otherM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.m5_rate
+    const otherM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.m15_rate
+    const otherMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.other`]?.mean_rate
     
-    const seCount = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.count
-    const seM1 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.m1_rate
-    const seM5 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.m5_rate
-    const seM15 = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.m15_rate
-    const seMean = data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.mean_rate
+    const seCount = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.count
+    const seM1 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.m1_rate
+    const seM5 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.m5_rate
+    const seM15 = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.m15_rate
+    const seMean = data?.meters && data?.meters[`com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError`]?.mean_rate
 
     //Service Type Account Controller
-    const accnpaCount = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.count
-    const accnpaMean = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.mean
-    const accnpaMin = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.min
-    const accnpaP50 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p50
-    const accnpaP75 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p75
-    const accnpaP95 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p95
-    const accnpaP99 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p99
-    const accnpaMax = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.max
+    const accnpaCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.count
+    const accnpaMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.mean
+    const accnpaMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.min
+    const accnpaP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p50
+    const accnpaP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p75
+    const accnpaP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p95
+    const accnpaP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.p99
+    const accnpaMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyAccount`]?.max
     
-    const accnpcCount = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.count
-    const accnpcMean = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.mean
-    const accnpcMin = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.min
-    const accnpcP50 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p50
-    const accnpcP75 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p75
-    const accnpcP95 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p95
-    const accnpcP99 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p99
-    const accnpcMax = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.max
+    const accnpcCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.count
+    const accnpcMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.mean
+    const accnpcMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.min
+    const accnpcP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p50
+    const accnpcP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p75
+    const accnpcP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p95
+    const accnpcP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.p99
+    const accnpcMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyCommunication`]?.max
     
-    const accnpxrCount = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.count
-    const accnpxrMean = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.mean
-    const accnpxrMin = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.min
-    const accnpxrP50 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p50
-    const accnpxrP75 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p75
-    const accnpxrP95 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p95
-    const accnpxrP99 = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p99
-    const accnpxrMax = data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.max
+    const accnpxrCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.count
+    const accnpxrMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.mean
+    const accnpxrMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.min
+    const accnpxrP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p50
+    const accnpxrP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p75
+    const accnpxrP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p95
+    const accnpxrP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.p99
+    const accnpxrMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.createNewPartyXRef`]?.max
     
-    const acgaCount = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.count
-    const acgaMean = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.mean
-    const acgaMin = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.min
-    const acgaP50 = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p50
-    const acgaP75 = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p75
-    const acgaP95 = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p95
-    const acgaP99 = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p99
-    const acgaMax = data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.max
+    const acgaCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.count
+    const acgaMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.mean
+    const acgaMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.min
+    const acgaP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p50
+    const acgaP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p75
+    const acgaP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p95
+    const acgaP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.p99
+    const acgaMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAccounts`]?.max
     
-    const acgacpCount = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.count
-    const acgacpMean = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.mean
-    const acgacpMin = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.min
-    const acgacpP50 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p50
-    const acgacpP75 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p75
-    const acgacpP95 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p95
-    const acgacpP99 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p99
-    const acgacpMax = data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.max
+    const acgacpCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.count
+    const acgacpMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.mean
+    const acgacpMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.min
+    const acgacpP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p50
+    const acgacpP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p75
+    const acgacpP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p95
+    const acgacpP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.p99
+    const acgacpMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedCounterparties`]?.max
     
-    const acgaoCount = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.count
-    const acgaoMean = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.mean
-    const acgaoMin = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.min
-    const acgaoP50 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p50
-    const acgaoP75 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p75
-    const acgaoP95 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p95
-    const acgaoP99 = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p99
-    const acgaoMax = data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.max
+    const acgaoCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.count
+    const acgaoMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.mean
+    const acgaoMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.min
+    const acgaoP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p50
+    const acgaoP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p75
+    const acgaoP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p95
+    const acgaoP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.p99
+    const acgaoMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getAllowedOwners`]?.max
     
-    const acgceCount = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.count
-    const acgceMean = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.mean
-    const acgceMin = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.min
-    const acgceP50 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p50
-    const acgceP75 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p75
-    const acgceP95 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p95
-    const acgceP99 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p99
-    const acgceMax = data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.max
+    const acgceCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.count
+    const acgceMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.mean
+    const acgceMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.min
+    const acgceP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p50
+    const acgceP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p75
+    const acgceP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p95
+    const acgceP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.p99
+    const acgceMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentEntity`]?.max
     
-    const acgcrCount = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.count
-    const acgcrMean = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.mean
-    const acgcrMin = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.min
-    const acgcrP50 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p50
-    const acgcrP75 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p75
-    const acgcrP95 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p95
-    const acgcrP99 = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p99
-    const acgcrMax = data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.max
+    const acgcrCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.count
+    const acgcrMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.mean
+    const acgcrMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.min
+    const acgcrP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p50
+    const acgcrP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p75
+    const acgcrP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p95
+    const acgcrP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.p99
+    const acgcrMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getCurrentRegion`]?.max
     
-    const acgeCount = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.count
-    const acgeMean = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.mean
-    const acgeMin = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.min
-    const acgeP50 = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p50
-    const acgeP75 = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p75
-    const acgeP95 = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p95
-    const acgeP99 = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p99
-    const acgeMax = data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.max
+    const acgeCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.count
+    const acgeMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.mean
+    const acgeMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.min
+    const acgeP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p50
+    const acgeP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p75
+    const acgeP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p95
+    const acgeP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.p99
+    const acgeMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getEntities`]?.max
     
-    const acgrCount = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.count
-    const acgrMean = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.mean
-    const acgrMin = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.min
-    const acgrP50 = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p50
-    const acgrP75 = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p75
-    const acgrP95 = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p95
-    const acgrP99 = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p99
-    const acgrMax = data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.max
+    const acgrCount = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.count
+    const acgrMean = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.mean
+    const acgrMin = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.min
+    const acgrP50 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p50
+    const acgrP75 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p75
+    const acgrP95 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p95
+    const acgrP99 = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.p99
+    const acgrMax = data?.timers && data?.timers[`com.cats.server.controllers.AccountController.getRegions`]?.max
     
     // Audit Controller
-    const accsCount = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.count
-    const accsMean = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.mean
-    const accsMin = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.min
-    const accsP50 = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p50
-    const accsP75 = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p75
-    const accsP95 = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p95
-    const accsP99 = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p99
-    const accsMax = data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.max
+    const accsCount = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.count
+    const accsMean = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.mean
+    const accsMin = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.min
+    const accsP50 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p50
+    const accsP75 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p75
+    const accsP95 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p95
+    const accsP99 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.p99
+    const accsMax = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.createSession`]?.max
     
-    const acusCount = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.count
-    const acusMean = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.mean
-    const acusMin = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.min
-    const acusP50 = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p50
-    const acusP75 = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p75
-    const acusP95 = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p95
-    const acusP99 = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p99
-    const acusMax = data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.max
+    const acusCount = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.count
+    const acusMean = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.mean
+    const acusMin = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.min
+    const acusP50 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p50
+    const acusP75 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p75
+    const acusP95 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p95
+    const acusP99 = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.p99
+    const acusMax = data?.timers && data?.timers[`com.cats.server.controllers.AuditController.updateSession`]?.max
     
     // Bookmark Controller
-    const bcaorbCount = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.count
-    const bcaorbMean = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.mean
-    const bcaorbMin = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.min
-    const bcaorbP50 = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p50
-    const bcaorbP75 = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p75
-    const bcaorbP95 = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p95
-    const bcaorbP99 = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p99
-    const bcaorbMax = data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.max
+    const bcaorbCount = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.count
+    const bcaorbMean = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.mean
+    const bcaorbMin = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.min
+    const bcaorbP50 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p50
+    const bcaorbP75 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p75
+    const bcaorbP95 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p95
+    const bcaorbP99 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.p99
+    const bcaorbMax = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.addOrRemoveBookmark`]?.max
     
-    const bccsCount = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.count
-    const bccsMean = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.mean
-    const bccsMin = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.min
-    const bccsP50 = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p50
-    const bccsP75 = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p75
-    const bccsP95 = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p95
-    const bccsP99 = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p99
-    const bccsMax = data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.max
+    const bccsCount = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.count
+    const bccsMean = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.mean
+    const bccsMin = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.min
+    const bccsP50 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p50
+    const bccsP75 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p75
+    const bccsP95 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p95
+    const bccsP99 = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.p99
+    const bccsMax = data?.timers && data?.timers[`com.cats.server.controllers.BookmarkController.createSession`]?.max
     
     // Corp Action Controller
-    const cacgeCount = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.count
-    const cacgeMean = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.mean
-    const cacgeMin = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.min
-    const cacgeP50 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p50
-    const cacgeP75 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p75
-    const cacgeP95 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p95
-    const cacgeP99 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p99
-    const cacgeMax = data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.max
+    const cacgeCount = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.count
+    const cacgeMean = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.mean
+    const cacgeMin = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.min
+    const cacgeP50 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p50
+    const cacgeP75 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p75
+    const cacgeP95 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p95
+    const cacgeP99 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.p99
+    const cacgeMax = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvent`]?.max
     
-    const cacgercCount = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.count
-    const cacgercMean = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.mean
-    const cacgercMin = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.min
-    const cacgercP50 = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p50
-    const cacgercP75 = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p75
-    const cacgercP95 = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p95
-    const cacgercP99 = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p99
-    const cacgercMax = data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.max
+    const cacgercCount = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.count
+    const cacgercMean = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.mean
+    const cacgercMin = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.min
+    const cacgercP50 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p50
+    const cacgercP75 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p75
+    const cacgercP95 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p95
+    const cacgercP99 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.p99
+    const cacgercMax = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEventRowCount`]?.max
     
-    const cacgesCount = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.count
-    const cacgesMean = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.mean
-    const cacgesMin = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.min
-    const cacgesP50 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p50
-    const cacgesP75 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p75
-    const cacgesP95 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p95
-    const cacgesP99 = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p99
-    const cacgesMax = data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.max
+    const cacgesCount = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.count
+    const cacgesMean = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.mean
+    const cacgesMin = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.min
+    const cacgesP50 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p50
+    const cacgesP75 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p75
+    const cacgesP95 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p95
+    const cacgesP99 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.p99
+    const cacgesMax = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getEvents`]?.max
 
-    const cacgtgCount = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.count
-    const cacgtgMean = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.mean
-    const cacgtgMin = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.min
-    const cacgtgP50 = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p50
-    const cacgtgP75 = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p75
-    const cacgtgP95 = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p95
-    const cacgtgP99 = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p99
-    const cacgtgMax = data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.max
+    const cacgtgCount = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.count
+    const cacgtgMean = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.mean
+    const cacgtgMin = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.min
+    const cacgtgP50 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p50
+    const cacgtgP75 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p75
+    const cacgtgP95 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p95
+    const cacgtgP99 = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.p99
+    const cacgtgMax = data?.timers && data?.timers[`com.cats.server.controllers.CorpActionController.getTypeGroups`]?.max
 
     //Dashboard Controller
-    const dcccdbCount = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.count
-    const dcccdbMean = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.mean
-    const dcccdbMin = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.min
-    const dcccdbP50 = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p50
-    const dcccdbP75 = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p75
-    const dcccdbP95 = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p95
-    const dcccdbP99 = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p99
-    const dcccdbMax = data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.max
+    const dcccdbCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.count
+    const dcccdbMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.mean
+    const dcccdbMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.min
+    const dcccdbP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p50
+    const dcccdbP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p75
+    const dcccdbP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p95
+    const dcccdbP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.p99
+    const dcccdbMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customCurrentDiaryBreakdown`]?.max
     
-    const dccebCount = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.count
-    const dccebMean = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.mean
-    const dccebMin = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.min
-    const dccebP50 = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p50
-    const dccebP75 = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p75
-    const dccebP95 = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p95
-    const dccebP99 = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p99
-    const dccebMax = data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.max
+    const dccebCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.count
+    const dccebMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.mean
+    const dccebMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.min
+    const dccebP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p50
+    const dccebP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p75
+    const dccebP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p95
+    const dccebP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.p99
+    const dccebMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customEventsBreakdown`]?.max
     
-    const dccpebCount = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.count
-    const dccpebMean = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.mean
-    const dccpebMin = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.min
-    const dccpebP50 = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p50
-    const dccpebP75 = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p75
-    const dccpebP95 = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p95
-    const dccpebP99 = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p99
-    const dccpebMax = data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.max
+    const dccpebCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.count
+    const dccpebMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.mean
+    const dccpebMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.min
+    const dccpebP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p50
+    const dccpebP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p75
+    const dccpebP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p95
+    const dccpebP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.p99
+    const dccpebMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.customPendingEventsBreakdown`]?.max
     
-    const dcddCount = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.count
-    const dcddMean = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.mean
-    const dcddMin = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.min
-    const dcddP50 = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p50
-    const dcddP75 = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p75
-    const dcddP95 = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p95
-    const dcddP99 = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p99
-    const dcddMax = data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.max
+    const dcddCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.count
+    const dcddMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.mean
+    const dcddMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.min
+    const dcddP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p50
+    const dcddP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p75
+    const dcddP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p95
+    const dcddP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.p99
+    const dcddMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.deleteDashboard`]?.max
     
-    const dcgdcCount = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.count
-    const dcgdcMean = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.mean
-    const dcgdcMin = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.min
-    const dcgdcP50 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p50
-    const dcgdcP75 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p75
-    const dcgdcP95 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p95
-    const dcgdcP99 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p99
-    const dcgdcMax = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.max
+    const dcgdcCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.count
+    const dcgdcMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.mean
+    const dcgdcMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.min
+    const dcgdcP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p50
+    const dcgdcP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p75
+    const dcgdcP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p95
+    const dcgdcP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.p99
+    const dcgdcMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardConfig`]?.max
     
-    const dcgdoCount = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.count
-    const dcgdoMean = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.mean
-    const dcgdoMin = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.min
-    const dcgdoP50 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p50
-    const dcgdoP75 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p75
-    const dcgdoP95 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p95
-    const dcgdoP99 = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p99
-    const dcgdoMax = data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.max
+    const dcgdoCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.count
+    const dcgdoMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.mean
+    const dcgdoMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.min
+    const dcgdoP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p50
+    const dcgdoP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p75
+    const dcgdoP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p95
+    const dcgdoP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.p99
+    const dcgdoMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getDashBoardOptions`]?.max
     
-    const dcgestdCount = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.count
-    const dcgestdMean = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.mean
-    const dcgestdMin = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.min
-    const dcgestdP50 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p50
-    const dcgestdP75 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p75
-    const dcgestdP95 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p95
-    const dcgestdP99 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p99
-    const dcgestdMax = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.max
+    const dcgestdCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.count
+    const dcgestdMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.mean
+    const dcgestdMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.min
+    const dcgestdP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p50
+    const dcgestdP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p75
+    const dcgestdP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p95
+    const dcgestdP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.p99
+    const dcgestdMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableData`]?.max
     
-    const dcgestdcCount = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.count
-    const dcgestdcMean = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.mean
-    const dcgestdcMin = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.min
-    const dcgestdcP50 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p50
-    const dcgestdcP75 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p75
-    const dcgestdcP95 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p95
-    const dcgestdcP99 = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p99
-    const dcgestdcMax = data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.max
+    const dcgestdcCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.count
+    const dcgestdcMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.mean
+    const dcgestdcMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.min
+    const dcgestdcP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p50
+    const dcgestdcP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p75
+    const dcgestdcP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p95
+    const dcgestdcP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.p99
+    const dcgestdcMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEntityStatisticsTableDataCount`]?.max
     
-    const dcgercCount = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.count
-    const dcgercMean = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.mean
-    const dcgercMin = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.min
-    const dcgercP50 = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p50
-    const dcgercP75 = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p75
-    const dcgercP95 = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p95
-    const dcgercP99 = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p99
-    const dcgercMax = data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.max
+    const dcgercCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.count
+    const dcgercMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.mean
+    const dcgercMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.min
+    const dcgercP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p50
+    const dcgercP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p75
+    const dcgercP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p95
+    const dcgercP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.p99
+    const dcgercMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEventRowCount`]?.max
     
-    const dcgeCount = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.count
-    const dcgeMean = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.mean
-    const dcgeMin = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.min
-    const dcgeP50 = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p50
-    const dcgeP75 = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p75
-    const dcgeP95 = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p95
-    const dcgeP99 = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p99
-    const dcgeMax = data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.max
+    const dcgeCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.count
+    const dcgeMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.mean
+    const dcgeMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.min
+    const dcgeP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p50
+    const dcgeP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p75
+    const dcgeP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p95
+    const dcgeP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.p99
+    const dcgeMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getEvents`]?.max
     
-    const dcgnoeCount = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.count
-    const dcgnoeMean = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.mean
-    const dcgnoeMin = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.min
-    const dcgnoeP50 = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p50
-    const dcgnoeP75 = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p75
-    const dcgnoeP95 = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p95
-    const dcgnoeP99 = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p99
-    const dcgnoeMax = data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.max
+    const dcgnoeCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.count
+    const dcgnoeMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.mean
+    const dcgnoeMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.min
+    const dcgnoeP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p50
+    const dcgnoeP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p75
+    const dcgnoeP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p95
+    const dcgnoeP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.p99
+    const dcgnoeMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumOfEvents`]?.max
     
-    const dcgnofweCount = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.count
-    const dcgnofweMean = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.mean
-    const dcgnofweMin = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.min
-    const dcgnofweP50 = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p50
-    const dcgnofweP75 = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p75
-    const dcgnofweP95 = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p95
-    const dcgnofweP99 = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p99
-    const dcgnofweMax = data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.max
+    const dcgnofweCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.count
+    const dcgnofweMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.mean
+    const dcgnofweMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.min
+    const dcgnofweP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p50
+    const dcgnofweP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p75
+    const dcgnofweP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p95
+    const dcgnofweP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.p99
+    const dcgnofweMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.getNumberOfFilesWithExceptions`]?.max
     
-    const dclcbCount = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.count
-    const dclcbMean = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.mean
-    const dclcbMin = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.min
-    const dclcbP50 = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p50
-    const dclcbP75 = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p75
-    const dclcbP95 = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p95
-    const dclcbP99 = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p99
-    const dclcbMax = data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.max
+    const dclcbCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.count
+    const dclcbMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.mean
+    const dclcbMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.min
+    const dclcbP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p50
+    const dclcbP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p75
+    const dclcbP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p95
+    const dclcbP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.p99
+    const dclcbMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listClaimBreakdown`]?.max
     
-    const dcldbCount = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.count
-    const dcldbMean = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.mean
-    const dcldbMin = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.min
-    const dcldbP50 = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p50
-    const dcldbP75 = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p75
-    const dcldbP95 = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p95
-    const dcldbP99 = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p99
-    const dcldbMax = data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.max
+    const dcldbCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.count
+    const dcldbMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.mean
+    const dcldbMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.min
+    const dcldbP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p50
+    const dcldbP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p75
+    const dcldbP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p95
+    const dcldbP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.p99
+    const dcldbMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listDiaryBreakdown`]?.max
     
-    const dclebCount = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.count
-    const dclebMean = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.mean
-    const dclebMin = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.min
-    const dclebP50 = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p50
-    const dclebP75 = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p75
-    const dclebP95 = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p95
-    const dclebP99 = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p99
-    const dclebMax = data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.max
+    const dclebCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.count
+    const dclebMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.mean
+    const dclebMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.min
+    const dclebP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p50
+    const dclebP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p75
+    const dclebP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p95
+    const dclebP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.p99
+    const dclebMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listEventsBreakdown`]?.max
 
-    const dclexbCount = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.count
-    const dclexbMean = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.mean
-    const dclexbMin = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.min
-    const dclexbP50 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p50
-    const dclexbP75 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p75
-    const dclexbP95 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p95
-    const dclexbP99 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p99
-    const dclexbMax = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.max
+    const dclexbCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.count
+    const dclexbMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.mean
+    const dclexbMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.min
+    const dclexbP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p50
+    const dclexbP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p75
+    const dclexbP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p95
+    const dclexbP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.p99
+    const dclexbMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdown`]?.max
     
-    const dclexbcCount = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.count
-    const dclexbcMean = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.mean
-    const dclexbcMin = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.min
-    const dclexbcP50 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p50
-    const dclexbcP75 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p75
-    const dclexbcP95 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p95
-    const dclexbcP99 = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p99
-    const dclexbcMax = data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.max
+    const dclexbcCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.count
+    const dclexbcMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.mean
+    const dclexbcMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.min
+    const dclexbcP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p50
+    const dclexbcP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p75
+    const dclexbcP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p95
+    const dclexbcP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.p99
+    const dclexbcMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.listExceptionBreakdownCount`]?.max
     
-    const dcsdcCount = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.count
-    const dcsdcMean = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.mean
-    const dcsdcMin = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.min
-    const dcsdcP50 = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p50
-    const dcsdcP75 = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p75
-    const dcsdcP95 = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p95
-    const dcsdcP99 = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p99
-    const dcsdcMax = data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.max
+    const dcsdcCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.count
+    const dcsdcMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.mean
+    const dcsdcMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.min
+    const dcsdcP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p50
+    const dcsdcP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p75
+    const dcsdcP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p95
+    const dcsdcP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.p99
+    const dcsdcMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.saveDashboardConfig`]?.max
     
-    const dcshCount = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.count
-    const dcshMean = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.mean
-    const dcshMin = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.min
-    const dcshP50 = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p50
-    const dcshP75 = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p75
-    const dcshP95 = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p95
-    const dcshP99 = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p99
-    const dcshMax = data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.max
+    const dcshCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.count
+    const dcshMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.mean
+    const dcshMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.min
+    const dcshP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p50
+    const dcshP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p75
+    const dcshP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p95
+    const dcshP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.p99
+    const dcshMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayHello`]?.max
     
-    const dcstCount = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.count
-    const dcstMean = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.mean
-    const dcstMin = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.min
-    const dcstP50 = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p50
-    const dcstP75 = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p75
-    const dcstP95 = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p95
-    const dcstP99 = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p99
-    const dcstMax = data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.max
+    const dcstCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.count
+    const dcstMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.mean
+    const dcstMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.min
+    const dcstP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p50
+    const dcstP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p75
+    const dcstP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p95
+    const dcstP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.p99
+    const dcstMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.sayToggle`]?.max
     
-    const dcspdiCount = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.count
-    const dcspdiMean = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.mean
-    const dcspdiMin = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.min
-    const dcspdiP50 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p50
-    const dcspdiP75 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p75
-    const dcspdiP95 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p95
-    const dcspdiP99 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p99
-    const dcspdiMax = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.max
+    const dcspdiCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.count
+    const dcspdiMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.mean
+    const dcspdiMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.min
+    const dcspdiP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p50
+    const dcspdiP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p75
+    const dcspdiP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p95
+    const dcspdiP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.p99
+    const dcspdiMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItems`]?.max
     
-    const dcspdicCount = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.count
-    const dcspdicMean = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.mean
-    const dcspdicMin = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.min
-    const dcspdicP50 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p50
-    const dcspdicP75 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p75
-    const dcspdicP95 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p95
-    const dcspdicP99 = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p99
-    const dcspdicMax = data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.max
+    const dcspdicCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.count
+    const dcspdicMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.mean
+    const dcspdicMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.min
+    const dcspdicP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p50
+    const dcspdicP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p75
+    const dcspdicP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p95
+    const dcspdicP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.p99
+    const dcspdicMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchPayDateItemsCount`]?.max
     
-    const dcssCount = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.count
-    const dcssMean = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.mean
-    const dcssMin = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.min
-    const dcssP50 = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p50
-    const dcssP75 = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p75
-    const dcssP95 = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p95
-    const dcssP99 = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p99
-    const dcssMax = data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.max
+    const dcssCount = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.count
+    const dcssMean = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.mean
+    const dcssMin = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.min
+    const dcssP50 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p50
+    const dcssP75 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p75
+    const dcssP95 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p95
+    const dcssP99 = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.p99
+    const dcssMax = data?.timers && data?.timers[`com.cats.server.controllers.DashboardController.searchStatistics`]?.max
     
     // Data Message Definition Controller
-    const dmdcgCount = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.count
-    const dmdcgMean = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.mean
-    const dmdcgMin = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.min
-    const dmdcgP50 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p50
-    const dmdcgP75 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p75
-    const dmdcgP95 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p95
-    const dmdcgP99 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p99
-    const dmdcgMax = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.max
+    const dmdcgCount = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.count
+    const dmdcgMean = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.mean
+    const dmdcgMin = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.min
+    const dmdcgP50 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p50
+    const dmdcgP75 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p75
+    const dmdcgP95 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p95
+    const dmdcgP99 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.p99
+    const dmdcgMax = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.get`]?.max
     
-    const dmdcgaCount = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.count
-    const dmdcgaMean = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.mean
-    const dmdcgaMin = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.min
-    const dmdcgaP50 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p50
-    const dmdcgaP75 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p75
-    const dmdcgaP95 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p95
-    const dmdcgaP99 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p99
-    const dmdcgaMax = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.max
+    const dmdcgaCount = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.count
+    const dmdcgaMean = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.mean
+    const dmdcgaMin = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.min
+    const dmdcgaP50 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p50
+    const dmdcgaP75 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p75
+    const dmdcgaP95 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p95
+    const dmdcgaP99 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.p99
+    const dmdcgaMax = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.getAll`]?.max
     
-    const dmdcsCount = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.count
-    const dmdcsMean = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.mean
-    const dmdcsMin = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.min
-    const dmdcsP50 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p50
-    const dmdcsP75 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p75
-    const dmdcsP95 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p95
-    const dmdcsP99 = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p99
-    const dmdcsMax = data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.max
+    const dmdcsCount = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.count
+    const dmdcsMean = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.mean
+    const dmdcsMin = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.min
+    const dmdcsP50 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p50
+    const dmdcsP75 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p75
+    const dmdcsP95 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p95
+    const dmdcsP99 = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.p99
+    const dmdcsMax = data?.timers && data?.timers[`com.cats.server.controllers.DataMessageDefinitionController.save`]?.max
     
     // Diary Controller
-    const dccCount = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.count
-    const dccMean = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.mean
-    const dccMin = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.min
-    const dccP50 = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p50
-    const dccP75 = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p75
-    const dccP95 = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p95
-    const dccP99 = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p99
-    const dccMax = data?.timers[`com.cats.server.controllers.DiaryController.count`]?.max
+    const dccCount = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.count
+    const dccMean = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.mean
+    const dccMin = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.min
+    const dccP50 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p50
+    const dccP75 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p75
+    const dccP95 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p95
+    const dccP99 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.p99
+    const dccMax = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.count`]?.max
     
-    const dcsCount = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.count
-    const dcsMean = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.mean
-    const dcsMin = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.min
-    const dcsP50 = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p50
-    const dcsP75 = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p75
-    const dcsP95 = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p95
-    const dcsP99 = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p99
-    const dcsMax = data?.timers[`com.cats.server.controllers.DiaryController.search`]?.max
+    const dcsCount = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.count
+    const dcsMean = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.mean
+    const dcsMin = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.min
+    const dcsP50 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p50
+    const dcsP75 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p75
+    const dcsP95 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p95
+    const dcsP99 = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.p99
+    const dcsMax = data?.timers && data?.timers[`com.cats.server.controllers.DiaryController.search`]?.max
     
     // Election Controller
-    const ecceCount = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.count
-    const ecceMean = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.mean
-    const ecceMin = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.min
-    const ecceP50 = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p50
-    const ecceP75 = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p75
-    const ecceP95 = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p95
-    const ecceP99 = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p99
-    const ecceMax = data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.max
+    const ecceCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.count
+    const ecceMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.mean
+    const ecceMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.min
+    const ecceP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p50
+    const ecceP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p75
+    const ecceP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p95
+    const ecceP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.p99
+    const ecceMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.canElect`]?.max
     
-    const ecdeCount = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.count
-    const ecdeMean = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.mean
-    const ecdeMin = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.min
-    const ecdeP50 = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p50
-    const ecdeP75 = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p75
-    const ecdeP95 = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p95
-    const ecdeP99 = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p99
-    const ecdeMax = data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.max
+    const ecdeCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.count
+    const ecdeMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.mean
+    const ecdeMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.min
+    const ecdeP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p50
+    const ecdeP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p75
+    const ecdeP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p95
+    const ecdeP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.p99
+    const ecdeMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.deleteElection`]?.max
     
-    const ecdbeCount = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.count
-    const ecdbeMean = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.mean
-    const ecdbeMin = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.min
-    const ecdbeP50 = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p50
-    const ecdbeP75 = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p75
-    const ecdbeP95 = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p95
-    const ecdbeP99 = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p99
-    const ecdbeMax = data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.max
+    const ecdbeCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.count
+    const ecdbeMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.mean
+    const ecdbeMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.min
+    const ecdbeP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p50
+    const ecdbeP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p75
+    const ecdbeP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p95
+    const ecdbeP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.p99
+    const ecdbeMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.doBulkElection`]?.max
     
-    const eceeCount = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.count
-    const eceeMean = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.mean
-    const eceeMin = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.min
-    const eceeP50 = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p50
-    const eceeP75 = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p75
-    const eceeP95 = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p95
-    const eceeP99 = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p99
-    const eceeMax = data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.max
+    const eceeCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.count
+    const eceeMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.mean
+    const eceeMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.min
+    const eceeP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p50
+    const eceeP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p75
+    const eceeP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p95
+    const eceeP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.p99
+    const eceeMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.editElection`]?.max
     
-    const ecgercCount = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.count
-    const ecgercMean = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.mean
-    const ecgercMin = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.min
-    const ecgercP50 = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p50
-    const ecgercP75 = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p75
-    const ecgercP95 = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p95
-    const ecgercP99 = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p99
-    const ecgercMax = data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.max
+    const ecgercCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.count
+    const ecgercMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.mean
+    const ecgercMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.min
+    const ecgercP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p50
+    const ecgercP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p75
+    const ecgercP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p95
+    const ecgercP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.p99
+    const ecgercMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElectionRowCount`]?.max
     
-    const ecgeCount = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.count
-    const ecgeMean = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.mean
-    const ecgeMin = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.min
-    const ecgeP50 = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p50
-    const ecgeP75 = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p75
-    const ecgeP95 = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p95
-    const ecgeP99 = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p99
-    const ecgeMax = data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.max
+    const ecgeCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.count
+    const ecgeMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.mean
+    const ecgeMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.min
+    const ecgeP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p50
+    const ecgeP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p75
+    const ecgeP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p95
+    const ecgeP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.p99
+    const ecgeMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getElections`]?.max
     
-    const ecgssCount = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.count
-    const ecgssMean = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.mean
-    const ecgssMin = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.min
-    const ecgssP50 = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p50
-    const ecgssP75 = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p75
-    const ecgssP95 = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p95
-    const ecgssP99 = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p99
-    const ecgssMax = data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.max
+    const ecgssCount = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.count
+    const ecgssMean = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.mean
+    const ecgssMin = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.min
+    const ecgssP50 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p50
+    const ecgssP75 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p75
+    const ecgssP95 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p95
+    const ecgssP99 = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.p99
+    const ecgssMax = data?.timers && data?.timers[`com.cats.server.controllers.ElectionController.getSavedSearches`]?.max
     
     // File Browser Controller
-    const fbccfdhCount = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.count
-    const fbccfdhMean = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.mean
-    const fbccfdhMin = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.min
-    const fbccfdhP50 = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p50
-    const fbccfdhP75 = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p75
-    const fbccfdhP95 = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p95
-    const fbccfdhP99 = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p99
-    const fbccfdhMax = data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.max
+    const fbccfdhCount = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.count
+    const fbccfdhMean = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.mean
+    const fbccfdhMin = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.min
+    const fbccfdhP50 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p50
+    const fbccfdhP75 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p75
+    const fbccfdhP95 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p95
+    const fbccfdhP99 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.p99
+    const fbccfdhMax = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.commFileDownloadHandler`]?.max
     
-    const fbcdhCount = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.count
-    const fbcdhMean = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.mean
-    const fbcdhMin = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.min
-    const fbcdhP50 = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p50
-    const fbcdhP75 = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p75
-    const fbcdhP95 = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p95
-    const fbcdhP99 = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p99
-    const fbcdhMax = data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.max
+    const fbcdhCount = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.count
+    const fbcdhMean = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.mean
+    const fbcdhMin = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.min
+    const fbcdhP50 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p50
+    const fbcdhP75 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p75
+    const fbcdhP95 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p95
+    const fbcdhP99 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.p99
+    const fbcdhMax = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.downloadHandler`]?.max
     
-    const fbcgfrCount = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.count
-    const fbcgfrMean = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.mean
-    const fbcgfrMin = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.min
-    const fbcgfrP50 = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p50
-    const fbcgfrP75 = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p75
-    const fbcgfrP95 = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p95
-    const fbcgfrP99 = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p99
-    const fbcgfrMax = data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.max
+    const fbcgfrCount = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.count
+    const fbcgfrMean = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.mean
+    const fbcgfrMin = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.min
+    const fbcgfrP50 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p50
+    const fbcgfrP75 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p75
+    const fbcgfrP95 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p95
+    const fbcgfrP99 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.p99
+    const fbcgfrMax = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getFileRoots`]?.max
     
-    const fbcgpCount = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.count
-    const fbcgpMean = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.mean
-    const fbcgpMin = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.min
-    const fbcgpP50 = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p50
-    const fbcgpP75 = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p75
-    const fbcgpP95 = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p95
-    const fbcgpP99 = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p99
-    const fbcgpMax = data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.max
+    const fbcgpCount = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.count
+    const fbcgpMean = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.mean
+    const fbcgpMin = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.min
+    const fbcgpP50 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p50
+    const fbcgpP75 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p75
+    const fbcgpP95 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p95
+    const fbcgpP99 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.p99
+    const fbcgpMax = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getPath`]?.max
     
-    const fbcgrpCount = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.count
-    const fbcgrpMean = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.mean
-    const fbcgrpMin = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.min
-    const fbcgrpP50 = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p50
-    const fbcgrpP75 = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p75
-    const fbcgrpP95 = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p95
-    const fbcgrpP99 = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p99
-    const fbcgrpMax = data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.max
+    const fbcgrpCount = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.count
+    const fbcgrpMean = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.mean
+    const fbcgrpMin = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.min
+    const fbcgrpP50 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p50
+    const fbcgrpP75 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p75
+    const fbcgrpP95 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p95
+    const fbcgrpP99 = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.p99
+    const fbcgrpMax = data?.timers && data?.timers[`com.cats.server.controllers.FileBrowserController.getRootPath`]?.max
     
     // Installation Controller 
-    const icgciCount = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.count
-    const icgciMean = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.mean
-    const icgciMin = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.min
-    const icgciP50 = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p50
-    const icgciP75 = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p75
-    const icgciP95 = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p95
-    const icgciP99 = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p99
-    const icgciMax = data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.max
+    const icgciCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.count
+    const icgciMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.mean
+    const icgciMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.min
+    const icgciP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p50
+    const icgciP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p75
+    const icgciP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p95
+    const icgciP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.p99
+    const icgciMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getCurrentInstallation`]?.max
     
-    const icgiCount = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.count
-    const icgiMean = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.mean
-    const icgiMin = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.min
-    const icgiP50 = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p50
-    const icgiP75 = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p75
-    const icgiP95 = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p95
-    const icgiP99 = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p99
-    const icgiMax = data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.max
+    const icgiCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.count
+    const icgiMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.mean
+    const icgiMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.min
+    const icgiP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p50
+    const icgiP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p75
+    const icgiP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p95
+    const icgiP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.p99
+    const icgiMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationController.getInstallations`]?.max
     
     // Installation Property Controller
-    const ipcgpsCount = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.count
-    const ipcgpsMean = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.mean
-    const ipcgpsMin = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.min
-    const ipcgpsP50 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p50
-    const ipcgpsP75 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p75
-    const ipcgpsP95 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p95
-    const ipcgpsP99 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p99
-    const ipcgpsMax = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.max
+    const ipcgpsCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.count
+    const ipcgpsMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.mean
+    const ipcgpsMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.min
+    const ipcgpsP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p50
+    const ipcgpsP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p75
+    const ipcgpsP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p95
+    const ipcgpsP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.p99
+    const ipcgpsMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperties`]?.max
     
-    const ipcgpcsvCount = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.count
-    const ipcgpcsvMean = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.mean
-    const ipcgpcsvMin = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.min
-    const ipcgpcsvP50 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p50
-    const ipcgpcsvP75 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p75
-    const ipcgpcsvP95 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p95
-    const ipcgpcsvP99 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p99
-    const ipcgpcsvMax = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.max
+    const ipcgpcsvCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.count
+    const ipcgpcsvMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.mean
+    const ipcgpcsvMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.min
+    const ipcgpcsvP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p50
+    const ipcgpcsvP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p75
+    const ipcgpcsvP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p95
+    const ipcgpcsvP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.p99
+    const ipcgpcsvMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsCSV`]?.max
         
-    const ipcgpjCount = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.count
-    const ipcgpjMean = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.mean
-    const ipcgpjMin = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.min
-    const ipcgpjP50 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p50
-    const ipcgpjP75 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p75
-    const ipcgpjP95 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p95
-    const ipcgpjP99 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p99
-    const ipcgpjMax = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.max
+    const ipcgpjCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.count
+    const ipcgpjMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.mean
+    const ipcgpjMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.min
+    const ipcgpjP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p50
+    const ipcgpjP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p75
+    const ipcgpjP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p95
+    const ipcgpjP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.p99
+    const ipcgpjMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsJson`]?.max
         
-    const ipcgppCount = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.count
-    const ipcgppMean = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.mean
-    const ipcgppMin = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.min
-    const ipcgppP50 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p50
-    const ipcgppP75 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p75
-    const ipcgppP95 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p95
-    const ipcgppP99 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p99
-    const ipcgppMax = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.max
+    const ipcgppCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.count
+    const ipcgppMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.mean
+    const ipcgppMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.min
+    const ipcgppP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p50
+    const ipcgppP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p75
+    const ipcgppP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p95
+    const ipcgppP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.p99
+    const ipcgppMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getPropertiesAsProps`]?.max
         
-    const ipcgpCount = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.count
-    const ipcgpMean = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.mean
-    const ipcgpMin = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.min
-    const ipcgpP50 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p50
-    const ipcgpP75 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p75
-    const ipcgpP95 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p95
-    const ipcgpP99 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p99
-    const ipcgpMax = data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.max
+    const ipcgpCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.count
+    const ipcgpMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.mean
+    const ipcgpMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.min
+    const ipcgpP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p50
+    const ipcgpP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p75
+    const ipcgpP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p95
+    const ipcgpP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.p99
+    const ipcgpMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.getProperty`]?.max
     
-    const ipcsCount = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.count
-    const ipcsMean = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.mean
-    const ipcsMin = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.min
-    const ipcsP50 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p50
-    const ipcsP75 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p75
-    const ipcsP95 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p95
-    const ipcsP99 = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p99
-    const ipcsMax = data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.max
+    const ipcsCount = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.count
+    const ipcsMean = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.mean
+    const ipcsMin = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.min
+    const ipcsP50 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p50
+    const ipcsP75 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p75
+    const ipcsP95 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p95
+    const ipcsP99 = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.p99
+    const ipcsMax = data?.timers && data?.timers[`com.cats.server.controllers.InstallationPropertyController.save`]?.max
     
     //Object Note Controller  
-    const oncgonCount = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.count
-    const oncgonMean = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.mean
-    const oncgonMin = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.min
-    const oncgonP50 = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p50
-    const oncgonP75 = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p75
-    const oncgonP95 = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p95
-    const oncgonP99 = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p99
-    const oncgonMax = data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.max
+    const oncgonCount = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.count
+    const oncgonMean = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.mean
+    const oncgonMin = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.min
+    const oncgonP50 = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p50
+    const oncgonP75 = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p75
+    const oncgonP95 = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p95
+    const oncgonP99 = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.p99
+    const oncgonMax = data?.timers && data?.timers[`com.cats.server.controllers.ObjectNoteController.getObjectNotes`]?.max
     
     //Simple Rule Controller  
-    const srcgbdCount = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.count
-    const srcgbdMean = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.mean
-    const srcgbdMin = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.min
-    const srcgbdP50 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p50
-    const srcgbdP75 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p75
-    const srcgbdP95 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p95
-    const srcgbdP99 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p99
-    const srcgbdMax = data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.max
+    const srcgbdCount = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.count
+    const srcgbdMean = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.mean
+    const srcgbdMin = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.min
+    const srcgbdP50 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p50
+    const srcgbdP75 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p75
+    const srcgbdP95 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p95
+    const srcgbdP99 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.p99
+    const srcgbdMax = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getByDescription`]?.max
     
-    const srcgrsdCount = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.count
-    const srcgrsdMean = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.mean
-    const srcgrsdMin = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.min
-    const srcgrsdP50 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p50
-    const srcgrsdP75 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p75
-    const srcgrsdP95 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p95
-    const srcgrsdP99 = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p99
-    const srcgrsdMax = data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.max
+    const srcgrsdCount = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.count
+    const srcgrsdMean = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.mean
+    const srcgrsdMin = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.min
+    const srcgrsdP50 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p50
+    const srcgrsdP75 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p75
+    const srcgrsdP95 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p95
+    const srcgrsdP99 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.p99
+    const srcgrsdMax = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.getRuleSetDescriptions`]?.max
     
-    const srcsCount = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.count
-    const srcsMean = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.mean
-    const srcsMin = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.min
-    const srcsP50 = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p50
-    const srcsP75 = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p75
-    const srcsP95 = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p95
-    const srcsP99 = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p99
-    const srcsMax = data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.max
+    const srcsCount = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.count
+    const srcsMean = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.mean
+    const srcsMin = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.min
+    const srcsP50 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p50
+    const srcsP75 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p75
+    const srcsP95 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p95
+    const srcsP99 = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.p99
+    const srcsMax = data?.timers && data?.timers[`com.cats.server.controllers.SimpleRuleController.save`]?.max
     
     //Static Data Controller 
-    const sdcgcCount = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.count
-    const sdcgcMean = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.mean
-    const sdcgcMin = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.min
-    const sdcgcP50 = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p50
-    const sdcgcP75 = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p75
-    const sdcgcP95 = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p95
-    const sdcgcP99 = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p99
-    const sdcgcMax = data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.max
+    const sdcgcCount = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.count
+    const sdcgcMean = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.mean
+    const sdcgcMin = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.min
+    const sdcgcP50 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p50
+    const sdcgcP75 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p75
+    const sdcgcP95 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p95
+    const sdcgcP99 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.p99
+    const sdcgcMax = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getCurrencies`]?.max
     
-    const sdcgipkCount = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.count
-    const sdcgipkMean = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.mean
-    const sdcgipkMin = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.min
-    const sdcgipkP50 = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p50
-    const sdcgipkP75 = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p75
-    const sdcgipkP95 = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p95
-    const sdcgipkP99 = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p99
-    const sdcgipkMax = data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.max
+    const sdcgipkCount = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.count
+    const sdcgipkMean = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.mean
+    const sdcgipkMin = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.min
+    const sdcgipkP50 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p50
+    const sdcgipkP75 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p75
+    const sdcgipkP95 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p95
+    const sdcgipkP99 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.p99
+    const sdcgipkMax = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getInstrumentPropertyKeys`]?.max
         
-    const sdcgpCount = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.count
-    const sdcgpMean = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.mean
-    const sdcgpMin = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.min
-    const sdcgpP50 = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p50
-    const sdcgpP75 = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p75
-    const sdcgpP95 = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p95
-    const sdcgpP99 = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p99
-    const sdcgpMax = data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.max
+    const sdcgpCount = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.count
+    const sdcgpMean = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.mean
+    const sdcgpMin = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.min
+    const sdcgpP50 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p50
+    const sdcgpP75 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p75
+    const sdcgpP95 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p95
+    const sdcgpP99 = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.p99
+    const sdcgpMax = data?.timers && data?.timers[`com.cats.server.controllers.StaticDataController.getPlace`]?.max
     
     //System Exception Controller
-    const secgetCount = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.count
-    const secgetMean = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.mean
-    const secgetMin = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.min
-    const secgetP50 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p50
-    const secgetP75 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p75
-    const secgetP95 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p95
-    const secgetP99 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p99
-    const secgetMax = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.max
+    const secgetCount = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.count
+    const secgetMean = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.mean
+    const secgetMin = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.min
+    const secgetP50 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p50
+    const secgetP75 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p75
+    const secgetP95 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p95
+    const secgetP99 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.p99
+    const secgetMax = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionTypes`]?.max
 
-    const secgebicaCount = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.count
-    const secgebicaMean = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.mean
-    const secgebicaMin = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.min
-    const secgebicaP50 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p50
-    const secgebicaP75 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p75
-    const secgebicaP95 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p95
-    const secgebicaP99 = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p99
-    const secgebicaMax = data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.max
+    const secgebicaCount = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.count
+    const secgebicaMean = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.mean
+    const secgebicaMin = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.min
+    const secgebicaP50 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p50
+    const secgebicaP75 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p75
+    const secgebicaP95 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p95
+    const secgebicaP99 = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.p99
+    const secgebicaMax = data?.timers && data?.timers[`com.cats.server.controllers.SystemExceptionController.getExceptionsByIdCA`]?.max
     
     //User Controller
-    const ucaarCount = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.count
-    const ucaarMean = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.mean
-    const ucaarMin = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.min
-    const ucaarP50 = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p50
-    const ucaarP75 = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p75
-    const ucaarP95 = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p95
-    const ucaarP99 = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p99
-    const ucaarMax = data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.max
+    const ucaarCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.count
+    const ucaarMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.mean
+    const ucaarMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.min
+    const ucaarP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p50
+    const ucaarP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p75
+    const ucaarP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p95
+    const ucaarP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.p99
+    const ucaarMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.approveAccountRequest`]?.max
 
-    const ucaCount = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.count
-    const ucaMean = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.mean
-    const ucaMin = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.min
-    const ucaP50 = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p50
-    const ucaP75 = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p75
-    const ucaP95 = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p95
-    const ucaP99 = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p99
-    const ucaMax = data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.max
+    const ucaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.count
+    const ucaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.mean
+    const ucaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.min
+    const ucaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p50
+    const ucaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p75
+    const ucaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p95
+    const ucaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.p99
+    const ucaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.authenticate`]?.max
         
-    const uccpCount = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.count
-    const uccpMean = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.mean
-    const uccpMin = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.min
-    const uccpP50 = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p50
-    const uccpP75 = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p75
-    const uccpP95 = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p95
-    const uccpP99 = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p99
-    const uccpMax = data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.max
+    const uccpCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.count
+    const uccpMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.mean
+    const uccpMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.min
+    const uccpP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p50
+    const uccpP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p75
+    const uccpP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p95
+    const uccpP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.p99
+    const uccpMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.changePassword`]?.max
         
-    const ucchpCount = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.count
-    const ucchpMean = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.mean
-    const ucchpMin = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.min
-    const ucchpP50 = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p50
-    const ucchpP75 = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p75
-    const ucchpP95 = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p95
-    const ucchpP99 = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p99
-    const ucchpMax = data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.max
+    const ucchpCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.count
+    const ucchpMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.mean
+    const ucchpMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.min
+    const ucchpP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p50
+    const ucchpP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p75
+    const ucchpP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p95
+    const ucchpP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.p99
+    const ucchpMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.checkPassword`]?.max
         
-    const ucdaCount = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.count
-    const ucdaMean = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.mean
-    const ucdaMin = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.min
-    const ucdaP50 = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p50
-    const ucdaP75 = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p75
-    const ucdaP95 = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p95
-    const ucdaP99 = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p99
-    const ucdaMax = data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.max
+    const ucdaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.count
+    const ucdaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.mean
+    const ucdaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.min
+    const ucdaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p50
+    const ucdaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p75
+    const ucdaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p95
+    const ucdaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.p99
+    const ucdaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.deactivateAccount`]?.max
 
-    const ucfpCount = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.count
-    const ucfpMean = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.mean
-    const ucfpMin = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.min
-    const ucfpP50 = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p50
-    const ucfpP75 = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p75
-    const ucfpP95 = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p95
-    const ucfpP99 = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p99
-    const ucfpMax = data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.max
+    const ucfpCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.count
+    const ucfpMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.mean
+    const ucfpMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.min
+    const ucfpP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p50
+    const ucfpP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p75
+    const ucfpP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p95
+    const ucfpP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.p99
+    const ucfpMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.forgottenPassword`]?.max
         
-    const ucgiCount = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.count
-    const ucgiMean = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.mean
-    const ucgiMin = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.min
-    const ucgiP50 = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p50
-    const ucgiP75 = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p75
-    const ucgiP95 = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p95
-    const ucgiP99 = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p99
-    const ucgiMax = data?.timers[`com.cats.server.controllers.UserController.getImage`]?.max
+    const ucgiCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.count
+    const ucgiMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.mean
+    const ucgiMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.min
+    const ucgiP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p50
+    const ucgiP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p75
+    const ucgiP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p95
+    const ucgiP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.p99
+    const ucgiMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImage`]?.max
         
-    const ucgifCount = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.count
-    const ucgifMean = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.mean
-    const ucgifMin = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.min
-    const ucgifP50 = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p50
-    const ucgifP75 = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p75
-    const ucgifP95 = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p95
-    const ucgifP99 = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p99
-    const ucgifMax = data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.max
+    const ucgifCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.count
+    const ucgifMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.mean
+    const ucgifMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.min
+    const ucgifP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p50
+    const ucgifP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p75
+    const ucgifP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p95
+    const ucgifP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.p99
+    const ucgifMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getImageForm`]?.max
         
-    const ucgmuaCount = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.count 
-    const ucgmuaMean = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.mean
-    const ucgmuaMin = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.min
-    const ucgmuaP50 = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p50
-    const ucgmuaP75 = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p75
-    const ucgmuaP95 = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p95
-    const ucgmuaP99 = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p99
-    const ucgmuaMax = data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.max
+    const ucgmuaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.count 
+    const ucgmuaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.mean
+    const ucgmuaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.min
+    const ucgmuaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p50
+    const ucgmuaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p75
+    const ucgmuaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p95
+    const ucgmuaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.p99
+    const ucgmuaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getMatchingUserAccounts`]?.max
         
-    const ucgsdCount = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.count
-    const ucgsdMean = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.mean
-    const ucgsdMin = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.min
-    const ucgsdP50 = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p50
-    const ucgsdP75 = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p75
-    const ucgsdP95 = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p95
-    const ucgsdP99 = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p99
-    const ucgsdMax = data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.max
+    const ucgsdCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.count
+    const ucgsdMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.mean
+    const ucgsdMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.min
+    const ucgsdP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p50
+    const ucgsdP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p75
+    const ucgsdP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p95
+    const ucgsdP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.p99
+    const ucgsdMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.getSystemDate`]?.max
     
-    const uciaCount = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.count
-    const uciaMean = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.mean
-    const uciaMin = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.min
-    const uciaP50 = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p50
-    const uciaP75 = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p75
-    const uciaP95 = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p95
-    const uciaP99 = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p99
-    const uciaMax = data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.max 
+    const uciaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.count
+    const uciaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.mean
+    const uciaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.min
+    const uciaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p50
+    const uciaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p75
+    const uciaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p95
+    const uciaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.p99
+    const uciaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isAuthenticated`]?.max 
     
-    const uciuaCount = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.count
-    const uciuaMean = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.mean
-    const uciuaMin = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.min
-    const uciuaP50 = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p50
-    const uciuaP75 = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p75
-    const uciuaP95 = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p95
-    const uciuaP99 = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p99
-    const uciuaMax = data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.max
+    const uciuaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.count
+    const uciuaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.mean
+    const uciuaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.min
+    const uciuaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p50
+    const uciuaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p75
+    const uciuaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p95
+    const uciuaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.p99
+    const uciuaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.isUsernameAvailable`]?.max
     
-    const ucraCount = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.count
-    const ucraMean = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.mean
-    const ucraMin = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.min
-    const ucraP50 = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p50
-    const ucraP75 = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p75
-    const ucraP95 = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p95
-    const ucraP99 = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p99
-    const ucraMax = data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.max
+    const ucraCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.count
+    const ucraMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.mean
+    const ucraMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.min
+    const ucraP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p50
+    const ucraP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p75
+    const ucraP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p95
+    const ucraP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.p99
+    const ucraMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.reactivateAccount`]?.max
     
-    const ucrarCount = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.count
-    const ucrarMean = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.mean
-    const ucrarMin = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.min
-    const ucrarP50 = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p50
-    const ucrarP75 = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p75
-    const ucrarP95 = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p95
-    const ucrarP99 = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p99
-    const ucrarMax = data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.max
+    const ucrarCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.count
+    const ucrarMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.mean
+    const ucrarMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.min
+    const ucrarP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p50
+    const ucrarP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p75
+    const ucrarP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p95
+    const ucrarP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.p99
+    const ucrarMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.rejectAccountRequest`]?.max
 
-    const ucrqaCount = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.count
-    const ucrqaMean = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.mean
-    const ucrqaMin = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.min
-    const ucrqaP50 = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p50
-    const ucrqaP75 = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p75
-    const ucrqaP95 = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p95
-    const ucrqaP99 = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p99
-    const ucrqaMax = data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.max
+    const ucrqaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.count
+    const ucrqaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.mean
+    const ucrqaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.min
+    const ucrqaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p50
+    const ucrqaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p75
+    const ucrqaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p95
+    const ucrqaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.p99
+    const ucrqaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.requestAccount`]?.max
 
-    const ucrpCount = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.count
-    const ucrpMean = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.mean
-    const ucrpMin = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.min
-    const ucrpP50 = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p50
-    const ucrpP75 = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p75
-    const ucrpP95 = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p95
-    const ucrpP99 = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p99
-    const ucrpMax = data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.max
+    const ucrpCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.count
+    const ucrpMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.mean
+    const ucrpMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.min
+    const ucrpP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p50
+    const ucrpP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p75
+    const ucrpP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p95
+    const ucrpP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.p99
+    const ucrpMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.resetPassword`]?.max
     
-    const ucsarCount = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.count
-    const ucsarMean = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.mean
-    const ucsarMin = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.min
-    const ucsarP50 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p50
-    const ucsarP75 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p75
-    const ucsarP95 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p95
-    const ucsarP99 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p99
-    const ucsarMax = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.max
+    const ucsarCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.count
+    const ucsarMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.mean
+    const ucsarMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.min
+    const ucsarP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p50
+    const ucsarP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p75
+    const ucsarP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p95
+    const ucsarP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.p99
+    const ucsarMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequest`]?.max
 
-    const ucsarcCount = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.count
-    const ucsarcMean = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.mean
-    const ucsarcMin = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.min
-    const ucsarcP50 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p50
-    const ucsarcP75 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p75
-    const ucsarcP95 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p95
-    const ucsarcP99 = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p99
-    const ucsarcMax = data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.max
+    const ucsarcCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.count
+    const ucsarcMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.mean
+    const ucsarcMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.min
+    const ucsarcP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p50
+    const ucsarcP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p75
+    const ucsarcP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p95
+    const ucsarcP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.p99
+    const ucsarcMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchAccountRequestCount`]?.max
 
-    const ucsaacCount = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.count
-    const ucsaacMean = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.mean
-    const ucsaacMin = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.min
-    const ucsaacP50 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p50
-    const ucsaacP75 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p75
-    const ucsaacP95 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p95
-    const ucsaacP99 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p99
-    const ucsaacMax = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.max
+    const ucsaacCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.count
+    const ucsaacMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.mean
+    const ucsaacMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.min
+    const ucsaacP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p50
+    const ucsaacP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p75
+    const ucsaacP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p95
+    const ucsaacP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.p99
+    const ucsaacMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccountCount`]?.max
 
-    const ucsaaCount = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.count
-    const ucsaaMean = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.mean
-    const ucsaaMin = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.min
-    const ucsaaP50 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p50
-    const ucsaaP75 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p75
-    const ucsaaP95 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p95
-    const ucsaaP99 = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p99
-    const ucsaaMax = data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.max
+    const ucsaaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.count
+    const ucsaaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.mean
+    const ucsaaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.min
+    const ucsaaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p50
+    const ucsaaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p75
+    const ucsaaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p95
+    const ucsaaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.p99
+    const ucsaaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchActiveAccounts`]?.max
 
-    const ucsdacCount = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.count
-    const ucsdacMean = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.mean
-    const ucsdacMin = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.min
-    const ucsdacP50 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p50
-    const ucsdacP75 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p75
-    const ucsdacP95 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p95
-    const ucsdacP99 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p99
-    const ucsdacMax = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.max
+    const ucsdacCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.count
+    const ucsdacMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.mean
+    const ucsdacMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.min
+    const ucsdacP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p50
+    const ucsdacP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p75
+    const ucsdacP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p95
+    const ucsdacP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.p99
+    const ucsdacMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccountCount`]?.max
     
-    const ucsdaCount = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.count
-    const ucsdaMean = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.mean
-    const ucsdaMin = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.min
-    const ucsdaP50 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p50
-    const ucsdaP75 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p75
-    const ucsdaP95 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p95
-    const ucsdaP99 = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p99
-    const ucsdaMax = data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.max
+    const ucsdaCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.count
+    const ucsdaMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.mean
+    const ucsdaMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.min
+    const ucsdaP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p50
+    const ucsdaP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p75
+    const ucsdaP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p95
+    const ucsdaP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.p99
+    const ucsdaMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.searchDeactivatedAccounts`]?.max
 
-    const ucuuCount = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.count
-    const ucuuMean = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.mean
-    const ucuuMin = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.min
-    const ucuuP50 = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p50
-    const ucuuP75 = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p75
-    const ucuuP95 = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p95
-    const ucuuP99 = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p99
-    const ucuuMax = data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.max
+    const ucuuCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.count
+    const ucuuMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.mean
+    const ucuuMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.min
+    const ucuuP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p50
+    const ucuuP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p75
+    const ucuuP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p95
+    const ucuuP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.p99
+    const ucuuMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.updateUser`]?.max
     
-    const ucuiCount = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.count
-    const ucuiMean = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.mean
-    const ucuiMin = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.min
-    const ucuiP50 = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p50
-    const ucuiP75 = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p75
-    const ucuiP95 = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p95
-    const ucuiP99 = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p99
-    const ucuiMax = data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.max
+    const ucuiCount = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.count
+    const ucuiMean = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.mean
+    const ucuiMin = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.min
+    const ucuiP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p50
+    const ucuiP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p75
+    const ucuiP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p95
+    const ucuiP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.p99
+    const ucuiMax = data?.timers && data?.timers[`com.cats.server.controllers.UserController.uploadImage`]?.max
     
     //User Event Controller
-    const ueccCount = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.count
-    const ueccMean = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.mean
-    const ueccMin = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.min
-    const ueccP50 = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p50
-    const ueccP75 = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p75
-    const ueccP95 = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p95
-    const ueccP99 = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p99
-    const ueccMax = data?.timers[`com.cats.server.controllers.UserEventController.count`]?.max
+    const ueccCount = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.count
+    const ueccMean = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.mean
+    const ueccMin = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.min
+    const ueccP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p50
+    const ueccP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p75
+    const ueccP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p95
+    const ueccP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.p99
+    const ueccMax = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.count`]?.max
             
-    const uecsCount = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.count
-    const uecsMean = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.mean
-    const uecsMin = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.min
-    const uecsP50 = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p50
-    const uecsP75 = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p75
-    const uecsP95 = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p95
-    const uecsP99 = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p99
-    const uecsMax = data?.timers[`com.cats.server.controllers.UserEventController.search`]?.max
+    const uecsCount = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.count
+    const uecsMean = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.mean
+    const uecsMin = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.min
+    const uecsP50 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p50
+    const uecsP75 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p75
+    const uecsP95 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p95
+    const uecsP99 = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.p99
+    const uecsMax = data?.timers && data?.timers[`com.cats.server.controllers.UserEventController.search`]?.max
     
     //Version Controller
-    const vcgvCount = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.count
-    const vcgvMean = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.mean
-    const vcgvMin = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.min
-    const vcgvP50 = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p50
-    const vcgvP75 = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p75
-    const vcgvP95 = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p95
-    const vcgvP99 = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p99
-    const vcgvMax = data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.max
+    const vcgvCount = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.count
+    const vcgvMean = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.mean
+    const vcgvMin = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.min
+    const vcgvP50 = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p50
+    const vcgvP75 = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p75
+    const vcgvP95 = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p95
+    const vcgvP99 = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.p99
+    const vcgvMax = data?.timers && data?.timers[`com.cats.server.controllers.VersionController.getVersion`]?.max
     
     //Instrumented Filter
-    const ifrCount = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.count
-    const ifrMean = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.mean
-    const ifrMin = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.min
-    const ifrP50 = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p50
-    const ifrP75 = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p75
-    const ifrP95 = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p95
-    const ifrP99 = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p99
-    const ifrMax = data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.max
+    const ifrCount = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.count
+    const ifrMean = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.mean
+    const ifrMin = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.min
+    const ifrP50 = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p50
+    const ifrP75 = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p75
+    const ifrP95 = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p95
+    const ifrP99 = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.p99
+    const ifrMax = data?.timers && data?.timers[`com.codahale.metrics.servlet.InstrumentedFilter.requests`]?.max
     
     useEffect(() => {
         setMemory(memoryDiff)
@@ -1083,24 +1083,24 @@ const Metrics = ({ data, errorCode }) => {
                 <div className="w-full flex flex-col">
                     <h1 className="text-2xl pb-2">JVM Metrics</h1>
                     <h2 className="text-xl">Memory</h2>
-                    <p className="text-sm mt-3">Total Memory ({usedMemory}M / {maxMemory}M)</p>
+                    <p className="text-sm mt-3">Total Memory ({usedMemory || 0}M / {maxMemory || 0}M)</p>
                     <div className="w-full lg:w-3/4">
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${memory}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{memory}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{memory || 0}%</span>
                         </div>
                         <p className="text-sm mt-3">Heap Memory ({usedHeapMemory}M / {maxHeapMemory}M)</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${heapMemory}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{heapMemory}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{heapMemory || 0}%</span>
                         </div>
                         <p className="text-sm mt-3">Non Heap Memory ({usedNonHeapMemory}M / {maxNonHeapMemory}M)</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-red-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${nonHeapMemory}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{nonHeapMemory}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{nonHeapMemory || 0}%</span>
                         </div>
                     </div>
                 </div>
@@ -1109,37 +1109,37 @@ const Metrics = ({ data, errorCode }) => {
                         <h2 className="text-xl">
                             Threads -
                         </h2>
-                        <span className="flex text-sm mt-1 ml-1">Total: {threads}
+                        <span className="flex text-sm mt-1 ml-1">Total: {threads || 0}
                             <span className="flex h-3 w-3 m-1 ml-1">
                             <span className="animate-ping relative inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
                             <span className="absolute inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                             </span>
                         </span>
                     </div>
-                    <p className="text-sm mt-3">Runnable ({runnable})</p>
+                    <p className="text-sm mt-3">Runnable ({runnable || 0})</p>
                     <div className="w-full lg:w-3/4">
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${runnableThread}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{runnableThread}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{runnableThread || 0}%</span>
                         </div>
-                        <p className="text-sm mt-3">Timed Waiting ({timedWaiting})</p>
+                        <p className="text-sm mt-3">Timed Waiting ({timedWaiting || 0})</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${timedWaitingThread}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{timedWaitingThread}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{timedWaitingThread || 0}%</span>
                         </div>
-                        <p className="text-sm mt-3">Waiting ({waiting})</p>
+                        <p className="text-sm mt-3">Waiting ({waiting || 0})</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${waitingThread}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{waitingThread}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{waitingThread || 0}%</span>
                         </div>
-                        <p className="text-sm mt-3">Blocked ({blocked})</p>
+                        <p className="text-sm mt-3">Blocked ({blocked || 0})</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-gray-400 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${blockedThread}%` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{blockedThread}%</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{blockedThread || 0}%</span>
                         </div>
                     </div>
                 </div>
@@ -1149,36 +1149,36 @@ const Metrics = ({ data, errorCode }) => {
                             Garbage Collections
                         </h2>
                     </div>
-                    <p className="text-sm mt-3">Mark Sweep count - G1 old ({markSweepTime})</p>
+                    <p className="text-sm mt-3">Mark Sweep count - G1 old ({markSweepTime || 0})</p>
                     <div className="w-full lg:w-3/4">
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${markSweepTime}` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{markSweepTime}</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{markSweepTime || 0}</span>
                         </div>
-                        <p className="text-sm mt-3">Mark Sweep time - G1 old ({markSweepCount})</p>
+                        <p className="text-sm mt-3">Mark Sweep time - G1 old ({markSweepCount || 0})</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${markSweepCount}` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{markSweepCount}</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{markSweepCount || 0}</span>
                         </div>
-                        <p className="text-sm mt-3">Scavenge count - G1 young ({scavengeTime})</p>
+                        <p className="text-sm mt-3">Scavenge count - G1 young ({scavengeTime || 0})</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${scavengeTime}` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{scavengeTime}</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{scavengeTime || 0}</span>
                         </div>
-                        <p className="text-sm mt-3">Scavenge time - G1 young ({scavengeCount})</p>
+                        <p className="text-sm mt-3">Scavenge time - G1 young ({scavengeCount || 0})</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-yellow-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${scavengeCount}` }}>
                             </div>
-                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{scavengeCount}</span>
+                            <span className="absolute top-0 left-0 h-full flex items-center pl-2">{scavengeCount || 0}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <h1 className="text-2xl">HTTP requests (events per second)</h1>
-            <p className="text-sm mt-2">Active Requests: {activeRequests} - Total Requests: {totalRequests}</p>
+            <p className="text-sm mt-2">Active Requests: {activeRequests || 0} - Total Requests: {totalRequests || 0}</p>
             <div className="overflow-auto max-w-full">
                 <table className="min-w-full divide-y divide-gray-200 shadow-sm mt-5">
                     <thead className="bg-gray-50">
@@ -1864,7 +1864,7 @@ const Metrics = ({ data, errorCode }) => {
                                 <p>{cacgercP95 == 0 ? 0 : cacgercP95 !== 'NaN' ? cacgercP95?.toFixed(9) : ''}</p>
                             </td>
                             <td className="px-6">
-                                <p>{cacgercP99 == 0 ? 0 : cacgercP99 !== 'NaN' ? bcacgercP99?.toFixed(9) : ''}</p>
+                                <p>{cacgercP99 == 0 ? 0 : cacgercP99 !== 'NaN' ? cacgercP99?.toFixed(9) : ''}</p>
                             </td>
                             <td className="px-6">
                                 <p>{cacgercMax == 0 ? 0 : cacgercMax !== 'NaN' ? cacgercMax?.toFixed(9) : ''}</p>

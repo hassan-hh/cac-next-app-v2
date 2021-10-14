@@ -38,10 +38,10 @@ export const DrawerProvider = ({ children }) => {
             }
         })
         .catch(err => {
-           if (err.response.status > 300) {
+           if (err.response?.status > 300) {
                 setSuccess({
                     ...success,
-                    errorCode: err.response.status, 
+                    errorCode: err.response?.status, 
                     data: false
                 })
             }
@@ -60,10 +60,10 @@ export const DrawerProvider = ({ children }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setSuccess({
                     ...success,
-                    errorCode: err.response.status, 
+                    errorCode: err.response?.status, 
                     data: false
                 })
             }
@@ -82,10 +82,10 @@ export const DrawerProvider = ({ children }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setSuccess({
                     ...success,
-                    errorCode: err.response.status, 
+                    errorCode: err.response?.status, 
                     data: false
                 })
             }
@@ -104,10 +104,10 @@ export const DrawerProvider = ({ children }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setSuccess({
                     ...success,
-                    errorCode: err.response.status, 
+                    errorCode: err.response?.status, 
                     data: false
                 })
             }
@@ -126,10 +126,10 @@ export const DrawerProvider = ({ children }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setSuccess({
                     ...success,
-                    errorCode: err.response.status, 
+                    errorCode: err.response?.status, 
                     data: false
                 })
             }

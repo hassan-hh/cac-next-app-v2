@@ -14,9 +14,9 @@ const Drawer = ({open}) => {
     const displayText = 'System Date:' 
     const zeroPad = (number) => number.toString().length === 1 ? `0${number}` : number
     const date = new Date(systemDate)
-    const day = zeroPad(date.getDate())
-    const month = date.toLocaleString('default', { month: 'short' });
-    const formatedDate = `${displayText} ${day} ${month} ${date.getFullYear()}`
+    const day = zeroPad(date?.getDate())
+    const month = date?.toLocaleString('default', { month: 'short' });
+    const formatedDate = `${displayText} ${day} ${month} ${date?.getFullYear()}`
     
     useEffect(() => {
         const x = setTimeout(() => {
@@ -40,7 +40,7 @@ const Drawer = ({open}) => {
                 :
                 <div style={{width: '24rem'}} className={`${open ? 'opacity-100 left-0 right-0 mx-auto md:left-0' : 'right-0'} opacity-0 lg:opacity-100 lg:right-auto absolute lg:relative overflow-hidden mx-10 sm:mx-auto px-0 sm:px-5 transition-all ease-linear delay-200 duration-300`}>
                     <p className="text-center py-5" key="date">
-                        {systemDate?.length === 0 && success.data === true ?
+                        { systemDate?.length === 0 && success.data === true ?
                             'System Date: No data available yet'
                             : systemDate?.length !== 0 && success.data === true ?
                             <>
