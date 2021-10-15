@@ -19,7 +19,6 @@ const Layout = ({ children }) => {
         router.replace(router.asPath)
     }
     
-
     useEffect(() => { //this will redirect the user when page is refreshed, page could be refreshed by visiting wrong url or hard resfresh the browser
         if (store.sessionId) {
             setLoggedIn(true)
@@ -41,7 +40,7 @@ const Layout = ({ children }) => {
             }
         }, 2000)
         return () => { clearTimeout(x); }
-    }, [loggedIn, store.sessionId, router.pathname])
+    }, [loggedIn, store.sessionId, router.pathname, router.asPath])
     
     //NotAuthScreen for non logged in users - before a user login and goes to another url then we protect it here
     
@@ -81,8 +80,6 @@ const Layout = ({ children }) => {
                                 <Drawer open={open} />
                             </aside>
                         </DrawerProvider>
-                        // <>
-                        // </>
                     }
                     <section className={`${loggedIn ? 'bg-gray-200' : ''} min-w-full lg:min-w-0 w-full overflow-auto p-4 sm:py-10 sm:px-10 min-h-screen z-10`}>
                         {children}

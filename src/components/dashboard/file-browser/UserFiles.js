@@ -71,7 +71,7 @@ const UserFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response?.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
                         errorCode: err.response?.status,
@@ -92,8 +92,8 @@ const UserFiles = () => {
 
     const lastModified = (timestamp) => {
         const date = new Date(timestamp)
-        const [month, day, year] = [date.getMonth() + 1, date.getDate(), date.getFullYear()]
-        const [hour, minutes] = [date.getHours(), date.getMinutes()]
+        const [month, day, year] = [date?.getMonth() + 1, date?.getDate(), date?.getFullYear()]
+        const [hour, minutes] = [date?.getHours(), date?.getMinutes()]
         const formatedDate = `${day}-${month}-${year} ${hour}:${minutes}`
         return formatedDate
     }

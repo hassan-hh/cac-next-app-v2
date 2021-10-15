@@ -21,7 +21,6 @@ const LoginFull = () => {
         error: null,
         status: null,
     })
-
     const [matchUser, setMatchUser] = useState([])
     const [selected, setSelected] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -42,12 +41,12 @@ const LoginFull = () => {
                 }
             })
             .catch(err => {
-                if (err.response && err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setLoading(false)
                     setMatchUserStatus({
                         ...matchUserStatus,
                         error: true,
-                        status: err.response.status,
+                        status: err.response?.status,
                     })
             }
         })
@@ -57,7 +56,7 @@ const LoginFull = () => {
             matchUserApi() //if username input is not empty run the api
         }
         if (matchUser.length !== 0) {
-            setSelected(matchUser.[0].idLogon) //!== 0 if result displayed, select the first input/option avilable
+            setSelected(matchUser?.[0]?.idLogon) //!== 0 if result displayed, select the first input/option avilable
         }
         // if (login.error === true || login.error === false) {//or just login.error for both - need this for both success or error, otherwise the connect account message will not get removed if error is occurred
         //     setConnectAccount(false)
@@ -117,18 +116,16 @@ const LoginFull = () => {
                     //loggedIn: true,
                     sessionId: sessionId, // JSESSIONID already stored in the cookie and cookie usually comes from the rest route itself we don't need to store it manually. Not like auth token JWT must be passed to the headers and stored in the local storage.
                 })
-                console.log('LoginStore', store)
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response && err.response?.status > 300) {
                 setLogin({
                     ...login,
                     error: true,
-                    status: err.response.status
+                    status: err.response?.status
                 })
             }
-            console.warn('errData', err.response)
         })
     }
 
@@ -188,7 +185,7 @@ const LoginFull = () => {
                             >
                                 <h1 className="text-xl">{user.name} {user.idLogonType.toLowerCase()}</h1>
                                 <p>Avilable entities:</p>
-                                {   user.entities.map(entity => {
+                                {   user.entities && user.entities?.map(entity => {
                                     return (
                                         <div key={entity.id}>
                                             <p>{entity.name}</p>

@@ -1090,13 +1090,13 @@ const Metrics = ({ data, errorCode }) => {
                             </div>
                             <span className="absolute top-0 left-0 h-full flex items-center pl-2">{memory || 0}%</span>
                         </div>
-                        <p className="text-sm mt-3">Heap Memory ({usedHeapMemory}M / {maxHeapMemory}M)</p>
+                        <p className="text-sm mt-3">Heap Memory ({usedHeapMemory || 0}M / {maxHeapMemory || 0}M)</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-green-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${heapMemory}%` }}>
                             </div>
                             <span className="absolute top-0 left-0 h-full flex items-center pl-2">{heapMemory || 0}%</span>
                         </div>
-                        <p className="text-sm mt-3">Non Heap Memory ({usedNonHeapMemory}M / {maxNonHeapMemory}M)</p>
+                        <p className="text-sm mt-3">Non Heap Memory ({usedNonHeapMemory || 0}M / {maxNonHeapMemory || 0}M)</p>
                         <div className="relative mt-2 bg-gray-600 rounded-full overflow-hidden text-white text-xs z-10">
                             <div className="bg-red-500 h-full py-4 animate-pulse transition-all ease-in-out duration-1000 z-0" style={{ width: `${nonHeapMemory}%` }}>
                             </div>

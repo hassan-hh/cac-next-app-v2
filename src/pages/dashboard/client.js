@@ -14,7 +14,7 @@ export const getServerSideProps = async ({req}) => {
 
     return {
         props: {
-            data: data || [],
+            data: data || {},
             errorCode: errorCode || null
         },
     }
@@ -39,7 +39,7 @@ const Client = ({ data, errorCode }) => {
             <Meta title="Client download" />
             <Header title={`Client Download For ${data?.description?.replace(/_/g,' ') || ''}`} subTitle="" />
             <div className="min-h-screen">
-                <h1 className="mb-10 text-black text-lg text-left capitalize">This will download the installer for {data?.description?.replace(/_/g,' ') || ''}</h1>
+                <h1 className="mb-10 text-black text-lg text-left capitalize">Click to download the installer for {data?.description?.replace(/_/g,' ') || ''}</h1>
                     <button
                         type="button"
                         onClick={() => setLoading(true)}

@@ -48,7 +48,7 @@ const FeedFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response?.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
                         errorCode: err.response?.status,
@@ -71,7 +71,7 @@ const FeedFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response?.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
                         errorCode: err.response?.status,
@@ -92,8 +92,8 @@ const FeedFiles = () => {
 
     const lastModified = (timestamp) => {
         const date = new Date(timestamp)
-        const [month, day, year] = [date.getMonth() + 1, date.getDate(), date.getFullYear()]
-        const [hour, minutes] = [date.getHours(), date.getMinutes()]
+        const [month, day, year] = [date?.getMonth() + 1, date?.getDate(), date?.getFullYear()]
+        const [hour, minutes] = [date?.getHours(), date?.getMinutes()]
         const formatedDate = `${day}-${month}-${year} ${hour}:${minutes}`
         return formatedDate
     }
@@ -145,12 +145,12 @@ const FeedFiles = () => {
                                                                 <img alt="folder" className="w-5 mr-5" src="/folder.svg" />
                                                                 <p>{feedFile.name}</p>
                                                             </div>
-                                                            : feedFile.name.includes('zip') ?
+                                                            : feedFile.name?.includes('zip') ?
                                                             <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
                                                                 <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
                                                                 {feedFile.name}
                                                             </a>
-                                                            : feedFile.name.includes('pdf') ?
+                                                            : feedFile.name?.includes('pdf') ?
                                                             <a onClick={() => setBaseUrl(feedFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
                                                                 <img alt="folder" className="w-5 mr-5" src="/pdf.svg" />
                                                                 {feedFile.name}

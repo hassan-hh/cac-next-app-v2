@@ -114,7 +114,7 @@ const Drawer = ({open}) => {
                                         <li className="text-green-500 py-1" key={event.name}>
                                             <Link
                                                 href="/dashboard/event/view/[idE]/[id]" //route must match below and folder structure
-                                                as={`/dashboard/event/view/${event.name.replace(/:/g, '/')}`}
+                                                as={`/dashboard/event/view/${event.name?.replace(/:/g, '/')}`}
                                             >
                                                 <a>
                                                     {event.name}

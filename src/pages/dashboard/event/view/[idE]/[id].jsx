@@ -3,10 +3,10 @@ import Header from '../../../../../components/dashboard/Header'
 import TabsPanel from '../../../../../components/dashboard/TabsPanel'
 import Error from '../../../../_error'
 
-export const getServerSideProps = async ({req}) => {//this is single page for any type of post, pages, comments, with dynamic routing
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${context.params.idE}/${context.params.id}`, {
+export const getServerSideProps = async (context) => {//this is single page for any type of post, pages, comments, with dynamic routing
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${context.params?.idE}/${context.params?.id}`, {
         headers: { 
-            Cookie: req.headers?.cookie 
+            Cookie: context.req?.headers?.cookie 
         }
     }) 
     //e.g evets/SGP/2224 as the endpoint and it should return json res/display EVENTS DATA in the console log
@@ -16,7 +16,7 @@ export const getServerSideProps = async ({req}) => {//this is single page for an
 
     return {
         props: {
-            data: data || [], 
+            data: data || {}, 
             errorCode: errorCode || null
         }
     }
@@ -34,7 +34,7 @@ const EventView = ({ data, errorCode }) => {
                 <h1 className="text-green-500 text-lg mb-5 font-semibold">{data?.idEntity}/{data?.idCA}</h1>
                 <div className="flex flex-col lg:flex-row lg:space-x-4 mb-4">
                     <div className="overflow-auto w-full lg:w-2/3 mb-4 lg:mb-0 shadow-sm rounded-md">
-                        <table className="min-w-full bg-white text-sm h-60">
+                        <table className="min-w-full bg-white text-sm h-64">
                             <tbody className="">
                                 <tr>
                                     <td className="px-6">

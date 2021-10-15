@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 
-
 const Nav = ({ loggedIn }) => {
     
     const router = useRouter()
