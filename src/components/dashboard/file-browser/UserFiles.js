@@ -48,10 +48,10 @@ const UserFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -71,10 +71,10 @@ const UserFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -82,7 +82,7 @@ const UserFiles = () => {
     }
 
     const handleFileBrowser = (userFile) => {
-        setBreadCrumbs(userFile.pathFromRoot.replace(/\//g, ' > '))
+        setBreadCrumbs(userFile.pathFromRoot?.replace(/\//g, ' > '))
         setBaseUrl(userFile.base64PathFromRoot) //.replace(/=/g, '%3D')
         setDirectory(userFile.directory)
         baseUrlApi(userFile.base64PathFromRoot)
@@ -92,8 +92,8 @@ const UserFiles = () => {
 
     const lastModified = (timestamp) => {
         const date = new Date(timestamp)
-        const [month, day, year] = [date.getMonth() + 1, date.getDate(), date.getFullYear()]
-        const [hour, minutes] = [date.getHours(), date.getMinutes()]
+        const [month, day, year] = [date?.getMonth() + 1, date?.getDate(), date?.getFullYear()]
+        const [hour, minutes] = [date?.getHours(), date?.getMinutes()]
         const formatedDate = `${day}-${month}-${year} ${hour}:${minutes}`
         return formatedDate
     }
@@ -145,12 +145,12 @@ const UserFiles = () => {
                                                                 <img alt="folder" className="w-5 mr-5" src="/folder.svg" />
                                                                 <p>{userFile.name}</p>
                                                             </div>
-                                                            : userFile.name.includes('zip') ? //if it has zip text then do the below mainly for img icon
+                                                            : userFile.name?.includes('zip') ? //if it has zip text then do the below mainly for img icon
                                                             <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
                                                                 <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
                                                                 {userFile.name}
                                                             </a>
-                                                            : userFile.name.includes('pdf') ? //if it has pdf text then do the below mainly for img icon
+                                                            : userFile.name?.includes('pdf') ? //if it has pdf text then do the below mainly for img icon
                                                             <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
                                                                 <img alt="folder" className="w-5 mr-5" src="/pdf.svg" />
                                                                 {userFile.name}

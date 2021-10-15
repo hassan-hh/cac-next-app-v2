@@ -3,8 +3,6 @@ import { StoreContext } from '../providers/StoreContext'
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-// import PropTypes from 'prop-types'
-
 
 const Nav = ({ loggedIn }) => {
     
@@ -70,18 +68,6 @@ const Nav = ({ loggedIn }) => {
         setLoggedIn(false)
         router.push('/login')
     }
-
-    // useEffect(() => {
-    //     // if (!store.sessionId && router.pathname === '/dashboard') {
-    //     //     router.push('/login')
-    //     //     setLoggedIn(false)
-    //     //     setLoadingScreen(true)
-    //     // }
-    //     if (!store.sessionId && router.pathname === '/login') { //if no sessionId and i am leaving the dahsboard page or i am in login page
-    //         setLoggedIn(false)
-    //         setLoadingScreen(false)
-    //     }
-    // }, [store.sessionId])
     
     return (
         <header ref={container}>

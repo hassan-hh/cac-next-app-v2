@@ -5,26 +5,31 @@ import ServicesCard from '../../components/dashboard/cards/ServicesCard'
 import Meta from '../../components/seo/Meta'
 import Error from '../_error'
 
-
-export const getStaticProps = async () => {
-    // const res = await fetch(`${process.env.API_BASE_URL}/account/regions`)
-    // const data = await res.text()
+export const getServerSideProps = async ({req}) => { //change endpoint below
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/endpointGoesHere`, {
+    //     headers: { 
+    //         Cookie: req.headers?.cookie || ''
+    //     }
+    // })
+    //const data = await res.json()
+    //const errorCode = res.ok ? 200 : res.statusCode
 
     return {
         props: {
-            //data
-        }
+            // data: data || [],
+            // errorCode: errorCode || null
+        },
     }
 }
 
-const Dashboard = ({data}) => {
+const Dashboard = ({data, errorCode}) => {
 
     return (
         <>
             <Meta title="User Dashboard"/>
             <Header title="My Tasks" subTitle="" />
-            { data ? //we must set it back to !data because our api above is not completed yet
-                <Error />
+            {  errorCode > 300 ?
+                <Error statusCode={errorCode} />
                 :
                 <div className="h-screen max-w-full overflow-auto">
                     <table className="h-screen min-w-full divide-y divide-gray-200 shadow-sm">

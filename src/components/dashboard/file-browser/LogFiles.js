@@ -48,10 +48,10 @@ const LogFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -71,10 +71,10 @@ const LogFiles = () => {
                 }
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status,
+                        errorCode: err.response?.status,
                         data: false
                     })
                 }
@@ -82,7 +82,7 @@ const LogFiles = () => {
     }
 
     const handleFileBrowser = (logFile) => {
-        setBreadCrumbs(logFile.pathFromRoot.replace(/\//g, ' > '))
+        setBreadCrumbs(logFile.pathFromRoot?.replace(/\//g, ' > '))
         setBaseUrl(logFile.base64PathFromRoot) //.replace(/=/g, '%3D')
         setDirectory(logFile.directory)
         baseUrlApi(logFile.base64PathFromRoot)
@@ -92,8 +92,8 @@ const LogFiles = () => {
 
     const lastModified = (timestamp) => {
         const date = new Date(timestamp)
-        const [month, day, year] = [date.getMonth() + 1, date.getDate(), date.getFullYear()]
-        const [hour, minutes] = [date.getHours(), date.getMinutes()]
+        const [month, day, year] = [date?.getMonth() + 1, date?.getDate(), date?.getFullYear()]
+        const [hour, minutes] = [date?.getHours(), date?.getMinutes()]
         const formatedDate = `${day}-${month}-${year} ${hour}:${minutes}`
         return formatedDate
     }
@@ -145,12 +145,12 @@ const LogFiles = () => {
                                                                 <img alt="folder" className="w-5 mr-5" src="/folder.svg" />
                                                                 <p>{logFile.name}</p>
                                                             </div>
-                                                            : logFile.name.includes('zip') ?
+                                                            : logFile.name?.includes('zip') ?
                                                                 <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
                                                                     <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
                                                                     {logFile.name}
                                                                 </a>
-                                                                : logFile.name.includes('log') ?
+                                                                : logFile.name?.includes('log') ?
                                                                     <a onClick={() => setBaseUrl(logFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
                                                                         <img alt="folder" className="w-5 mr-5" src="/log-format.svg" />
                                                                         {logFile.name}

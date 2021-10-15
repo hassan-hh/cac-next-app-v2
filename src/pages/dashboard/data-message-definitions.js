@@ -7,27 +7,20 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import DMLoadingSkeleton from '../../components/dashboard/loading-skeletons/DMLoadingSkeleton'
 
-export const getStaticProps = async () => {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`)
-        //const errorCode = res.ok ? 200 : res.statusCode
-        const data = await res.json()
-        
-        return {
-            props: {
-                data, errorCode
-            },
-            revalidate: 30,
+export const getServerSideProps = async ({req}) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dataMessageDefinition`, {
+        headers: { 
+            Cookie: req.headers?.cookie || ''
         }
-    }
-    catch (err) {
-        const errorCode = err ? 500 : null
-        //const errMessage = err.message //it will display error message after passed as props
-        return {
-            props: {
-                errorCode
-            },
-        }
+    })
+    const data = await res.json()
+    const errorCode = res.ok ? 200 : res.statusCode
+
+    return {
+        props: {
+            data: data || [], 
+            errorCode: errorCode || null
+        },
     }
 }
 
@@ -126,7 +119,7 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
             }
         })
         .catch(err => {
-            if (err.response.status > 300) {
+            if (err.response?.status > 300) {
                 setItemDetail({...itemDetail})
                 setSuccess(false)
                 refreshData()
@@ -156,15 +149,15 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
                         <button
                             type="button"
                             onClick={refreshData}
-                            className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-28 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none">
+                            className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-24 transition-all ease-in-out duration-300 uppercase shadow-sm mr-3 py-2 rounded-md text-sm font-medium focus:outline-none">
                             {   !updateText ?
                                 <>
-                                    <img alt="plus" className="w-3 mr-1" src="/reload.svg" />
+                                    <img alt="plus" className="w-3 h-3 mr-1" src="/reload.svg" />
                                     <span>Refresh</span>
                                 </>
                                 :
                                 <>
-                                    <img alt="plus" className="w-3 animate-spin mr-1" src="/reload.svg" />
+                                    <img alt="plus" className="w-3 h-3 animate-spin mr-1" src="/reload.svg" />
                                     <span>Loading</span>
                                 </>
                             }
@@ -173,13 +166,13 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
                             type="button"
                             onClick={newForm}
                             className="bg-gray-900 text-white hover:bg-gray-500 flex items-center justify-center w-24 transition-all ease-in-out duration-300 uppercase shadow-sm py-2 rounded-md text-sm font-medium focus:outline-none">
-                                <img alt="plus" className="w-3 mr-1" src="/plus-heavy-white.svg" /> 
+                                <img alt="plus" className="w-3 h-3 mr-1" src="/plus-heavy-white.svg" /> 
                                 Add
                         </button>
                     </div>
                     <div className="h-screen max-w-full mt-8 overflow-auto">
                         <table className="min-w-full divide-y divide-gray-200 shadow-sm">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-white">
                                 <tr>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
                                             Definition Key
@@ -196,13 +189,13 @@ const DataMessageDefinitions = ({ data, errorCode }) => {
                                 </tr>
                             </thead>
                             <tbody className="relative bg-white divide-y divide-gray-200">
-                                {data && data.length === 0 && errorCode < 300 ?
-                                    <tr className="h-full absolute top-40 inset-0 flex items-center justify-center">
+                                {data.length === 0 && errorCode < 300 ?
+                                    <tr className="h-screen absolute inset-0 flex items-center justify-center">
                                         <td>no data available yet</td>
                                     </tr>
                                 :
                                 <>
-                                    {data.map((item, idx ) => ( //item.filter(x => x !== null) =>
+                                    {data.length > 0 && data.map((item, idx ) => ( //item.filter(x => x !== null) =>
                                         <tr
                                             key={idx}
                                             onClick={() => handleModal(item)}

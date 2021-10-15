@@ -9,13 +9,15 @@ import LoadingScreen from './dashboard/LoadingScreen'
 import NotAuthScreen from './dashboard/NotAuthScreen'
 
 
-const Layout = ({ children}) => {
+const Layout = ({ children }) => {
 
     const router = useRouter()
     const { store, setStore, loggedIn, setLoggedIn, loadingScreen, setLoadingScreen } = useContext(StoreContext)
-    console.log('loadingScreen', loadingScreen)
     const [open, setOpen] = useState(true)
-    console.log('loggedIn', loggedIn)
+
+    const refreshData = () => { //similar to AJAX in this case we might not need revalidate. 
+        router.replace(router.asPath)
+    }
 
     useEffect(() => { //this will redirect the user when page is refreshed, page could be refreshed by visiting wrong url or hard resfresh the browser
         if (store.sessionId) {
@@ -32,9 +34,12 @@ const Layout = ({ children}) => {
             // if (!store.sessionId) { //after logout/before auth, if user goes to another url 
             //     router.push('/login')
             // }
+            if (router.pathname === router.asPath) {
+                refreshData()
+            }
         }, 2000)
         return () => { clearTimeout(x); }
-    }, [loggedIn, store.sessionId, router.pathname])
+    }, [loggedIn, store.sessionId, router.pathname, router.asPath])
     
     
     //NotAuthScreen for non logged in users - before a user login and goes to another url then we protect it here
@@ -54,15 +59,18 @@ const Layout = ({ children}) => {
     //     )
     // }
     // else {
-        return (
-            <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}>
+    return (
+            <div className={!store.sessionId ? 'relative h-screen flex flex-col justify-between' : ''} style={!store.sessionId? { background: '#2bbc9c' } : {}}>
+            {/* <div style={!loggedIn ? { background: '#2bbc9c', postion: 'relative' } : {}}> */}
                 <Nav loggedIn={loggedIn} />
                 <img
                     src="/drawerToggler.svg"
                     alt="toggler icon"
+                    //className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
                     className={`${ loggedIn? 'block' : 'hidden' } w-16 h-auto absolute top-0 left-0 cursor-pointer`}
                     onClick={() => setOpen(!open)}
-                />
+            />
+                {/* <main className={`${store.sessionId ? 'flex' : 'hidden' } flex-row relative`}> */}
                 <main className="flex flex-row relative">
                     {   !loggedIn ?
                         null

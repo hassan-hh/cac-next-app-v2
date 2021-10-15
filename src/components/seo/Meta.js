@@ -17,9 +17,9 @@ const Meta = ({title, keywords, description}) => {
 }
 
 Meta.defaultProps = {
-    title: "Corporate Action Financial Services",
-    keywords: "financial advisor, certified financial planner, financial consultant, wealth advisor",
-    description: "UKs best financial services organisation",
+    title: "The Corporate Action Company",
+    keywords: "financial advisor, certified financial planner, financial consultant",
+    description: "UKs best software solutions for banking services",
 }
 
 export default Meta

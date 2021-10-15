@@ -7,7 +7,6 @@ import axios from 'axios'
 const DeactivatedAccounts = () => {
 
     const [deactivatedAccounts, setDeactivatedAccounts] = useState([])
-    console.log('check', deactivatedAccounts)
     const [update, setUpdate] = useState(0)
     const [reactivating, setReactivating] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -38,17 +37,15 @@ const DeactivatedAccounts = () => {
                         data: true
                     })
                 }
-                console.log('res', res)
             })
             .catch(err => {
-                if (err.response && err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status, 
+                        errorCode: err.response?.status, 
                         data: false
                     })
                 }
-                console.log('err', err.response)
             })
     }
 
@@ -66,15 +63,8 @@ const DeactivatedAccounts = () => {
         }
     }
 
-    // const handleRemoveItem = idx => {
-    //     const newAccount = [...deactivatedAccounts]
-    //     newAccount.splice(idx, 1)
-    //     setDeactivatedAccounts(newAccount)
-    // }
-    
     const handleReactivate = (account, idx) => {
         ReactivateAccountsApi(account.username, idx)
-        //handleRemoveItem(idx) //causes a bug at the bottom of the list, reactivating an item 
     }
 
     return (

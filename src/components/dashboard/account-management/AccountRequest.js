@@ -12,7 +12,6 @@ const AccountRequest = () => {
         errorCode: null,
         data: null
     })
-    console.log('accountRequest', accountRequest)
 
     useEffect(() => {
         AccountRequestApi()
@@ -36,17 +35,15 @@ const AccountRequest = () => {
                         data: true
                     })
                 }
-                console.log('res', res)
             })
             .catch(err => {
-                if (err.response && err.response.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
-                        errorCode: err.response.status, 
+                        errorCode: err.response?.status, 
                         data: false
                     })
                 }
-                console.log('err', err.response)
             })
     }
 
@@ -104,7 +101,7 @@ const AccountRequest = () => {
                                     </tr>
                                     :
                                     <>
-                                        {accountRequest.map((account, idx) => (
+                                        {accountRequest && accountRequest.map((account, idx) => (
                                             <tr key={idx} className="hover:bg-gray-100 text-sm">
                                                 {   loading === true ?
                                                     <AMLoadingSkeleton />
