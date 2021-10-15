@@ -39,7 +39,7 @@ const DeactivatedAccounts = () => {
                 }
             })
             .catch(err => {
-                if (err.response?.status > 300) {
+                if (err.response && err.response?.status > 300) {
                     setSuccess({
                         ...success,
                         errorCode: err.response?.status, 
@@ -65,7 +65,6 @@ const DeactivatedAccounts = () => {
     
     const handleReactivate = (account, idx) => {
         ReactivateAccountsApi(account?.username, idx)
-        //handleRemoveItem(idx) //causes a bug at the bottom of the list, reactivating an item 
     }
 
     return (
