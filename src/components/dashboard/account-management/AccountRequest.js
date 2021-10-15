@@ -39,7 +39,7 @@ const AccountRequest = () => {
                 console.log('res', res)
             })
             .catch(err => {
-                if (err.response.status > 300) {
+                if (err.response && err.response.status > 300) {
                     setSuccess({
                         ...success,
                         errorCode: err.response.status, 

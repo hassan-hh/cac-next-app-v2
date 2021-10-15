@@ -145,21 +145,21 @@ const UserFiles = () => {
                                                                 <img alt="folder" className="w-5 mr-5" src="/folder.svg" />
                                                                 <p>{userFile.name}</p>
                                                             </div>
-                                                            : userFile.name.includes('zip') ?
-                                                                <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                    <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
-                                                                    {userFile.name}
-                                                                </a>
-                                                                : userFile.name.includes('pdf') ?
-                                                                    <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                        <img alt="folder" className="w-5 mr-5" src="/pdf.svg" />
-                                                                        {userFile.name}
-                                                                    </a>
-                                                                    :
-                                                                    <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
-                                                                        <img alt="folder" className="w-5 mr-5" src="/file.svg" />
-                                                                        {userFile.name}
-                                                                    </a>
+                                                            : userFile.name.includes('zip') ? //if it has zip text then do the below mainly for img icon
+                                                            <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/zip.svg" />
+                                                                {userFile.name}
+                                                            </a>
+                                                            : userFile.name.includes('pdf') ? //if it has pdf text then do the below mainly for img icon
+                                                            <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/pdf.svg" />
+                                                                {userFile.name}
+                                                            </a>
+                                                            :
+                                                            <a onClick={() => setBaseUrl(userFile.base64PathFromRoot)} target="_blank" href={hrefBaseUrl} className="flex items-center">
+                                                                <img alt="folder" className="w-5 mr-5" src="/file.svg" />
+                                                                {userFile.name}
+                                                            </a>
                                                         }
                                                     </td>
                                                     <td className="px-6 py-1 w-80 break-all">
